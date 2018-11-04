@@ -1,0 +1,25 @@
+{
+  "name": "react-timer-hook",
+  "version": "1.0.0",
+  "description": "React timer hook is a custom hook built to simplify react components that need timers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amrlabib/react-timer-hook.git"
+  },
+  "keywords": [
+    "react",
+    "timer",
+    "hook",
+    "component"
+  ],
+  "author": "amrlabib",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amrlabib/react-timer-hook/issues"
+  },
+  "homepage": "https://github.com/amrlabib/react-timer-hook#readme"
+}
