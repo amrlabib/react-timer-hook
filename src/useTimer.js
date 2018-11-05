@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 export default function useTimer(settings) {
-  const { autoStart, expiryTimeStamp } = settings;
+  const { autoStart, expiryTimestamp } = settings;
 
   // Seconds
   const [seconds, setSeconds] = useState(0);
@@ -55,7 +55,7 @@ export default function useTimer(settings) {
   function startTimer() {
     if(!intervalRef.current) {
       intervalRef.current = setInterval(() => {
-        if (expiryTimeStamp) {
+        if (expiryTimestamp) {
           calculateExpiryDate();
         } else {
           addSecond();
@@ -85,7 +85,7 @@ export default function useTimer(settings) {
   // Timer expiry date calculation
   function calculateExpiryDate() {
     var now = new Date().getTime();
-    var distance = expiryTimeStamp - now;
+    var distance = expiryTimestamp - now;
     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -98,7 +98,7 @@ export default function useTimer(settings) {
 
   // didMount effect
   useEffect(() => {
-    if (autoStart || expiryTimeStamp) {
+    if (autoStart || expiryTimestamp) {
       startTimer();
     }
     return stopTimer;

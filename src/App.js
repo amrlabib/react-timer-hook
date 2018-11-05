@@ -6,7 +6,7 @@ export default function App() {
   const after10Days = now.setDate(now.getDate() + 10);
   const { seconds, minutes, hours, days, startTimer, stopTimer, clearTimer } = useTimer({
     autoStart: true,
-    expiryTimeStamp: after10Days,
+    expiryTimestamp: after10Days,
   });
 
 

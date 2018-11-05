@@ -23,7 +23,7 @@ export default function App() {
 
   const { seconds, minutes, hours, days, startTimer, stopTimer, clearTimer } = useTimer({
     autoStart: true,
-    expiryTimeStamp: after10Days,
+    expiryTimestamp: after10Days,
   });
 
 
@@ -56,7 +56,7 @@ export default function App() {
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
 | autoStart | boolean | No | if set to `true` timer will auto start |
-| expiryTimeStamp | number(timestamp) | No | if set a countdown timer will start, instead of normal timer |
+| expiryTimestamp | number(timestamp) | No | if set a countdown timer will start, instead of normal timer |
 
 ---
 
