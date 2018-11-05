@@ -51,7 +51,7 @@ export default function App() {
 
 ---
 
-Settings:
+## Settings
 
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
@@ -60,7 +60,7 @@ Settings:
 
 ---
 
-Values:
+## Values
 
 | key | Type | Description |
 | --- | --- | ---- |
