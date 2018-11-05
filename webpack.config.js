@@ -1,7 +1,6 @@
 const path = require('path')
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CompressionPlugin = require("compression-webpack-plugin")
 
 
 module.exports = {
@@ -30,9 +29,6 @@ module.exports = {
             { from: './index.html', to: './' },
             { from: './src/useTimer.js', to: './index.js' }
         ]),
-        new CompressionPlugin({
-          test: /\.js/m,
-        }),
     ],
     devServer: {
       contentBase: path.join(__dirname, 'dist'),
