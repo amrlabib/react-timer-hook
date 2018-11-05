@@ -54,7 +54,7 @@ export default function App() {
 Settings:
 
 | key | Type | Required | Description |
-| --- | --- | --- | --- | ---- |
+| --- | --- | --- | ---- |
 | autoStart | boolean | No | if set to `true` timer will auto start |
 | expiryTimeStamp | number(timestamp) | No | if set a countdown timer will start, instead of normal timer |
 
