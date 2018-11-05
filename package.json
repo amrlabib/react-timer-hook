@@ -1,12 +1,11 @@
 {
   "name": "react-timer-hook",
   "version": "1.0.0",
-  "description": "React timer hook is a custom hook built to simplify react components that need timers",
-  "main": "index.js",
+  "description": "React timer hook is a custom react hook built to handle timers and count down logic in your react component.",
+  "main": "dist/index.js",
   "scripts": {
     "build:dev": "webpack-dev-server",
-    "build:prod": "rm -rf ./dist && webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:prod": "rm -rf ./dist && webpack"
   },
   "repository": {
     "type": "git",

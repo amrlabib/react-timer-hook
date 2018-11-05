@@ -11,7 +11,7 @@ module.exports = {
     mode: "production",
     entry: './src/index.js',
     output: {
-        filename: 'js/index.js',
+        filename: 'js/scripts.js',
         chunkFilename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist'),
     },
@@ -28,6 +28,7 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([
             { from: './index.html', to: './' },
+            { from: './src/useTimer.js', to: './index.js' }
         ]),
         new CompressionPlugin({
           test: /\.js/m,
