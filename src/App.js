@@ -4,7 +4,7 @@ import useTimer  from './useTimer';
 export default function App() {
   const now = new Date()
   const after10Days = now.setDate(now.getDate() + 10);
-  const { seconds, minutes, hours, days, startTimer, stopTimer, clearTimer } = useTimer({
+  const { seconds, minutes, hours, days, startTimer, stopTimer, resetTimer } = useTimer({
     autoStart: true,
     expiryTimestamp: after10Days,
   });
@@ -26,7 +26,7 @@ export default function App() {
       <button onClick={stopTimer}>Stop</button>
       <br/>
       <br/>
-      <button onClick={clearTimer}>Clear</button>
+      <button onClick={resetTimer}>Reset</button>
     </div>
   );
 }

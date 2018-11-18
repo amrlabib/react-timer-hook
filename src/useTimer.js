@@ -71,7 +71,7 @@ export default function useTimer(settings) {
     }
   }
 
-  function clearTimer() {
+  function resetTimer() {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
@@ -104,5 +104,5 @@ export default function useTimer(settings) {
     return stopTimer;
   },[]);
 
-  return { seconds, minutes, hours, days, startTimer, stopTimer, clearTimer };
+  return { seconds, minutes, hours, days, startTimer, stopTimer, resetTimer };
 }

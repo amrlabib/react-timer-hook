@@ -21,7 +21,7 @@ export default function App() {
   const after10Days = now.setDate(now.getDate() + 10);
 
 
-  const { seconds, minutes, hours, days, startTimer, stopTimer, clearTimer } = useTimer({
+  const { seconds, minutes, hours, days, startTimer, stopTimer, resetTimer } = useTimer({
     autoStart: true,
     expiryTimestamp: after10Days,
   });
@@ -43,7 +43,7 @@ export default function App() {
       <button onClick={stopTimer}>Stop</button>
       <br/>
       <br/>
-      <button onClick={clearTimer}>Clear</button>
+      <button onClick={resetTimer}>Reset</button>
     </div>
   );
 }
@@ -70,4 +70,4 @@ export default function App() {
 | days | number | days value |
 | startTimer | function | function to be called to start timer |
 | stopTimer | function | function to be called to stop timer |
-| resetTimer | function | function to be called to reset timer, this clear will not make sense with countdown timer |
+| resetTimer | function | function to be called to reset timer, this reset will not make sense with countdown timer |
