@@ -15,7 +15,9 @@
     "react",
     "timer",
     "hook",
-    "component"
+    "component",
+    "hooks",
+    "countdown",
   ],
   "author": "amrlabib",
   "license": "ISC",
