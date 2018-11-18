@@ -18,7 +18,7 @@ React hooks is available from react version 16.7.0-alpha
 
 ```javascript
 import React from 'react';
-import useTimer  from './useTimer';
+import useTimer  from 'react-timer-hook';
 
 export default function App() {
   const now = new Date()
