@@ -21,8 +21,6 @@ import React from 'react';
 import useTimer  from 'react-timer-hook';
 
 export default function App() {
-  const now = new Date()
-  const after10Days = now.setDate(now.getDate() + 10);
   const {
     seconds,
     minutes,

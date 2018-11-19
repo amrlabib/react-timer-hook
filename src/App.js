@@ -2,8 +2,6 @@ import React from 'react';
 import useTimer  from './useTimer';
 
 export default function App() {
-  const now = new Date()
-  const after10Days = now.setDate(now.getDate() + 10);
   const {
     seconds,
     minutes,
