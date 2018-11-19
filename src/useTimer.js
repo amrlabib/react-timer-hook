@@ -33,7 +33,7 @@ export default function useTimer(settings) {
   const [hours, setHours] = useState(0);
   function addHour() {
     setHours(prevHours => {
-      if (prevHours === 24) {
+      if (prevHours === 23) {
         addDay();
         return 0;
       }
