@@ -1,6 +1,6 @@
 {
   "name": "react-timer-hook",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React timer hook is a custom react hook built to handle timers and count down logic in your react component.",
   "main": "dist/index.js",
   "scripts": {
