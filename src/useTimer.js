@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 export default function useTimer(settings) {
-  const { autoStart, expiryTimestamp } = settings;
+  const { autoStart, expiryTimestamp, onExpire } = settings;
 
   // Seconds
   const [seconds, setSeconds] = useState(0);
@@ -92,6 +92,7 @@ export default function useTimer(settings) {
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     if(seconds < 0) {
       resetTimer();
+      onExpire();
     } else {
       setSeconds(seconds);
       setMinutes(minutes);

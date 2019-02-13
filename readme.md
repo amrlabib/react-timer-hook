@@ -54,6 +54,7 @@ export default function App() {
 | --- | --- | --- | ---- |
 | autoStart | boolean | No | if set to `true` timer will auto start |
 | expiryTimestamp | number(timestamp) | No | if set a countdown timer will start, instead of normal timer |
+| onExpire | Function | No | callback function to be executed once countdown timer is expired, works only for countdown |
 
 ---
 
