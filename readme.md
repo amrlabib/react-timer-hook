@@ -4,7 +4,7 @@ React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.h
 
 #### Note:
 
-React hooks is available from react version 16.7.0-alpha
+React hooks is available from react version 16.8.0
 
 ---
 
