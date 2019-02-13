@@ -10,7 +10,11 @@ React hooks is available from react version 16.8.0
 
 ## Setup
 
-`yarn add react-timer-hook` OR `npm install react-timer-hook`
+`yarn add react-timer-hook`
+
+OR
+
+`npm install --save react-timer-hook`
 
 ---
 
