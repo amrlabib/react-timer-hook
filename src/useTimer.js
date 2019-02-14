@@ -54,6 +54,7 @@ export default function useTimer(settings) {
   const intervalRef = useRef();
   function startTimer() {
     if(!intervalRef.current) {
+      expiryTimestamp && calculateExpiryDate();
       intervalRef.current = setInterval(() => {
         if (expiryTimestamp) {
           calculateExpiryDate();
