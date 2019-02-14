@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import Validator from './Validator.js';
 
 export default function useTimer(settings) {
   const { autoStart, expiryTimestamp, onExpire } = settings;
@@ -15,7 +16,6 @@ export default function useTimer(settings) {
     });
   }
 
-
   // Minutes
   const [minutes, setMinutes] = useState(0);
   function addMinute() {
@@ -27,7 +27,6 @@ export default function useTimer(settings) {
       return prevMinutes + 1;
     });
   }
-
 
   // Hours
   const [hours, setHours] = useState(0);
@@ -49,19 +48,13 @@ export default function useTimer(settings) {
     });
   }
 
-
-  // Control function
+  // Control functions
   const intervalRef = useRef();
   function startTimer() {
-    if(!intervalRef.current) {
-      expiryTimestamp && calculateExpiryDate();
-      intervalRef.current = setInterval(() => {
-        if (expiryTimestamp) {
-          calculateExpiryDate();
-        } else {
-          addSecond();
-        }
-      }, 1000);
+    if (expiryTimestamp) {
+      Validator.isValidExpiryTimestamp(expiryTimestamp) && runCountdownTimer();
+    } else if(autoStart) {
+      runTimer();
     }
   }
 
@@ -69,6 +62,19 @@ export default function useTimer(settings) {
     if(intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
+    }
+  }
+
+  function runCountdownTimer() {
+    if(!intervalRef.current) {
+      calculateExpiryDate();
+      intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
+    }
+  }
+
+  function runTimer() {
+    if(!intervalRef.current) {
+      intervalRef.current = setInterval(() => addSecond(), 1000);
     }
   }
 
@@ -93,7 +99,7 @@ export default function useTimer(settings) {
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     if(seconds < 0) {
       resetTimer();
-      onExpire();
+      Validator.isValidOnExpire(onExpire) && onExpire();
     } else {
       setSeconds(seconds);
       setMinutes(minutes);
@@ -104,9 +110,7 @@ export default function useTimer(settings) {
 
   // didMount effect
   useEffect(() => {
-    if (autoStart || expiryTimestamp) {
-      startTimer();
-    }
+    startTimer();
     return stopTimer;
   },[]);
 
