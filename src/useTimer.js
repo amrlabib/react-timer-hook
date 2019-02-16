@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 export default function useTimer(settings) {
-  const { autoStart, expiryTimestamp, onExpire } = settings;
+  const { autoStart, expiryTimestamp, onExpire } = settings || {};
 
   // Seconds
   const [seconds, setSeconds] = useState(0);
@@ -49,7 +49,7 @@ export default function useTimer(settings) {
 
   // Control functions
   const intervalRef = useRef();
-  function startTimer() {
+  function start(isFunctionTrigger) {
     if (expiryTimestamp) {
       isValidExpiryTimestamp(expiryTimestamp) && runCountdownTimer();
     } else if(autoStart) {
@@ -57,17 +57,21 @@ export default function useTimer(settings) {
     }
   }
 
-  function stopTimer() {
-    if(intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-    }
-  }
-
   function runCountdownTimer() {
     if(!intervalRef.current) {
       calculateExpiryDate();
       intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
+    }
+  }
+
+  function startTimer() {
+    runTimer();
+  }
+
+  function stopTimer() {
+    if(intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
     }
   }
 
@@ -81,11 +85,11 @@ export default function useTimer(settings) {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
-      setSeconds(0);
-      setMinutes(0);
-      setHours(0);
-      setDays(0);
     }
+    setSeconds(0);
+    setMinutes(0);
+    setHours(0);
+    setDays(0);
   }
 
   // Timer expiry date calculation
@@ -109,7 +113,7 @@ export default function useTimer(settings) {
 
   // didMount effect
   useEffect(() => {
-    startTimer();
+    start();
     return stopTimer;
   },[]);
 
