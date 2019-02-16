@@ -72,4 +72,4 @@ export default function App() {
 | days | number | days value |
 | startTimer | function | function to be called to start timer |
 | stopTimer | function | function to be called to stop timer |
-| resetTimer | function | function to be called to reset timer, this reset will not make sense with countdown timer |
+| resetTimer | function | function to be called to reset timer to 0:0:0:0 |
