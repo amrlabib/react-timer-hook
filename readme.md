@@ -158,4 +158,4 @@ export default function App() {
 
 ### Deprecation Warning:
 
-Starting from v1.1.0 and above default export `useTimer` is deprecated, your old code will still work but it is better to start using named exports { useTimer, useStopwatch }
+Starting from `v1.1.0` and above default export `useTimer` is deprecated, your old code will still work but it is better to start using named exports `{ useTimer, useStopwatch }`
