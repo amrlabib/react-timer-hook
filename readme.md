@@ -22,7 +22,9 @@ OR
 
 ---
 
-## `useTimer` Example
+## `useTimer`
+
+### Example
 
 ```javascript
 import React from 'react';
@@ -65,9 +67,31 @@ export default function App() {
 }
 ```
 
+### Settings
+
+| key | Type | Required | Description |
+| --- | --- | --- | ---- |
+| expiryTimestamp | number(timestamp) | YES | this will define for how long the timer will be running   |
+| onExpire | Function | No | callback function to be executed once countdown timer is expired |
+
+### Values
+
+| key | Type | Description |
+| --- | --- | ---- |
+| seconds | number | seconds value |
+| minutes | number | minutes value |
+| hours | number | hours value |
+| days | number | days value |
+| pause | function | function to be called to pause timer |
+| start | function | function if called after pause the timer will continue based on original expiryTimestamp |
+| resume | function | function if called after pause the timer will continue countdown from last paused state |
+
+
 ---
 
-## `useStopwatch` Example
+## `useStopwatch`
+
+### Example
 
 ```javascript
 import React from 'react';
@@ -107,33 +131,6 @@ export default function App() {
   );
 }
 ```
-
----
-
-## `useTimer`
-
-### Settings
-
-| key | Type | Required | Description |
-| --- | --- | --- | ---- |
-| expiryTimestamp | number(timestamp) | YES | this will define for how long the timer will be running   |
-| onExpire | Function | No | callback function to be executed once countdown timer is expired |
-
-### Values
-
-| key | Type | Description |
-| --- | --- | ---- |
-| seconds | number | seconds value |
-| minutes | number | minutes value |
-| hours | number | hours value |
-| days | number | days value |
-| pause | function | function to be called to pause timer |
-| start | function | function if called after pause the timer will continue based on original expiryTimestamp |
-| resume | function | function if called after pause the timer will continue countdown from last paused state |
-
----
-
-## `useStopwatch`
 
 ### Settings
 
