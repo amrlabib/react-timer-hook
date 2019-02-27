@@ -174,7 +174,7 @@ export function useTimer(settings) {
   function isValidOnExpire(onExpire) {
     const isValid = onExpire && typeof onExpire === 'function';
     if(onExpire && !isValid) {
-      console.warn('react-timer-hook: Invalid onExpire settings function passed', onExpire);
+      console.warn('react-timer-hook: { useTimer } Invalid onExpire settings function', onExpire);
     }
     return isValid;
   }
