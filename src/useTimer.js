@@ -7,9 +7,11 @@ export default function deprecatedUseTimer(settings) {
   },[]);
 
   if(settings.expiryTimestamp) {
-    return useTimer(settings);
+    const values = useTimer(settings);
+    return { ...values, startTimer: values.start, stopTimer: values.pause, resetTimer: () => {} };
   } else {
-    return useStopwatch(settings);
+    const values = useStopwatch(settings);
+    return { ...values, startTimer: values.start, stopTimer: values.pause, resetTimer: values.reset };
   }
 }
 
