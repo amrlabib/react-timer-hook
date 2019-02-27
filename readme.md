@@ -36,7 +36,7 @@ function MyTimer({ expiryTimestamp }) {
     days,
     start,
     pause,
-    reset,
+    resume
   } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
 
 
@@ -49,7 +49,7 @@ function MyTimer({ expiryTimestamp }) {
       </div>
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
-      <button onClick={reset}>Reset</button>
+      <button onClick={resume}>Resume</button>
     </div>
   );
 }
@@ -112,22 +112,14 @@ export default function App() {
 
 ## `useTimer` Settings
 
+### Settings
+
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
 | expiryTimestamp | number(timestamp) | YES | this will define for how long the timer will be running   |
 | onExpire | Function | No | callback function to be executed once countdown timer is expired |
 
----
-
-## `useStopwatch` Settings
-
-| key | Type | Required | Description |
-| --- | --- | --- | ---- |
-| autoStart | boolean | No | if set to `true` stopwatch will auto start |
-
----
-
-## Values
+### Values
 
 | key | Type | Description |
 | --- | --- | ---- |
@@ -135,9 +127,31 @@ export default function App() {
 | minutes | number | minutes value |
 | hours | number | hours value |
 | days | number | days value |
-| start | function | function to be called to start |
-| pause | function | function to be called to stop |
-| reset | function | function to be called to reset to 0:0:0:0 |
+| pause | function | function to be called to pause timer |
+| start | function | function if called after pause the timer will continue based on original expiryTimestamp |
+| resume | function | function if called after pause the timer will continue countdown from last paused state |
+
+---
+
+## `useStopwatch`
+
+### Settings
+
+| key | Type | Required | Description |
+| --- | --- | --- | ---- |
+| autoStart | boolean | No | if set to `true` stopwatch will auto start |
+
+### Values
+
+| key | Type | Description |
+| --- | --- | ---- |
+| seconds | number | seconds value |
+| minutes | number | minutes value |
+| hours | number | hours value |
+| days | number | days value |
+| start | function | function to be called to start stopwatch |
+| pause | function | function to be called to pause stopwatch |
+| reset | function | function to be called to reset stopwatch to 0:0:0:0 |
 
 
 ---
