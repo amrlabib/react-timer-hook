@@ -2,8 +2,8 @@
 
 React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.html), built to handle time related logic in your react component:
 
-1. Timers (countdown timer)
-2. Stopwatch (count up timer)
+1. Timers (countdown timer) `useTimer`
+2. Stopwatch (count up timer) `useStopwatch`
 
 
 #### Note:
