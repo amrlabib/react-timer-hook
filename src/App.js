@@ -1,27 +1,38 @@
 import React from 'react';
-import useTimer  from './useTimer';
+import { useTimer } from './useTimer';
 
-export default function App() {
+function MyTimer({ expiryTimestamp }) {
   const {
     seconds,
     minutes,
     hours,
     days,
-    startTimer,
-    stopTimer,
-    resetTimer,
-  } = useTimer({ autoStart: true });
+    start,
+    pause,
+    resume
+  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
 
 
   return (
     <div style={{textAlign: 'center'}}>
-      <h1>react-timer-hook Demo</h1>
+      <h1>react-timer-hook </h1>
+      <p>Timer Demo</p>
       <div style={{fontSize: '100px'}}>
         <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
-      <button onClick={startTimer}>Start</button>
-      <button onClick={stopTimer}>Stop</button>
-      <button onClick={resetTimer}>Reset</button>
+      <button onClick={start}>Start</button>
+      <button onClick={pause}>Pause</button>
+      <button onClick={resume}>Resume</button>
+    </div>
+  );
+}
+
+export default function App() {
+  var t = new Date();
+  t.setSeconds(t.getSeconds() + 600); // 10 minutes timer
+  return (
+    <div>
+      <MyTimer expiryTimestamp={t} />
     </div>
   );
 }
