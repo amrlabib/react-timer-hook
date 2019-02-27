@@ -110,7 +110,7 @@ export default function App() {
 
 ---
 
-## `useTimer` Settings
+## `useTimer`
 
 ### Settings
 
