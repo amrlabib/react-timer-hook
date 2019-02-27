@@ -163,9 +163,9 @@ export function useTimer(settings) {
 
   // Validate expiryTimestamp
   function isValidExpiryTimestamp(expiryTimestamp) {
-    const isValid = expiryTimestamp && (new Date(expiryTimestamp)).getTime() > 0;
-    if(expiryTimestamp && !isValid) {
-      console.warn('react-timer-hook: Invalid expiryTimestamp settings passed', expiryTimestamp);
+    const isValid = (new Date(expiryTimestamp)).getTime() > 0;
+    if(!isValid) {
+      console.warn('react-timer-hook: { useTimer } Invalid expiryTimestamp settings', expiryTimestamp);
     }
     return isValid;
   }
