@@ -135,6 +135,10 @@ export function useTimer(settings) {
     setDays(0);
   }
 
+  function resume() {
+    // TODO implement countdown timer resume after pause
+  }
+
   // Timer expiry date calculation
   function calculateExpiryDate() {
     var now = new Date().getTime();
@@ -179,5 +183,5 @@ export function useTimer(settings) {
     return isValid;
   }
 
-  return { seconds, minutes, hours, days, start, pause, reset };
+  return { seconds, minutes, hours, days, start, pause, resume };
 }
