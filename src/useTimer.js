@@ -15,6 +15,19 @@ export default function useTimer(settings) {
     });
   }
 
+  function subtractSecond() {
+    setSeconds(prevSeconds => {
+      if (prevSeconds === 0) {
+        if (shouldStop()) {
+          return 0;
+        }
+        subtractMinute();
+        return 59;
+      }
+      return prevSeconds - 1;
+    })
+  }
+
   // Minutes
   const [minutes, setMinutes] = useState(0);
   function addMinute() {
@@ -24,6 +37,16 @@ export default function useTimer(settings) {
         return 0;
       }
       return prevMinutes + 1;
+    });
+  }
+
+  function subtractMinute() {
+    setMinutes(prevMinutes => {
+      if (prevMinutes === 0) {
+        subtractHour();
+        return 59;
+      }
+      return prevMinutes - 1;
     });
   }
 
@@ -39,6 +62,16 @@ export default function useTimer(settings) {
     });
   }
 
+  function subtractHour() {
+    setHours(prevHours => {
+      if (prevHours === 0) {
+        subtractDay();
+        return 23;
+      }
+      return prevHours - 1;
+    });
+  }
+
   // Days
   const [days, setDays] = useState(0);
   function addDay() {
@@ -47,11 +80,18 @@ export default function useTimer(settings) {
     });
   }
 
+  function subtractDay() {
+    setDays(prevDays => {
+      return prevDays - 1;
+    });
+  }
+
   // Control functions
   const intervalRef = useRef();
   function start(isFunctionTrigger) {
-    if (expiryTimestamp) {
-      isValidExpiryTimestamp(expiryTimestamp) && runCountdownTimer();
+    if (expiryTimestamp && isValidExpiryTimestamp(expiryTimestamp)) {
+       calculateExpiryDate();
+       runCountdownTimer();
     } else if(autoStart) {
       runTimer();
     }
@@ -59,13 +99,17 @@ export default function useTimer(settings) {
 
   function runCountdownTimer() {
     if(!intervalRef.current) {
-      calculateExpiryDate();
-      intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
+      intervalRef.current = setInterval(() => subtractSecond(), 1000);
     }
   }
 
   function startTimer() {
-    runTimer();
+    if (expiryTimestamp) {
+      runCountdownTimer();
+    } else {
+      runTimer();
+    }
+    
   }
 
   function stopTimer() {
@@ -100,15 +144,10 @@ export default function useTimer(settings) {
     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    if(seconds < 0) {
-      resetTimer();
-      isValidOnExpire(onExpire) && onExpire();
-    } else {
       setSeconds(seconds);
       setMinutes(minutes);
       setHours(hours);
       setDays(days);
-    }
   }
 
   // didMount effect
@@ -117,6 +156,15 @@ export default function useTimer(settings) {
     return stopTimer;
   },[]);
 
+  // Determines if the timer should stop
+  function shouldStop() {
+    if (seconds === 0 && minutes === 0 && hours === 0 && days === 0) {
+      resetTimer();
+      isValidOnExpire(onExpire) && onExpire();
+      return true;
+    }
+    return false;
+  }
 
   // Validate expiryTimestamp
   function isValidExpiryTimestamp(expiryTimestamp) {
