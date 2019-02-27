@@ -91,8 +91,10 @@ export function useStopwatch(settings) {
 
   // didMount effect
   useEffect(() => {
-    start();
-    return stop;
+    if(autoStart) {
+      start();
+    }
+    return reset;
   },[]);
 
   return { seconds, minutes, hours, days, start, pause, reset };
@@ -161,7 +163,7 @@ export function useTimer(settings) {
   // didMount effect
   useEffect(() => {
     start();
-    return stop;
+    return reset;
   },[]);
 
 
