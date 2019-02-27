@@ -1,6 +1,10 @@
 ## react-timer-hook
 
-React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.html), built to handle timers and countdown logic in your react component.
+React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.html), built to handle time related logic in your react component:
+
+1. Timers (countdown timer)
+2. Stopwatch (count up timer)
+
 
 #### Note:
 
@@ -18,33 +22,44 @@ OR
 
 ---
 
-## Example
+## `useTimer` Example
 
 ```javascript
 import React from 'react';
-import useTimer  from 'react-timer-hook';
+import { useTimer } from 'react-timer-hook';
 
-export default function App() {
+function MyTimer({ expiryTimestamp }) {
   const {
     seconds,
     minutes,
     hours,
     days,
-    startTimer,
-    stopTimer,
-    resetTimer,
-  } = useTimer({ autoStart: true });
+    start,
+    pause,
+    reset,
+  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
 
 
   return (
     <div style={{textAlign: 'center'}}>
-      <h1>react-timer-hook Demo</h1>
+      <h1>react-timer-hook </h1>
+      <p>Timer Demo</p>
       <div style={{fontSize: '100px'}}>
         <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
-      <button onClick={startTimer}>Start</button>
-      <button onClick={stopTimer}>Stop</button>
-      <button onClick={resetTimer}>Reset</button>
+      <button onClick={start}>Start</button>
+      <button onClick={pause}>Pause</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+
+export default function App() {
+  var t = new Date();
+  t.setSeconds(t.getSeconds() + 600); // 10 minutes timer
+  return (
+    <div>
+      <MyTimer expiryTimestamp={t} />
     </div>
   );
 }
@@ -52,13 +67,64 @@ export default function App() {
 
 ---
 
-## Settings
+## `useStopwatch` Example
+
+```javascript
+import React from 'react';
+import { useStopwatch } from 'react-timer-hook';
+
+function MyStopwatch() {
+  const {
+    seconds,
+    minutes,
+    hours,
+    days,
+    start,
+    pause,
+    reset,
+  } = useStopwatch({ autoStart: true });
+
+
+  return (
+    <div style={{textAlign: 'center'}}>
+      <h1>react-timer-hook</h1>
+      <p>Stopwatch Demo</p>
+      <div style={{fontSize: '100px'}}>
+        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+      </div>
+      <button onClick={start}>Start</button>
+      <button onClick={pause}>Pause</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <div>
+      <MyStopwatch />
+    </div>
+  );
+}
+```
+
+---
+
+
+## `useTimer` Settings
 
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
-| autoStart | boolean | No | if set to `true` timer will auto start |
-| expiryTimestamp | number(timestamp) | No | if set a countdown timer will start, instead of normal timer |
-| onExpire | Function | No | callback function to be executed once countdown timer is expired, works only for countdown |
+| expiryTimestamp | number(timestamp) | YES | this will define for how long the timer will be running   |
+| onExpire | Function | No | callback function to be executed once countdown timer is expired |
+
+---
+
+## `useStopwatch` Settings
+
+| key | Type | Required | Description |
+| --- | --- | --- | ---- |
+| autoStart | boolean | No | if set to `true` stopwatch will auto start |
 
 ---
 
@@ -70,6 +136,6 @@ export default function App() {
 | minutes | number | minutes value |
 | hours | number | hours value |
 | days | number | days value |
-| startTimer | function | function to be called to start timer |
-| stopTimer | function | function to be called to stop timer |
-| resetTimer | function | function to be called to reset timer to 0:0:0:0 |
+| start | function | function to be called to start |
+| pause | function | function to be called to stop |
+| reset | function | function to be called to reset to 0:0:0:0 |
