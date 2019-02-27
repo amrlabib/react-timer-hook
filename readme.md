@@ -110,7 +110,6 @@ export default function App() {
 
 ---
 
-
 ## `useTimer` Settings
 
 | key | Type | Required | Description |
@@ -139,3 +138,10 @@ export default function App() {
 | start | function | function to be called to start |
 | pause | function | function to be called to stop |
 | reset | function | function to be called to reset to 0:0:0:0 |
+
+
+---
+
+### Deprecation Warning:
+
+Starting from v1.1.0 and above default export `useTimer` is deprecated, your old code will still work but it is better to start using named exports { useTimer, useStopwatch }
