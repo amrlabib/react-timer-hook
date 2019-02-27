@@ -1,7 +1,22 @@
 import { useState, useEffect, useRef } from 'react';
 
-export default function useTimer(settings) {
-  const { autoStart, expiryTimestamp, onExpire } = settings || {};
+export default function deprecatedUseTimer(settings) {
+  // didMount effect
+  useEffect(() => {
+    console.warn('react-timer-hook: default export useTimer is deprecated, use named exports { useTimer, useStopwatch } instead');
+  },[]);
+
+  if(settings.expiryTimestamp) {
+    return useTimer(settings);
+  } else {
+    return useStopwatch(settings);
+  }
+}
+
+/* --------------------- useStopwatch ----------------------- */
+
+export function useStopwatch(settings) {
+  const { autoStart } = settings || {};
 
   // Seconds
   const [seconds, setSeconds] = useState(0);
@@ -49,39 +64,21 @@ export default function useTimer(settings) {
 
   // Control functions
   const intervalRef = useRef();
-  function start(isFunctionTrigger) {
-    if (expiryTimestamp) {
-      isValidExpiryTimestamp(expiryTimestamp) && runCountdownTimer();
-    } else if(autoStart) {
-      runTimer();
-    }
-  }
 
-  function runCountdownTimer() {
+  function start() {
     if(!intervalRef.current) {
-      calculateExpiryDate();
-      intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
+      intervalRef.current = setInterval(() => addSecond(), 1000);
     }
   }
 
-  function startTimer() {
-    runTimer();
-  }
-
-  function stopTimer() {
+  function pause() {
     if(intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
     }
   }
 
-  function runTimer() {
-    if(!intervalRef.current) {
-      intervalRef.current = setInterval(() => addSecond(), 1000);
-    }
-  }
-
-  function resetTimer() {
+  function reset() {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
@@ -90,6 +87,58 @@ export default function useTimer(settings) {
     setMinutes(0);
     setHours(0);
     setDays(0);
+  }
+
+  // didMount effect
+  useEffect(() => {
+    if(autoStart) {
+      start();
+    }
+    return reset;
+  },[]);
+
+  return { seconds, minutes, hours, days, start, pause, reset };
+}
+
+/* ---------------------- useTimer --------------------- */
+
+export function useTimer(settings) {
+  const { expiryTimestamp, onExpire } = settings || {};
+
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [days, setDays] = useState(0);
+
+  const intervalRef = useRef();
+
+  function start() {
+    if(isValidExpiryTimestamp(expiryTimestamp) && !intervalRef.current) {
+      calculateExpiryDate();
+      intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
+    }
+  }
+
+  function pause() {
+    if(intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+  }
+
+  function reset() {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+    setSeconds(0);
+    setMinutes(0);
+    setHours(0);
+    setDays(0);
+  }
+
+  function resume() {
+    // TODO implement countdown timer resume after pause
   }
 
   // Timer expiry date calculation
@@ -101,7 +150,7 @@ export default function useTimer(settings) {
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     if(seconds < 0) {
-      resetTimer();
+      reset();
       isValidOnExpire(onExpire) && onExpire();
     } else {
       setSeconds(seconds);
@@ -114,15 +163,15 @@ export default function useTimer(settings) {
   // didMount effect
   useEffect(() => {
     start();
-    return stopTimer;
+    return reset;
   },[]);
 
 
   // Validate expiryTimestamp
   function isValidExpiryTimestamp(expiryTimestamp) {
-    const isValid = expiryTimestamp && (new Date(expiryTimestamp)).getTime() > 0;
-    if(expiryTimestamp && !isValid) {
-      console.warn('react-timer-hook: Invalid expiryTimestamp settings passed', expiryTimestamp);
+    const isValid = (new Date(expiryTimestamp)).getTime() > 0;
+    if(!isValid) {
+      console.warn('react-timer-hook: { useTimer } Invalid expiryTimestamp settings', expiryTimestamp);
     }
     return isValid;
   }
@@ -131,10 +180,10 @@ export default function useTimer(settings) {
   function isValidOnExpire(onExpire) {
     const isValid = onExpire && typeof onExpire === 'function';
     if(onExpire && !isValid) {
-      console.warn('react-timer-hook: Invalid onExpire settings function passed', onExpire);
+      console.warn('react-timer-hook: { useTimer } Invalid onExpire settings function', onExpire);
     }
     return isValid;
   }
 
-  return { seconds, minutes, hours, days, startTimer, stopTimer, resetTimer };
+  return { seconds, minutes, hours, days, start, pause, resume };
 }
