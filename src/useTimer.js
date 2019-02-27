@@ -144,7 +144,7 @@ export function useTimer(settings) {
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     if(seconds < 0) {
-      resetTimer();
+      reset();
       isValidOnExpire(onExpire) && onExpire();
     } else {
       setSeconds(seconds);
