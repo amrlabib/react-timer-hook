@@ -108,9 +108,56 @@ export function useTimer(settings) {
   const { expiryTimestamp, onExpire } = settings || {};
 
   const [seconds, setSeconds] = useState(0);
+  function subtractSecond() {
+    setSeconds(prevSeconds => {
+      if(prevSeconds === 0) {
+        subtractMinute();
+        return 59;
+      } else if(prevSeconds > 0) {
+        return prevSeconds - 1;
+      }
+      return 0;
+    });
+  }
+
+
   const [minutes, setMinutes] = useState(0);
+  function subtractMinute() {
+    setMinutes(prevMinutes => {
+      if (prevMinutes === 0) {
+        subtractHour();
+        return 59;
+      } else if(prevMinutes > 0) {
+        return prevMinutes - 1;
+      }
+      return 0;
+    });
+  }
+
   const [hours, setHours] = useState(0);
+  function subtractHour() {
+    setHours(prevHours => {
+      if (prevHours === 0) {
+        subtractDay();
+        return 23;
+      } else if(prevHours > 0) {
+        return prevHours - 1;
+      }
+      return 0;
+    });
+  }
+
   const [days, setDays] = useState(0);
+  function subtractDay() {
+    setDays(prevDays => {
+      if(prevDays > 0) {
+        return prevDays - 1;
+      }
+      reset();
+      isValidOnExpire(onExpire) && onExpire();
+      return 0;
+    });
+  }
 
   const intervalRef = useRef();
 
@@ -140,7 +187,9 @@ export function useTimer(settings) {
   }
 
   function resume() {
-    // TODO implement countdown timer resume after pause
+    if(isValidExpiryTimestamp(expiryTimestamp) && !intervalRef.current) {
+      intervalRef.current = setInterval(() => subtractSecond(), 1000);
+    }
   }
 
   // Timer expiry date calculation
