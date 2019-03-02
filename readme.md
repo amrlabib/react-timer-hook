@@ -4,6 +4,7 @@ React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.h
 
 1. Timers (countdown timer) `useTimer`
 2. Stopwatch (count up timer) `useStopwatch`
+3. Time (return current time) `useTime`
 
 
 #### Note:
@@ -149,6 +150,61 @@ export default function App() {
 | start | function | function to be called to start stopwatch |
 | pause | function | function to be called to pause stopwatch |
 | reset | function | function to be called to reset stopwatch to 0:0:0:0 |
+
+
+---
+
+
+## `useTime`
+
+### Example
+
+```javascript
+import React from 'react';
+import { useTime } from 'react-timer-hook';
+
+function MyTime() {
+  const {
+    seconds,
+    minutes,
+    hours,
+    ampm,
+  } = useTime({ format: '12-hour'});
+
+  return (
+    <div style={{textAlign: 'center'}}>
+      <h1>react-timer-hook </h1>
+      <p>Current Time Demo</p>
+      <div style={{fontSize: '100px'}}>
+        <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span><span>{ampm}</span>
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <div>
+      <MyTime />
+    </div>
+  );
+}
+```
+
+### Settings
+
+| key | Type | Required | Description |
+| --- | --- | --- | ---- |
+| format | string | No | if set to `12-hour` time will be formatted with am/pm |
+
+### Values
+
+| key | Type | Description |
+| --- | --- | ---- |
+| seconds | number | seconds value |
+| minutes | number | minutes value |
+| hours | number | hours value |
+| ampm | string | am/pm value if `12-hour` format is used |
 
 
 ---
