@@ -1,10 +1,10 @@
 ## react-timer-hook
 
-React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.html), built to handle time related logic in your react component:
+React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.html), built to handle timers(countdown), stopwatch, and time logic and state in your react component.
 
-1. Timers (countdown timer) `useTimer`
-2. Stopwatch (count up timer) `useStopwatch`
-3. Time (return current time) `useTime`
+1. `useTimer`: Timers (countdown timer)
+2. `useStopwatch`: Stopwatch (count up timer)
+3. `useTime`: Time (return current time) 
 
 
 #### Note:
@@ -147,7 +147,7 @@ export default function App() {
 | minutes | number | minutes value |
 | hours | number | hours value |
 | days | number | days value |
-| start | function | function to be called to start stopwatch |
+| start | function | function to be called to start/resume stopwatch |
 | pause | function | function to be called to pause stopwatch |
 | reset | function | function to be called to reset stopwatch to 0:0:0:0 |
 
@@ -211,4 +211,4 @@ export default function App() {
 
 ### Deprecation Warning:
 
-Starting from `v1.1.0` and above default export `useTimer` is deprecated, your old code will still work but it is better to start using named exports `{ useTimer, useStopwatch }`
+Starting from `v1.1.0` and above default export `useTimer` is deprecated, your old code will still work but it is better to start using named exports `{ useTimer, useStopwatch, useTime }`
