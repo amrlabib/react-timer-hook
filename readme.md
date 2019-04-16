@@ -4,7 +4,7 @@ React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.h
 
 1. `useTimer`: Timers (countdown timer)
 2. `useStopwatch`: Stopwatch (count up timer)
-3. `useTime`: Time (return current time) 
+3. `useTime`: Time (return current time)
 
 
 #### Note:
@@ -39,7 +39,8 @@ function MyTimer({ expiryTimestamp }) {
     days,
     start,
     pause,
-    resume
+    resume,
+    restart,
   } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
 
 
@@ -53,6 +54,12 @@ function MyTimer({ expiryTimestamp }) {
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
       <button onClick={resume}>Resume</button>
+      <button onClick={() => {
+        // Restarts to 5 minutes timer
+        var t = new Date();
+        t.setSeconds(t.getSeconds() + 300);
+        restart(t)
+      }}>restart</button>
     </div>
   );
 }
@@ -86,6 +93,7 @@ export default function App() {
 | pause | function | function to be called to pause timer |
 | start | function | function if called after pause the timer will continue based on original expiryTimestamp |
 | resume | function | function if called after pause the timer will continue countdown from last paused state |
+| restart | function | function to restart timer with new expiryTimestamp |
 
 
 ---
