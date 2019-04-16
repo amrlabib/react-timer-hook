@@ -25,9 +25,9 @@ function MyTimer({ expiryTimestamp }) {
       <button onClick={pause}>Pause</button>
       <button onClick={resume}>Resume</button>
       <button onClick={() => {
-        // Resets to 10 minutes timer 
+        // Restarts to 5 minutes timer
         var t = new Date();
-        t.setSeconds(t.getSeconds() + 600);
+        t.setSeconds(t.getSeconds() + 300);
         restart(t)
       }}>restart</button>
     </div>
