@@ -9,7 +9,8 @@ function MyTimer({ expiryTimestamp }) {
     days,
     start,
     pause,
-    resume
+    resume,
+    restart
   } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
 
 
@@ -23,6 +24,12 @@ function MyTimer({ expiryTimestamp }) {
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
       <button onClick={resume}>Resume</button>
+      <button onClick={() => {
+        // Resets to 10 minutes timer 
+        var t = new Date();
+        t.setSeconds(t.getSeconds() + 600);
+        restart(t)
+      }}>restart</button>
     </div>
   );
 }

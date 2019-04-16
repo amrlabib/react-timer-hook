@@ -105,7 +105,8 @@ export function useStopwatch(settings) {
 /* ---------------------- useTimer --------------------- */
 
 export function useTimer(settings) {
-  const { expiryTimestamp, onExpire } = settings || {};
+  const { expiryTimestamp: expiry, onExpire } = settings || {};
+  const [expiryTimestamp, setExpiryTimestamp] = useState(expiry);
 
   const [seconds, setSeconds] = useState(0);
   function subtractSecond() {
@@ -164,7 +165,7 @@ export function useTimer(settings) {
   function start() {
     if(isValidExpiryTimestamp(expiryTimestamp) && !intervalRef.current) {
       calculateExpiryDate();
-      intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
+      intervalRef.current = setInterval(() => subtractSecond(), 1000);
     }
   }
 
@@ -192,6 +193,12 @@ export function useTimer(settings) {
     }
   }
 
+  function restart(newExpiryTimestamp) {
+    reset();
+    setExpiryTimestamp(newExpiryTimestamp);
+  }
+
+
   // Timer expiry date calculation
   function calculateExpiryDate() {
     var now = new Date().getTime();
@@ -215,7 +222,7 @@ export function useTimer(settings) {
   useEffect(() => {
     start();
     return reset;
-  },[]);
+  },[expiryTimestamp]);
 
 
   // Validate expiryTimestamp
@@ -236,7 +243,7 @@ export function useTimer(settings) {
     return isValid;
   }
 
-  return { seconds, minutes, hours, days, start, pause, resume };
+  return { seconds, minutes, hours, days, start, pause, resume, restart };
 }
 
 
