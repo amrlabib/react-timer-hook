@@ -7,12 +7,12 @@ module.exports = {
     performance: {
       hints: false
     },
-    mode: "production",
+    mode: "development",
     entry: './src/index.js',
     output: {
         filename: 'js/scripts.js',
         chunkFilename: '[name].[chunkhash].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'dev-dist'),
     },
     module: {
         rules: [{
@@ -27,11 +27,10 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([
             { from: './index.html', to: './' },
-            { from: './src/useTimer.js', to: './index.js' }
         ]),
     ],
     devServer: {
-      contentBase: path.join(__dirname, 'dist'),
+      contentBase: path.join(__dirname, 'dev-dist'),
       compress: true,
       port: 9000
     }

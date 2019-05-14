@@ -4,6 +4,7 @@ src
 build
 !.eslintrc
 yarn-error.log
+dev-dist
 
 *.js
 !dist/index.js
