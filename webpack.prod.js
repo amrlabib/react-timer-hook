@@ -6,7 +6,7 @@ module.exports = {
       hints: false
     },
     mode: "production",
-    entry: './src/useTimer.js',
+    entry: './src/index.js',
     output: {
         filename: './index.js',
         // chunkFilename: '[name].[chunkhash].js',

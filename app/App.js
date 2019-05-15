@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTimer } from './useTimer';
+import { useTimer } from '../src/index';
 
 function MyTimer({ expiryTimestamp }) {
   const {

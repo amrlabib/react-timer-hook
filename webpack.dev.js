@@ -8,7 +8,7 @@ module.exports = {
       hints: false
     },
     mode: "development",
-    entry: './src/index.js',
+    entry: './app/index.js',
     output: {
         filename: 'js/scripts.js',
         chunkFilename: '[name].[chunkhash].js',
