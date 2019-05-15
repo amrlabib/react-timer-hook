@@ -1,6 +1,3 @@
-const path = require('path')
-
-
 module.exports = {
     performance: {
       hints: false
