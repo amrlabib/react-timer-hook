@@ -1,6 +1,6 @@
 ## react-timer-hook
 
-React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.html), built to handle timers(countdown), stopwatch, and time logic and state in your react component.
+React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.html), built to handle timers(countdown), stopwatch, and time logic/state in your react component.
 
 1. `useTimer`: Timers (countdown timer)
 2. `useStopwatch`: Stopwatch (count up timer)
