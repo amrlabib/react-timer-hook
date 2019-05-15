@@ -9,7 +9,7 @@ export {
   useTime,
 }
 
-// This deprecated default export is just for old version before v1.1.0 for all new versions only named exports should be used
+// This deprecated default export is just to avoid breaking old versions code before v1.1.0
 export default function deprecatedUseTimer(settings) {
   // didMount effect
   useEffect(() => {
