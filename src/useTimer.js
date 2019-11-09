@@ -63,7 +63,7 @@ export default function useTimer(settings) {
   function start() {
     if(isValidExpiryTimestamp(expiryTimestamp) && !intervalRef.current) {
       calculateExpiryDate();
-      intervalRef.current = setInterval(() => subtractSecond(), 1000);
+      intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
     }
   }
 
