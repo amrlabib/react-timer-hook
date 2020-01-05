@@ -24,6 +24,7 @@ OR
 ---
 
 ## `useTimer`
+<img src="https://github.com/amrlabib/react-timer-hook/blob/master/readme-images/useTimer.gif" width="250" />
 
 ### Example
 
@@ -99,6 +100,7 @@ export default function App() {
 ---
 
 ## `useStopwatch`
+<img src="https://github.com/amrlabib/react-timer-hook/blob/master/readme-images/useStopwatch.gif" width="250" />
 
 ### Example
 
@@ -164,6 +166,7 @@ export default function App() {
 
 
 ## `useTime`
+<img src="https://github.com/amrlabib/react-timer-hook/blob/master/readme-images/useTime.gif" width="250" />
 
 ### Example
 
