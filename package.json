@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build:dev": "webpack --config webpack.dev.js && webpack-dev-server --open --config webpack.dev.js",
-    "build:prod": "rm -rf ./dist && webpack --config webpack.prod.js && cpy src/index.d.ts dist/index.d.ts"
+    "build:prod": "rm -rf ./dist && webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -41,7 +41,6 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "copy-webpack-plugin": "^4.6.0",
-    "cpy-cli": "^3.0.0",
     "react": "^16.8.0",
     "react-dom": "16.8.0",
     "webpack": "^4.24.0",
