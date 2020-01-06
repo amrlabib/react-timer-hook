@@ -1,3 +1,5 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
     performance: {
       hints: false
@@ -18,6 +20,11 @@ module.exports = {
             }
         }]
     },
+    plugins: [
+        new CopyWebpackPlugin([
+            { from: './src/index.d.ts', to: './' },
+        ]),
+    ],
     externals: [
       'react',
       /^react\/.+$/,
