@@ -1,37 +1,23 @@
-import { useState, useEffect, useRef } from 'react';
+import {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 
 /* --------------------- useStopwatch ----------------------- */
 
 export default function useStopwatch(settings) {
   const { autoStart } = settings || {};
 
-  // Seconds
-  const [seconds, setSeconds] = useState(0);
-  function addSecond() {
-    setSeconds((prevSeconds) => {
-      if (prevSeconds === 59) {
-        addMinute();
-        return 0;
-      }
-      return prevSeconds + 1;
-    });
-  }
-
-  // Minutes
-  const [minutes, setMinutes] = useState(0);
-  function addMinute() {
-    setMinutes((prevMinutes) => {
-      if (prevMinutes === 59) {
-        addHour();
-        return 0;
-      }
-      return prevMinutes + 1;
-    });
-  }
-
-  // Hours
+  const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
-  function addHour() {
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const intervalRef = useRef();
+
+  const addDay = useCallback(() => {
+    setDays((prevDays) => (prevDays + 1));
+  }, []);
+
+  const addHour = useCallback(() => {
     setHours((prevHours) => {
       if (prevHours === 23) {
         addDay();
@@ -39,22 +25,33 @@ export default function useStopwatch(settings) {
       }
       return prevHours + 1;
     });
-  }
+  }, [addDay]);
 
-  // Days
-  const [days, setDays] = useState(0);
-  function addDay() {
-    setDays((prevDays) => (prevDays + 1));
-  }
+  const addMinute = useCallback(() => {
+    setMinutes((prevMinutes) => {
+      if (prevMinutes === 59) {
+        addHour();
+        return 0;
+      }
+      return prevMinutes + 1;
+    });
+  }, [addHour]);
 
-  // Control functions
-  const intervalRef = useRef();
+  const addSecond = useCallback(() => {
+    setSeconds((prevSeconds) => {
+      if (prevSeconds === 59) {
+        addMinute();
+        return 0;
+      }
+      return prevSeconds + 1;
+    });
+  }, [addMinute]);
 
-  function start() {
+  const start = useCallback(() => {
     if (!intervalRef.current) {
       intervalRef.current = setInterval(() => addSecond(), 1000);
     }
-  }
+  }, [addSecond]);
 
   function pause() {
     if (intervalRef.current) {
@@ -80,7 +77,7 @@ export default function useStopwatch(settings) {
       start();
     }
     return reset;
-  }, []);
+  }, [start, autoStart]);
 
   return {
     seconds, minutes, hours, days, start, pause, reset,
