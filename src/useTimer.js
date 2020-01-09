@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 import Validate from './validate';
 
 /* ---------------------- useTimer --------------------- */
@@ -67,12 +69,12 @@ export default function useTimer(settings) {
 
   const intervalRef = useRef();
 
-  function start() {
+  const start = useCallback(() => {
     if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
       calculateExpiryDate();
       intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
     }
-  }
+  }, [expiryTimestamp, calculateExpiryDate]);
 
   function pause() {
     if (intervalRef.current) {
@@ -105,7 +107,7 @@ export default function useTimer(settings) {
 
 
   // Timer expiry date calculation
-  function calculateExpiryDate() {
+  const calculateExpiryDate = useCallback(() => {
     const now = new Date().getTime();
     const distance = expiryTimestamp - now;
     const daysValue = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -121,13 +123,13 @@ export default function useTimer(settings) {
       setHours(hoursValue);
       setDays(daysValue);
     }
-  }
+  }, [onExpire, expiryTimestamp, seconds]);
 
   // didMount effect
   useEffect(() => {
     start();
     return reset;
-  }, [expiryTimestamp]);
+  }, [expiryTimestamp, start]);
 
 
   return {
