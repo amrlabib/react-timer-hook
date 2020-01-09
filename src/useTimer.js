@@ -1,6 +1,4 @@
-import {
-  useState, useEffect, useRef, useCallback,
-} from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Validate from './validate';
 
 /* ---------------------- useTimer --------------------- */
@@ -80,7 +78,7 @@ export default function useTimer(settings) {
   }
 
   // Timer expiry date calculation
-  const calculateExpiryDate = useCallback(() => {
+  function calculateExpiryDate() {
     const now = new Date().getTime();
     const distance = expiryTimestamp - now;
     const daysValue = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -96,14 +94,14 @@ export default function useTimer(settings) {
       setHours(hoursValue);
       setDays(daysValue);
     }
-  }, [onExpire, expiryTimestamp]);
+  }
 
-  const start = useCallback(() => {
+  function start() {
     if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
       calculateExpiryDate();
       intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
     }
-  }, [expiryTimestamp, calculateExpiryDate]);
+  }
 
   function pause() {
     if (intervalRef.current) {
@@ -127,7 +125,7 @@ export default function useTimer(settings) {
   useEffect(() => {
     start();
     return reset;
-  }, [expiryTimestamp, start]);
+  });
 
 
   return {
