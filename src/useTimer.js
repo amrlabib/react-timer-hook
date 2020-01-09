@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import Validate from './validate';
 
 /* ---------------------- useTimer --------------------- */
 
@@ -53,7 +54,7 @@ export default function useTimer(settings) {
         return prevDays - 1;
       }
       reset();
-      isValidOnExpire(onExpire) && onExpire();
+      Validate.onExpire(onExpire) && onExpire();
       return 0;
     });
   }
@@ -61,7 +62,7 @@ export default function useTimer(settings) {
   const intervalRef = useRef();
 
   function start() {
-    if(isValidExpiryTimestamp(expiryTimestamp) && !intervalRef.current) {
+    if(Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
       calculateExpiryDate();
       intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
     }
@@ -86,7 +87,7 @@ export default function useTimer(settings) {
   }
 
   function resume() {
-    if(isValidExpiryTimestamp(expiryTimestamp) && !intervalRef.current) {
+    if(Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
       intervalRef.current = setInterval(() => subtractSecond(), 1000);
     }
   }
@@ -107,7 +108,7 @@ export default function useTimer(settings) {
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     if(seconds < 0) {
       reset();
-      isValidOnExpire(onExpire) && onExpire();
+      Validate.onExpire(onExpire) && onExpire();
     } else {
       setSeconds(seconds);
       setMinutes(minutes);
@@ -122,24 +123,6 @@ export default function useTimer(settings) {
     return reset;
   },[expiryTimestamp]);
 
-
-  // Validate expiryTimestamp
-  function isValidExpiryTimestamp(expiryTimestamp) {
-    const isValid = (new Date(expiryTimestamp)).getTime() > 0;
-    if(!isValid) {
-      console.warn('react-timer-hook: { useTimer } Invalid expiryTimestamp settings', expiryTimestamp);
-    }
-    return isValid;
-  }
-
-  // Validate onExpire
-  function isValidOnExpire(onExpire) {
-    const isValid = onExpire && typeof onExpire === 'function';
-    if(onExpire && !isValid) {
-      console.warn('react-timer-hook: { useTimer } Invalid onExpire settings function', onExpire);
-    }
-    return isValid;
-  }
 
   return { seconds, minutes, hours, days, start, pause, resume, restart };
 }
