@@ -9,11 +9,13 @@ export default function useTimer(settings) {
 
   const [seconds, setSeconds] = useState(0);
   function subtractSecond() {
-    setSeconds(prevSeconds => {
-      if(prevSeconds === 0) {
+    setSeconds((prevSeconds) => {
+      if (prevSeconds === 0) {
         subtractMinute();
         return 59;
-      } else if(prevSeconds > 0) {
+      }
+
+      if (prevSeconds > 0) {
         return prevSeconds - 1;
       }
       return 0;
@@ -23,11 +25,13 @@ export default function useTimer(settings) {
 
   const [minutes, setMinutes] = useState(0);
   function subtractMinute() {
-    setMinutes(prevMinutes => {
+    setMinutes((prevMinutes) => {
       if (prevMinutes === 0) {
         subtractHour();
         return 59;
-      } else if(prevMinutes > 0) {
+      }
+
+      if (prevMinutes > 0) {
         return prevMinutes - 1;
       }
       return 0;
@@ -36,11 +40,13 @@ export default function useTimer(settings) {
 
   const [hours, setHours] = useState(0);
   function subtractHour() {
-    setHours(prevHours => {
+    setHours((prevHours) => {
       if (prevHours === 0) {
         subtractDay();
         return 23;
-      } else if(prevHours > 0) {
+      }
+
+      if (prevHours > 0) {
         return prevHours - 1;
       }
       return 0;
@@ -49,8 +55,8 @@ export default function useTimer(settings) {
 
   const [days, setDays] = useState(0);
   function subtractDay() {
-    setDays(prevDays => {
-      if(prevDays > 0) {
+    setDays((prevDays) => {
+      if (prevDays > 0) {
         return prevDays - 1;
       }
       reset();
@@ -62,14 +68,14 @@ export default function useTimer(settings) {
   const intervalRef = useRef();
 
   function start() {
-    if(Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
+    if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
       calculateExpiryDate();
       intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
     }
   }
 
   function pause() {
-    if(intervalRef.current) {
+    if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
     }
@@ -87,7 +93,7 @@ export default function useTimer(settings) {
   }
 
   function resume() {
-    if(Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
+    if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
       intervalRef.current = setInterval(() => subtractSecond(), 1000);
     }
   }
@@ -100,20 +106,20 @@ export default function useTimer(settings) {
 
   // Timer expiry date calculation
   function calculateExpiryDate() {
-    var now = new Date().getTime();
-    var distance = expiryTimestamp - now;
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    if(seconds < 0) {
+    const now = new Date().getTime();
+    const distance = expiryTimestamp - now;
+    const daysValue = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hoursValue = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutesValue = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const secondsValue = Math.floor((distance % (1000 * 60)) / 1000);
+    if (seconds < 0) {
       reset();
       Validate.onExpire(onExpire) && onExpire();
     } else {
-      setSeconds(seconds);
-      setMinutes(minutes);
-      setHours(hours);
-      setDays(days);
+      setSeconds(secondsValue);
+      setMinutes(minutesValue);
+      setHours(hoursValue);
+      setDays(daysValue);
     }
   }
 
@@ -121,8 +127,10 @@ export default function useTimer(settings) {
   useEffect(() => {
     start();
     return reset;
-  },[expiryTimestamp]);
+  }, [expiryTimestamp]);
 
 
-  return { seconds, minutes, hours, days, start, pause, resume, restart };
+  return {
+    seconds, minutes, hours, days, start, pause, resume, restart,
+  };
 }
