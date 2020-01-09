@@ -1,6 +1,4 @@
-import {
-  useState, useEffect, useRef, useCallback,
-} from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 /* --------------------- useStopwatch ----------------------- */
 
@@ -13,11 +11,11 @@ export default function useStopwatch(settings) {
   const [seconds, setSeconds] = useState(0);
   const intervalRef = useRef();
 
-  const addDay = useCallback(() => {
+  function addDay() {
     setDays((prevDays) => (prevDays + 1));
-  }, []);
+  }
 
-  const addHour = useCallback(() => {
+  function addHour() {
     setHours((prevHours) => {
       if (prevHours === 23) {
         addDay();
@@ -25,9 +23,9 @@ export default function useStopwatch(settings) {
       }
       return prevHours + 1;
     });
-  }, [addDay]);
+  }
 
-  const addMinute = useCallback(() => {
+  function addMinute() {
     setMinutes((prevMinutes) => {
       if (prevMinutes === 59) {
         addHour();
@@ -35,9 +33,9 @@ export default function useStopwatch(settings) {
       }
       return prevMinutes + 1;
     });
-  }, [addHour]);
+  }
 
-  const addSecond = useCallback(() => {
+  function addSecond() {
     setSeconds((prevSeconds) => {
       if (prevSeconds === 59) {
         addMinute();
@@ -45,39 +43,39 @@ export default function useStopwatch(settings) {
       }
       return prevSeconds + 1;
     });
-  }, [addMinute]);
+  }
 
-  const start = useCallback(() => {
+  function start() {
     if (!intervalRef.current) {
       intervalRef.current = setInterval(() => addSecond(), 1000);
     }
-  }, [addSecond]);
+  }
 
-  function pause() {
+  function clearIntervalRef() {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
     }
   }
 
+  function pause() {
+    clearIntervalRef();
+  }
+
   function reset() {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-    }
+    clearIntervalRef();
     setSeconds(0);
     setMinutes(0);
     setHours(0);
     setDays(0);
   }
 
-  // didMount effect
   useEffect(() => {
     if (autoStart) {
       start();
     }
-    return reset;
-  }, [start, autoStart]);
+    return clearIntervalRef;
+  });
 
   return {
     seconds, minutes, hours, days, start, pause, reset,
