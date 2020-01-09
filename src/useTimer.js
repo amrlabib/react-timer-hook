@@ -7,40 +7,36 @@ import Validate from './validate';
 
 export default function useTimer(settings) {
   const { expiryTimestamp: expiry, onExpire } = settings || {};
+
   const [expiryTimestamp, setExpiryTimestamp] = useState(expiry);
-
-  const [seconds, setSeconds] = useState(0);
-  function subtractSecond() {
-    setSeconds((prevSeconds) => {
-      if (prevSeconds === 0) {
-        subtractMinute();
-        return 59;
-      }
-
-      if (prevSeconds > 0) {
-        return prevSeconds - 1;
-      }
-      return 0;
-    });
-  }
-
-
-  const [minutes, setMinutes] = useState(0);
-  function subtractMinute() {
-    setMinutes((prevMinutes) => {
-      if (prevMinutes === 0) {
-        subtractHour();
-        return 59;
-      }
-
-      if (prevMinutes > 0) {
-        return prevMinutes - 1;
-      }
-      return 0;
-    });
-  }
-
+  const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const intervalRef = useRef();
+
+  function reset() {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+    setSeconds(0);
+    setMinutes(0);
+    setHours(0);
+    setDays(0);
+  }
+
+  function subtractDay() {
+    setDays((prevDays) => {
+      if (prevDays > 0) {
+        return prevDays - 1;
+      }
+      reset();
+      Validate.onExpire(onExpire) && onExpire();
+      return 0;
+    });
+  }
+
   function subtractHour() {
     setHours((prevHours) => {
       if (prevHours === 0) {
@@ -55,56 +51,33 @@ export default function useTimer(settings) {
     });
   }
 
-  const [days, setDays] = useState(0);
-  function subtractDay() {
-    setDays((prevDays) => {
-      if (prevDays > 0) {
-        return prevDays - 1;
+  function subtractMinute() {
+    setMinutes((prevMinutes) => {
+      if (prevMinutes === 0) {
+        subtractHour();
+        return 59;
       }
-      reset();
-      Validate.onExpire(onExpire) && onExpire();
+
+      if (prevMinutes > 0) {
+        return prevMinutes - 1;
+      }
       return 0;
     });
   }
 
-  const intervalRef = useRef();
+  function subtractSecond() {
+    setSeconds((prevSeconds) => {
+      if (prevSeconds === 0) {
+        subtractMinute();
+        return 59;
+      }
 
-  const start = useCallback(() => {
-    if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
-      calculateExpiryDate();
-      intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
-    }
-  }, [expiryTimestamp, calculateExpiryDate]);
-
-  function pause() {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-    }
+      if (prevSeconds > 0) {
+        return prevSeconds - 1;
+      }
+      return 0;
+    });
   }
-
-  function reset() {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-    }
-    setSeconds(0);
-    setMinutes(0);
-    setHours(0);
-    setDays(0);
-  }
-
-  function resume() {
-    if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
-      intervalRef.current = setInterval(() => subtractSecond(), 1000);
-    }
-  }
-
-  function restart(newExpiryTimestamp) {
-    reset();
-    setExpiryTimestamp(newExpiryTimestamp);
-  }
-
 
   // Timer expiry date calculation
   const calculateExpiryDate = useCallback(() => {
@@ -124,6 +97,31 @@ export default function useTimer(settings) {
       setDays(daysValue);
     }
   }, [onExpire, expiryTimestamp]);
+
+  const start = useCallback(() => {
+    if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
+      calculateExpiryDate();
+      intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
+    }
+  }, [expiryTimestamp, calculateExpiryDate]);
+
+  function pause() {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+  }
+
+  function resume() {
+    if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
+      intervalRef.current = setInterval(() => subtractSecond(), 1000);
+    }
+  }
+
+  function restart(newExpiryTimestamp) {
+    reset();
+    setExpiryTimestamp(newExpiryTimestamp);
+  }
 
   // didMount effect
   useEffect(() => {
