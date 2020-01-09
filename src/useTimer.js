@@ -11,13 +11,18 @@ export default function useTimer(settings) {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const [isResume, setIsResume] = useState(false);
   const intervalRef = useRef();
 
-  function reset() {
+  function clearIntervalRef() {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
     }
+  }
+
+  function reset() {
+    clearIntervalRef();
     setSeconds(0);
     setMinutes(0);
     setHours(0);
@@ -97,6 +102,7 @@ export default function useTimer(settings) {
   }
 
   function start() {
+    setIsResume(false);
     if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
       calculateExpiryDate();
       intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
@@ -104,13 +110,11 @@ export default function useTimer(settings) {
   }
 
   function pause() {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-    }
+    clearIntervalRef();
   }
 
   function resume() {
+    setIsResume(true);
     if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
       intervalRef.current = setInterval(() => subtractSecond(), 1000);
     }
@@ -121,10 +125,15 @@ export default function useTimer(settings) {
     setExpiryTimestamp(newExpiryTimestamp);
   }
 
-  // didMount effect
+
   useEffect(() => {
-    start();
-    return reset;
+    if (isResume) {
+      resume();
+    } else {
+      start();
+    }
+
+    return clearIntervalRef;
   });
 
 
