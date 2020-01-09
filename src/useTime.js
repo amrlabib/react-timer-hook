@@ -10,15 +10,11 @@ export default function useTime(settings) {
   const [ampm, setAmPm] = useState('');
   const intervalRef = useRef();
 
-  function reset() {
+  function clearIntervalRef() {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
     }
-    setSeconds(0);
-    setMinutes(0);
-    setHours(0);
-    setAmPm('');
   }
 
   function formatHours(hoursValue) {
@@ -51,12 +47,10 @@ export default function useTime(settings) {
     }
   }
 
-  // didMount effect
   useEffect(() => {
     start();
-    return reset;
+    return clearIntervalRef;
   });
-
 
   return {
     seconds, minutes, hours, ampm,
