@@ -21,41 +21,41 @@ export default function useTime(settings) {
     setAmPm('');
   }
 
+  function formatHours(hoursValue) {
+    if (format === '12-hour') {
+      const ampmValue = hoursValue >= 12 ? 'pm' : 'am';
+      let formattedHours = hoursValue % 12;
+      formattedHours = formattedHours || 12;
+      return { hoursValue: formattedHours, ampmValue };
+    }
+    return { hoursValue, ampmValue: '' };
+  }
+
+  function setCurrentTime() {
+    const now = new Date();
+    const secondsValue = now.getSeconds();
+    const minutesValue = now.getMinutes();
+    const { hoursValue, ampmValue } = formatHours(now.getHours());
+
+
+    setSeconds(secondsValue);
+    setMinutes(minutesValue);
+    setHours(hoursValue);
+    setAmPm(ampmValue);
+  }
+
+  function start() {
+    if (!intervalRef.current) {
+      setCurrentTime();
+      intervalRef.current = setInterval(() => setCurrentTime(), 1000);
+    }
+  }
+
   // didMount effect
   useEffect(() => {
-    function formatHours(hoursValue) {
-      if (format === '12-hour') {
-        const ampmValue = hoursValue >= 12 ? 'pm' : 'am';
-        let formattedHours = hoursValue % 12;
-        formattedHours = formattedHours || 12;
-        return { hoursValue: formattedHours, ampmValue };
-      }
-      return { hoursValue, ampmValue: '' };
-    }
-
-    function setCurrentTime() {
-      const now = new Date();
-      const secondsValue = now.getSeconds();
-      const minutesValue = now.getMinutes();
-      const { hoursValue, ampmValue } = formatHours(now.getHours());
-
-
-      setSeconds(secondsValue);
-      setMinutes(minutesValue);
-      setHours(hoursValue);
-      setAmPm(ampmValue);
-    }
-
-    function start() {
-      if (!intervalRef.current) {
-        setCurrentTime();
-        intervalRef.current = setInterval(() => setCurrentTime(), 1000);
-      }
-    }
-
     start();
     return reset;
-  }, [format]);
+  });
 
 
   return {
