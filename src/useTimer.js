@@ -121,6 +121,7 @@ export default function useTimer(settings) {
   }
 
   function restart(newExpiryTimestamp) {
+    setIsResume(false);
     reset();
     setExpiryTimestamp(newExpiryTimestamp);
   }
