@@ -49,7 +49,7 @@ export default function useStopwatch(settings) {
   function start() {
     setIsInitialStart(false);
     if (!intervalRef.current) {
-      intervalRef.current = setInterval(() => addSecond(), 100);
+      intervalRef.current = setInterval(() => addSecond(), 1000);
     }
   }
 
