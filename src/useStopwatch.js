@@ -9,6 +9,7 @@ export default function useStopwatch(settings) {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const [isInitialStart, setIsInitialStart] = useState(true);
   const intervalRef = useRef();
 
   function addDay() {
@@ -46,8 +47,9 @@ export default function useStopwatch(settings) {
   }
 
   function start() {
+    setIsInitialStart(false);
     if (!intervalRef.current) {
-      intervalRef.current = setInterval(() => addSecond(), 1000);
+      intervalRef.current = setInterval(() => addSecond(), 100);
     }
   }
 
@@ -63,6 +65,7 @@ export default function useStopwatch(settings) {
   }
 
   function reset() {
+    setIsInitialStart(true);
     clearIntervalRef();
     setSeconds(0);
     setMinutes(0);
@@ -70,10 +73,12 @@ export default function useStopwatch(settings) {
     setDays(0);
   }
 
+
   useEffect(() => {
-    if (autoStart) {
+    if (!isInitialStart || (isInitialStart && autoStart)) {
       start();
     }
+
     return clearIntervalRef;
   });
 
