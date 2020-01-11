@@ -1,19 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-import Validate from './validate';
+import { Validate, Time } from './utils';
 
-/* ---------------------- useTimer --------------------- */
 
 export default function useTimer(settings) {
   const { expiryTimestamp: expiry, onExpire } = settings || {};
 
   const [expiryTimestamp, setExpiryTimestamp] = useState(expiry);
-  const [time, setTime] = useState({
-    seconds: 0,
-    minutes: 0,
-    hours: 0,
-    days: 0,
-  });
+  const [timeDistance, setTimeDistance] = useState(Time.getDistanceForExpiry(expiryTimestamp));
   const [isResume, setIsResume] = useState(false);
+  const [isExpired, setIsExpired] = useState(false);
   const intervalRef = useRef();
 
   function clearIntervalRef() {
@@ -23,95 +18,11 @@ export default function useTimer(settings) {
     }
   }
 
-  function reset() {
-    clearIntervalRef();
-    setTime({
-      seconds: 0,
-      minutes: 0,
-      hours: 0,
-      days: 0,
-    });
-  }
-
-  function updateTime() {
-    setTime((prevTime) => {
-      const {
-        seconds, minutes, hours, days,
-      } = prevTime;
-
-      if (seconds > 0) {
-        return {
-          ...prevTime,
-          seconds: seconds - 1,
-        };
-      }
-
-      if (seconds === 0 && minutes > 0) {
-        return {
-          seconds: 59,
-          minutes: minutes - 1,
-          hours,
-          days,
-        };
-      }
-
-      if (seconds === 0 && minutes === 0 && hours > 0) {
-        return {
-          seconds: 59,
-          minutes: 59,
-          hours: hours - 1,
-          days,
-        };
-      }
-
-      if (seconds === 0 && minutes === 0 && hours === 0 && days > 0) {
-        return {
-          seconds: 59,
-          minutes: 59,
-          hours: 23,
-          days: days - 1,
-        };
-      }
-
-      if (days === 0) {
-        Validate.onExpire(onExpire) && onExpire();
-        return {
-          seconds: 0,
-          minutes: 0,
-          hours: 0,
-          days: 0,
-        };
-      }
-
-      return prevTime;
-    });
-  }
-
-  // Timer expiry date calculation
-  function calculateExpiryDate() {
-    const now = new Date().getTime();
-    const distance = expiryTimestamp - now;
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    if (seconds < 0) {
-      reset();
-      Validate.onExpire(onExpire) && onExpire();
-    } else {
-      setTime({
-        seconds,
-        minutes,
-        hours,
-        days,
-      });
-    }
-  }
-
   function start() {
     setIsResume(false);
-    if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
-      intervalRef.current = setInterval(() => calculateExpiryDate(), 1000);
+    setIsExpired(false);
+    if (!intervalRef.current) {
+      intervalRef.current = setInterval(() => setTimeDistance(Time.getDistanceForExpiry(expiryTimestamp)), 1000);
     }
   }
 
@@ -121,32 +32,40 @@ export default function useTimer(settings) {
 
   function resume() {
     setIsResume(true);
-    if (Validate.expiryTimestamp(expiryTimestamp) && !intervalRef.current) {
-      intervalRef.current = setInterval(() => updateTime(), 1000);
+    if (!intervalRef.current && !isExpired) {
+      intervalRef.current = setInterval(() => setTimeDistance((prevDist) => prevDist - 1000), 1000);
     }
   }
 
   function restart(newExpiryTimestamp) {
     setIsResume(false);
-    reset();
+    setIsExpired(false);
     setExpiryTimestamp(newExpiryTimestamp);
+    setTimeDistance(Time.getDistanceForExpiry(newExpiryTimestamp));
   }
 
+  function expire() {
+    setIsExpired(true);
+    setTimeDistance(0);
+    clearIntervalRef();
+    Validate.onExpire(onExpire) && onExpire();
+  }
 
   useEffect(() => {
-    if (isResume) {
-      console.warn('resume useEffect');
-      resume();
-    } else {
-      console.warn('start useEffect');
-      start();
+    if (Validate.expiryTimestamp(expiryTimestamp)) {
+      if (timeDistance < 1000 && !isExpired) {
+        expire();
+      } else if (isResume) {
+        resume();
+      } else if (!isExpired) {
+        start();
+      }
     }
 
     return clearIntervalRef;
   });
 
-
   return {
-    ...time, start, pause, resume, restart,
+    ...Time.getTimeForDistance(timeDistance), start, pause, resume, restart,
   };
 }

@@ -9,6 +9,7 @@
     "no-unused-expressions": [ 2,{
       "allowShortCircuit": true,
     }],
+    "max-len": 0
   },
   "extends": "airbnb"
 }
