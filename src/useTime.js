@@ -4,10 +4,31 @@ import { useState, useEffect, useRef } from 'react';
 
 export default function useTime(settings) {
   const { format } = settings || {};
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [hours, setHours] = useState(0);
-  const [ampm, setAmPm] = useState('');
+
+  function formatHours(hours) {
+    if (format === '12-hour') {
+      const ampm = hours >= 12 ? 'pm' : 'am';
+      let formattedHours = hours % 12;
+      formattedHours = formattedHours || 12;
+      return { hours: formattedHours, ampm };
+    }
+    return { hours, ampm: '' };
+  }
+
+  function getCurrentTime() {
+    const now = new Date();
+    const seconds = now.getSeconds();
+    const minutes = now.getMinutes();
+    const { hours, ampm } = formatHours(now.getHours());
+    return {
+      seconds,
+      minutes,
+      hours,
+      ampm,
+    };
+  }
+
+  const [time, setTime] = useState(getCurrentTime());
   const intervalRef = useRef();
 
   function clearIntervalRef() {
@@ -17,33 +38,9 @@ export default function useTime(settings) {
     }
   }
 
-  function formatHours(hoursValue) {
-    if (format === '12-hour') {
-      const ampmValue = hoursValue >= 12 ? 'pm' : 'am';
-      let formattedHours = hoursValue % 12;
-      formattedHours = formattedHours || 12;
-      return { hoursValue: formattedHours, ampmValue };
-    }
-    return { hoursValue, ampmValue: '' };
-  }
-
-  function setCurrentTime() {
-    const now = new Date();
-    const secondsValue = now.getSeconds();
-    const minutesValue = now.getMinutes();
-    const { hoursValue, ampmValue } = formatHours(now.getHours());
-
-
-    setSeconds(secondsValue);
-    setMinutes(minutesValue);
-    setHours(hoursValue);
-    setAmPm(ampmValue);
-  }
-
   function start() {
     if (!intervalRef.current) {
-      setCurrentTime();
-      intervalRef.current = setInterval(() => setCurrentTime(), 1000);
+      intervalRef.current = setInterval(() => setTime(getCurrentTime()), 1000);
     }
   }
 
@@ -52,7 +49,5 @@ export default function useTime(settings) {
     return clearIntervalRef;
   });
 
-  return {
-    seconds, minutes, hours, ampm,
-  };
+  return time;
 }
