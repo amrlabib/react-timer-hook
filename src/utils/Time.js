@@ -17,6 +17,6 @@ export default class Time {
   static getDistanceForExpiry(expiry) {
     const now = new Date().getTime();
     const distance = expiry - now;
-    return distance;
+    return distance - 1;
   }
 }
