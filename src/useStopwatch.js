@@ -20,7 +20,7 @@ export default function useStopwatch(settings) {
   function start() {
     setIsInitialStart(false);
     if (!intervalRef.current) {
-      intervalRef.current = setInterval(() => setTimeDistance((prevDistance) => prevDistance + 1001), 1000);
+      intervalRef.current = setInterval(() => setTimeDistance((prevDistance) => prevDistance + 1000), 1000);
     }
   }
 
