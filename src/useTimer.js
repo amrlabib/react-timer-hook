@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
 
-// Validate expiryTimestamp
 function isValidExpiryTimestamp(expiryTimestamp) {
   const isValid = (new Date(expiryTimestamp)).getTime() > 0;
   if (!isValid) {
@@ -10,7 +9,6 @@ function isValidExpiryTimestamp(expiryTimestamp) {
   return isValid;
 }
 
-// Validate onExpire
 function isValidOnExpire(onExpire) {
   const isValid = onExpire && typeof onExpire === 'function';
   if (onExpire && !isValid) {

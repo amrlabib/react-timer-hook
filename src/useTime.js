@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 
-/* ---------------------- useTime --------------------- */
-
 export default function useTime(settings) {
   const { format } = settings || {};
 
