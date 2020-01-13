@@ -1,0 +1,15 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "react-hooks"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "no-unused-expressions": [ 2,{
+      "allowShortCircuit": true,
+    }],
+    "max-len": 0
+  },
+  "extends": "airbnb"
+}
