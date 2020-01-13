@@ -1,38 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 
-/* --------------------- useStopwatch ----------------------- */
-
 export default function useStopwatch(settings) {
   const { autoStart } = settings || {};
 
-  // Seconds
-  const [seconds, setSeconds] = useState(0);
-  function addSecond() {
-    setSeconds(prevSeconds => {
-      if(prevSeconds === 59) {
-        addMinute();
-        return 0;
-      }
-      return prevSeconds + 1;
-    });
-  }
-
-  // Minutes
-  const [minutes, setMinutes] = useState(0);
-  function addMinute() {
-    setMinutes(prevMinutes => {
-      if (prevMinutes === 59) {
-        addHour();
-        return 0;
-      }
-      return prevMinutes + 1;
-    });
+  // Days
+  const [days, setDays] = useState(0);
+  function addDay() {
+    setDays((prevDays) => (prevDays + 1));
   }
 
   // Hours
   const [hours, setHours] = useState(0);
   function addHour() {
-    setHours(prevHours => {
+    setHours((prevHours) => {
       if (prevHours === 23) {
         addDay();
         return 0;
@@ -41,11 +21,27 @@ export default function useStopwatch(settings) {
     });
   }
 
-  // Days
-  const [days, setDays] = useState(0);
-  function addDay() {
-    setDays(prevDays => {
-      return prevDays + 1;
+  // Minutes
+  const [minutes, setMinutes] = useState(0);
+  function addMinute() {
+    setMinutes((prevMinutes) => {
+      if (prevMinutes === 59) {
+        addHour();
+        return 0;
+      }
+      return prevMinutes + 1;
+    });
+  }
+
+  // Seconds
+  const [seconds, setSeconds] = useState(0);
+  function addSecond() {
+    setSeconds((prevSeconds) => {
+      if (prevSeconds === 59) {
+        addMinute();
+        return 0;
+      }
+      return prevSeconds + 1;
     });
   }
 
@@ -53,13 +49,13 @@ export default function useStopwatch(settings) {
   const intervalRef = useRef();
 
   function start() {
-    if(!intervalRef.current) {
+    if (!intervalRef.current) {
       intervalRef.current = setInterval(() => addSecond(), 1000);
     }
   }
 
   function pause() {
-    if(intervalRef.current) {
+    if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
     }
@@ -78,11 +74,13 @@ export default function useStopwatch(settings) {
 
   // didMount effect
   useEffect(() => {
-    if(autoStart) {
+    if (autoStart) {
       start();
     }
     return reset;
-  },[]);
+  }, []);
 
-  return { seconds, minutes, hours, days, start, pause, reset };
+  return {
+    seconds, minutes, hours, days, start, pause, reset,
+  };
 }
