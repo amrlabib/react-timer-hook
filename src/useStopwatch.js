@@ -3,14 +3,17 @@ import { useState, useEffect, useRef } from 'react';
 export default function useStopwatch(settings) {
   const { autoStart } = settings || {};
 
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [hours, setHours] = useState(0);
+  const intervalRef = useRef();
+
   // Days
   const [days, setDays] = useState(0);
   function addDay() {
     setDays((prevDays) => (prevDays + 1));
   }
 
-  // Hours
-  const [hours, setHours] = useState(0);
   function addHour() {
     setHours((prevHours) => {
       if (prevHours === 23) {
@@ -21,8 +24,6 @@ export default function useStopwatch(settings) {
     });
   }
 
-  // Minutes
-  const [minutes, setMinutes] = useState(0);
   function addMinute() {
     setMinutes((prevMinutes) => {
       if (prevMinutes === 59) {
@@ -33,8 +34,6 @@ export default function useStopwatch(settings) {
     });
   }
 
-  // Seconds
-  const [seconds, setSeconds] = useState(0);
   function addSecond() {
     setSeconds((prevSeconds) => {
       if (prevSeconds === 59) {
@@ -44,9 +43,6 @@ export default function useStopwatch(settings) {
       return prevSeconds + 1;
     });
   }
-
-  // Control functions
-  const intervalRef = useRef();
 
   function start() {
     if (!intervalRef.current) {
