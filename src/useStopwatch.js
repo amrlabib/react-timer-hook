@@ -6,10 +6,9 @@ export default function useStopwatch(settings) {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
+  const [days, setDays] = useState(0);
   const intervalRef = useRef();
 
-  // Days
-  const [days, setDays] = useState(0);
   function addDay() {
     setDays((prevDays) => (prevDays + 1));
   }
