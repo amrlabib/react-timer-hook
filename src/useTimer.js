@@ -99,7 +99,7 @@ export default function useTimer(settings) {
     const hoursValue = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutesValue = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const secondsValue = Math.floor((distance % (1000 * 60)) / 1000);
-    if (seconds < 0) {
+    if (secondsValue < 0) {
       reset();
       isValidOnExpire(onExpire) && onExpire();
     } else {
