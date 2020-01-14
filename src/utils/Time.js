@@ -21,4 +21,29 @@ export default class Time {
     }
     return 0;
   }
+
+  static getSecondsFromTimeNow() {
+    const now = new Date();
+    const currentTimestamp = now.getTime();
+    const offset = (now.getTimezoneOffset() * 60);
+    return (currentTimestamp / 1000) - offset;
+  }
+
+  static getFormattedTimeFromSeconds(totalSeconds, format) {
+    const { seconds: secondsValue, minutes, hours } = Time.getTimeFromSeconds(totalSeconds);
+    let ampm = '';
+    let hoursValue = hours;
+
+    if (format === '12-hour') {
+      ampm = hours >= 12 ? 'pm' : 'am';
+      hoursValue = hours % 12;
+    }
+
+    return {
+      seconds: secondsValue,
+      minutes,
+      hours: hoursValue,
+      ampm,
+    };
+  }
 }
