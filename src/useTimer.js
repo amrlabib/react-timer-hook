@@ -14,13 +14,17 @@ export default function useTimer(settings) {
     }
   }
 
+  function handleExpire() {
+    clearIntervalRef();
+    Validate.onExpire(onExpire) && onExpire();
+  }
+
   function start() {
     if (!intervalRef.current) {
       intervalRef.current = setInterval(() => {
         const secondsValue = Time.getSecondsFromExpiry(expiryTimestamp);
         if (secondsValue <= 0) {
-          clearIntervalRef();
-          Validate.onExpire(onExpire) && onExpire();
+          handleExpire();
         }
         setSeconds(secondsValue);
       }, 1000);
@@ -33,7 +37,13 @@ export default function useTimer(settings) {
 
   function resume() {
     if (!intervalRef.current) {
-      intervalRef.current = setInterval(() => setSeconds((prevSeconds) => (prevSeconds - 1)), 1000);
+      intervalRef.current = setInterval(() => setSeconds((prevSeconds) => {
+        const secondsValue = prevSeconds - 1;
+        if (secondsValue <= 0) {
+          handleExpire();
+        }
+        return secondsValue;
+      }), 1000);
     }
   }
 
