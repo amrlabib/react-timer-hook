@@ -31,7 +31,7 @@ export default function useTime(settings) {
   function formatHours(hours) {
     if (format === '12-hour') {
       const ampm = hours >= 12 ? 'pm' : 'am';
-      var formattedHours = hours % 12;
+      const formattedHours = hours % 12;
       formattedHours = formattedHours || 12;
       return { hours: formattedHours, ampm };
     }
@@ -40,7 +40,7 @@ export default function useTime(settings) {
 
 
   function setCurrentTime() {
-    var now = new Date();
+    const now = new Date();
     const seconds = now.getSeconds();
     const minutes = now.getMinutes();
     const { hours, ampm } = formatHours(now.getHours());
