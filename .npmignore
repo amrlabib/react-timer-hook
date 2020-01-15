@@ -5,7 +5,6 @@ build
 !.eslintrc
 yarn-error.log
 dev-dist
-readme-images
 
 *.js
 !dist/index.js
