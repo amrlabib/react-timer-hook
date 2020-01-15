@@ -29,9 +29,9 @@ function MyTimer({ expiryTimestamp }) {
         type="button"
         onClick={() => {
           // Restarts to 5 minutes timer
-          const t = new Date();
-          t.setSeconds(t.getSeconds() + 300);
-          restart(t);
+          const time = new Date();
+          time.setSeconds(time.getSeconds() + 300);
+          restart(time);
         }}
       >
         Restart
@@ -41,11 +41,11 @@ function MyTimer({ expiryTimestamp }) {
 }
 
 export default function App() {
-  const t = new Date();
-  t.setSeconds(t.getSeconds() + 600); // 10 minutes timer
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
   return (
     <div>
-      <MyTimer expiryTimestamp={t} />
+      <MyTimer expiryTimestamp={time} />
     </div>
   );
 }
