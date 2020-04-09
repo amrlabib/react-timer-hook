@@ -25,7 +25,7 @@ OR
 
 ## `useTimer`
 
-### Example
+### Example  - [Live Demo](https://codesandbox.io/s/usetimer-react-timer-hook-ne3et?file=/src/App.js)
 
 ```javascript
 import React from 'react';
@@ -103,7 +103,7 @@ export default function App() {
 
 ## `useStopwatch`
 
-### Example
+### Example  - [Live Demo](https://codesandbox.io/s/usestopwatch-react-timer-hook-p5jvq?file=/src/App.js)
 
 ```javascript
 import React from 'react';
@@ -171,7 +171,7 @@ export default function App() {
 
 ## `useTime`
 
-### Example
+### Example  - [Live Demo](https://codesandbox.io/s/usetime-react-timer-hook-fdzl4?file=/src/App.js)
 
 ```javascript
 import React from 'react';
