@@ -37,7 +37,7 @@ function MyTimer({ expiryTimestamp }) {
       >
         Restart
       </button>
-      <p>{isRunning ? 'running' : 'not running'}</p>
+      <p>{isRunning ? 'Running' : 'Not running'}</p>
     </div>
   );
 }
