@@ -8,11 +8,11 @@ function MyTimer({ expiryTimestamp }) {
     minutes,
     hours,
     days,
+    isRunning,
     start,
     pause,
     resume,
     restart,
-    isRunning,
   } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
 
 
