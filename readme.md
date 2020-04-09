@@ -37,11 +37,11 @@ function MyTimer({ expiryTimestamp }) {
     minutes,
     hours,
     days,
+    isRunning,
     start,
     pause,
     resume,
     restart,
-    isRunning,
   } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
 
 
@@ -52,6 +52,7 @@ function MyTimer({ expiryTimestamp }) {
       <div style={{fontSize: '100px'}}>
         <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
+      <p>{isRunning ? 'Running' : 'Not running'}</p>
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
       <button onClick={resume}>Resume</button>
@@ -61,7 +62,6 @@ function MyTimer({ expiryTimestamp }) {
         time.setSeconds(time.getSeconds() + 300);
         restart(time)
       }}>Restart</button>
-      <p>{isRunning ? 'Running' : 'Not running'}</p>
     </div>
   );
 }
@@ -92,11 +92,11 @@ export default function App() {
 | minutes | number | minutes value |
 | hours | number | hours value |
 | days | number | days value |
+| isRunning | boolean | flag to indicate if timer is running or not |
 | pause | function | function to be called to pause timer |
 | start | function | function if called after pause the timer will continue based on original expiryTimestamp |
 | resume | function | function if called after pause the timer will continue countdown from last paused state |
 | restart | function | function to restart timer with new expiryTimestamp |
-| isRunning | boolean | flag to indicate if timer is running or not |
 
 
 ---
@@ -115,10 +115,10 @@ function MyStopwatch() {
     minutes,
     hours,
     days,
+    isRunning,
     start,
     pause,
     reset,
-    isRunning,
   } = useStopwatch({ autoStart: true });
 
 
@@ -129,10 +129,10 @@ function MyStopwatch() {
       <div style={{fontSize: '100px'}}>
         <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
+      <p>{isRunning ? 'Running' : 'Not running'}</p>
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
       <button onClick={reset}>Reset</button>
-      <p>{isRunning ? 'Running' : 'Not running'}</p>
     </div>
   );
 }
@@ -160,10 +160,10 @@ export default function App() {
 | minutes | number | minutes value |
 | hours | number | hours value |
 | days | number | days value |
+| isRunning | boolean | flag to indicate if stopwatch is running or not |
 | start | function | function to be called to start/resume stopwatch |
 | pause | function | function to be called to pause stopwatch |
 | reset | function | function to be called to reset stopwatch to 0:0:0:0 |
-| isRunning | boolean | flag to indicate if stopwatch is running or not |
 
 
 ---
