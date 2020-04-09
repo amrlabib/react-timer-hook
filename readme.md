@@ -37,6 +37,7 @@ function MyTimer({ expiryTimestamp }) {
     minutes,
     hours,
     days,
+    isRunning,
     start,
     pause,
     resume,
@@ -51,6 +52,7 @@ function MyTimer({ expiryTimestamp }) {
       <div style={{fontSize: '100px'}}>
         <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
+      <p>{isRunning ? 'Running' : 'Not running'}</p>
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
       <button onClick={resume}>Resume</button>
@@ -90,6 +92,7 @@ export default function App() {
 | minutes | number | minutes value |
 | hours | number | hours value |
 | days | number | days value |
+| isRunning | boolean | flag to indicate if timer is running or not |
 | pause | function | function to be called to pause timer |
 | start | function | function if called after pause the timer will continue based on original expiryTimestamp |
 | resume | function | function if called after pause the timer will continue countdown from last paused state |
@@ -112,6 +115,7 @@ function MyStopwatch() {
     minutes,
     hours,
     days,
+    isRunning,
     start,
     pause,
     reset,
@@ -125,6 +129,7 @@ function MyStopwatch() {
       <div style={{fontSize: '100px'}}>
         <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
+      <p>{isRunning ? 'Running' : 'Not running'}</p>
       <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
       <button onClick={reset}>Reset</button>
@@ -155,6 +160,7 @@ export default function App() {
 | minutes | number | minutes value |
 | hours | number | hours value |
 | days | number | days value |
+| isRunning | boolean | flag to indicate if stopwatch is running or not |
 | start | function | function to be called to start/resume stopwatch |
 | pause | function | function to be called to pause stopwatch |
 | reset | function | function to be called to reset stopwatch to 0:0:0:0 |

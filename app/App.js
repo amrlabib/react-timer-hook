@@ -8,6 +8,7 @@ function MyTimer({ expiryTimestamp }) {
     minutes,
     hours,
     days,
+    isRunning,
     start,
     pause,
     resume,
@@ -22,6 +23,7 @@ function MyTimer({ expiryTimestamp }) {
       <div style={{ fontSize: '100px' }}>
         <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
+      <p>{isRunning ? 'Running' : 'Not running'}</p>
       <button type="button" onClick={start}>Start</button>
       <button type="button" onClick={pause}>Pause</button>
       <button type="button" onClick={resume}>Resume</button>
