@@ -10,6 +10,7 @@ export default function useTimer(settings) {
 
   function clearIntervalRef() {
     if (intervalRef.current) {
+      setIsRunning(false);
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
     }
@@ -17,7 +18,6 @@ export default function useTimer(settings) {
 
   function handleExpire() {
     clearIntervalRef();
-    setIsRunning(false);
     Validate.onExpire(onExpire) && onExpire();
   }
 
@@ -35,7 +35,6 @@ export default function useTimer(settings) {
   }
 
   function pause() {
-    setIsRunning(false);
     clearIntervalRef();
   }
 
