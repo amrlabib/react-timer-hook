@@ -12,6 +12,7 @@ function MyTimer({ expiryTimestamp }) {
     pause,
     resume,
     restart,
+    isRunning,
   } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
 
 
@@ -36,6 +37,7 @@ function MyTimer({ expiryTimestamp }) {
       >
         Restart
       </button>
+      <p>{isRunning ? 'running' : 'not running'}</p>
     </div>
   );
 }
