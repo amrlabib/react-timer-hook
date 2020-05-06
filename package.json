@@ -3,6 +3,7 @@
   "version": "2.0.2",
   "description": "React timer hook is a custom react hook built to handle timers(countdown), stopwatch and time logic/state in your react component.",
   "main": "dist/index.js",
+  "module": "src/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build:dev": "webpack --config webpack.dev.js && webpack-dev-server --open --config webpack.dev.js",

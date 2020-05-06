@@ -1,5 +1,4 @@
 node_modules
-src
 .DS_Store
 build
 !.eslintrc
@@ -8,5 +7,6 @@ dev-dist
 
 *.js
 !dist/index.js
+!src/**/*.js
 
 *.html
