@@ -9,7 +9,8 @@ module.exports = {
     output: {
         filename: './index.js',
         library: 'react-timer-hook',
-        libraryTarget: "umd"
+        libraryTarget: "umd",
+        globalObject: 'typeof self !== \'undefined\' ? self : this',
     },
     module: {
         rules: [{
