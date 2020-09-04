@@ -13,6 +13,7 @@ module.exports = {
         filename: 'js/scripts.js',
         chunkFilename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dev-dist'),
+        globalObject: 'typeof self !== \'undefined\' ? self : this',
     },
     module: {
         rules: [{
