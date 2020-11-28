@@ -16,8 +16,9 @@ export default class Time {
   static getSecondsFromExpiry(expiry) {
     const now = new Date().getTime();
     const milliSecondsDistance = expiry - now;
-    if (milliSecondsDistance > 0) {
-      return Math.floor(milliSecondsDistance / 1000);
+    const roundedValue = Math.ceil((milliSecondsDistance) / 100) * 100;
+    if (roundedValue > 0) {
+      return roundedValue / 1000;
     }
     return 0;
   }

@@ -56,10 +56,25 @@ export default function useTimer(settings) {
     setExpiryTimestamp(newExpiryTimestamp);
   }
 
-  useEffect(() => {
-    if (Validate.expiryTimestamp(expiryTimestamp)) {
+  function handleExtraMilliSeconds(secondsValue, extraMilliSeconds) {
+    setSeconds(Math.floor(secondsValue) + 1);
+    intervalRef.current = setTimeout(() => {
+      intervalRef.current = undefined;
       setSeconds(Time.getSecondsFromExpiry(expiryTimestamp));
       start();
+    }, extraMilliSeconds);
+  }
+
+  useEffect(() => {
+    if (Validate.expiryTimestamp(expiryTimestamp)) {
+      const secondsValue = Time.getSecondsFromExpiry(expiryTimestamp);
+      const extraMilliSeconds = ((secondsValue - Math.floor(secondsValue)) * 1000).toFixed(2);
+      if (extraMilliSeconds > 0) {
+        handleExtraMilliSeconds(secondsValue, extraMilliSeconds);
+      } else {
+        setSeconds(secondsValue);
+        start();
+      }
     }
     return clearIntervalRef;
   }, [expiryTimestamp]);
