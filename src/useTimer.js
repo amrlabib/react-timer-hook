@@ -67,7 +67,7 @@ export default function useTimer(settings) {
   useEffect(() => {
     if (Validate.expiryTimestamp(expiryTimestamp)) {
       const secondsValue = Time.getSecondsFromExpiry(expiryTimestamp);
-      const extraMilliSeconds = ((secondsValue - Math.floor(secondsValue)) * 1000).toFixed(2);
+      const extraMilliSeconds = Math.floor((secondsValue - Math.floor(secondsValue)) * 1000);
       setSeconds(secondsValue);
       if (extraMilliSeconds > 0) {
         handleExtraMilliSeconds(secondsValue, extraMilliSeconds);
