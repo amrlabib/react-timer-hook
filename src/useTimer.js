@@ -59,9 +59,14 @@ export default function useTimer(settings) {
   function handleExtraMilliSeconds(secondsValue, extraMilliSeconds) {
     setIsRunning(true);
     intervalRef.current = setTimeout(() => {
-      intervalRef.current = undefined;
-      setSeconds(Time.getSecondsFromExpiry(expiryTimestamp));
-      start();
+      const currentSeconds = Time.getSecondsFromExpiry(expiryTimestamp);
+      setSeconds(currentSeconds);
+      if (currentSeconds <= 0) {
+        handleExpire();
+      } else {
+        intervalRef.current = undefined;
+        start();
+      }
     }, extraMilliSeconds);
   }
 
