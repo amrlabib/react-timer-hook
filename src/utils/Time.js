@@ -1,5 +1,6 @@
 export default class Time {
-  static getTimeFromSeconds(totalSeconds) {
+  static getTimeFromSeconds(secs) {
+    const totalSeconds = Math.ceil(secs);
     const days = Math.floor(totalSeconds / (60 * 60 * 24));
     const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
     const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
@@ -17,7 +18,7 @@ export default class Time {
     const now = new Date().getTime();
     const milliSecondsDistance = expiry - now;
     if (milliSecondsDistance > 0) {
-      return Math.floor(milliSecondsDistance / 1000);
+      return milliSecondsDistance / 1000;
     }
     return 0;
   }
