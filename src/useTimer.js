@@ -57,7 +57,6 @@ export default function useTimer(settings) {
   }
 
   function handleExtraMilliSeconds(secondsValue, extraMilliSeconds) {
-    setSeconds(Math.floor(secondsValue) + 1);
     intervalRef.current = setTimeout(() => {
       intervalRef.current = undefined;
       setSeconds(Time.getSecondsFromExpiry(expiryTimestamp));
@@ -69,10 +68,10 @@ export default function useTimer(settings) {
     if (Validate.expiryTimestamp(expiryTimestamp)) {
       const secondsValue = Time.getSecondsFromExpiry(expiryTimestamp);
       const extraMilliSeconds = ((secondsValue - Math.floor(secondsValue)) * 1000).toFixed(2);
+      setSeconds(secondsValue);
       if (extraMilliSeconds > 0) {
         handleExtraMilliSeconds(secondsValue, extraMilliSeconds);
       } else {
-        setSeconds(secondsValue);
         start();
       }
     }
