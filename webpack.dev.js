@@ -10,7 +10,7 @@ module.exports = {
     mode: "development",
     entry: './demo/index.js',
     output: {
-        filename: 'js/scripts.js',
+        filename: 'index.js',
         chunkFilename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'docs'),
         globalObject: 'typeof self !== \'undefined\' ? self : this',
