@@ -1,5 +1,7 @@
 import React from 'react';
 import { useTimer } from '../../src/index';
+import StyledTimer from './StyledTimer';
+import Button from './Button';
 
 export default function UseTimerDemo({ expiryTimestamp }) {
   const {
@@ -19,14 +21,12 @@ export default function UseTimerDemo({ expiryTimestamp }) {
     <div style={{ textAlign: 'center' }}>
       <h1>react-timer-hook </h1>
       <p>Timer Demo</p>
-      <div style={{ fontSize: '100px' }}>
-        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
-      </div>
+      <StyledTimer seconds={seconds} minutes={minutes} hours={hours}/>
       <p>{isRunning ? 'Running' : 'Not running'}</p>
-      <button type="button" onClick={start}>Start</button>
-      <button type="button" onClick={pause}>Pause</button>
-      <button type="button" onClick={resume}>Resume</button>
-      <button
+      <Button type="button" onClick={start}>Start</Button>
+      <Button type="button" onClick={pause}>Pause</Button>
+      <Button type="button" onClick={resume}>Resume</Button>
+      <Button
         type="button"
         onClick={() => {
           // Restarts to 5 minutes timer
@@ -36,7 +36,7 @@ export default function UseTimerDemo({ expiryTimestamp }) {
         }}
       >
         Restart
-      </button>
+      </Button>
     </div>
   );
 }

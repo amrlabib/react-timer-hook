@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTime } from '../../src/index';
+import StyledTimer from './StyledTimer';
 
 export default function UseTimeDemo() {
   const {
@@ -13,7 +14,8 @@ export default function UseTimeDemo() {
     <div style={{textAlign: 'center'}}>
       <p>Current Time Demo</p>
       <div style={{fontSize: '100px'}}>
-        <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span><span>{ampm}</span>
+        <StyledTimer seconds={seconds} minutes={minutes} hours={hours}/>
+        <span>{ampm}</span>
       </div>
     </div>
   );
