@@ -8,11 +8,11 @@ module.exports = {
       hints: false
     },
     mode: "development",
-    entry: './app/index.js',
+    entry: './demo/index.js',
     output: {
         filename: 'js/scripts.js',
         chunkFilename: '[name].[chunkhash].js',
-        path: path.resolve(__dirname, 'dev-dist'),
+        path: path.resolve(__dirname, 'docs'),
         globalObject: 'typeof self !== \'undefined\' ? self : this',
     },
     module: {
@@ -27,11 +27,11 @@ module.exports = {
     },
     plugins: [
         new CopyWebpackPlugin([
-            { from: './index.html', to: './' },
+            { from: './demo/index.html', to: './' },
         ]),
     ],
     devServer: {
-      contentBase: path.join(__dirname, 'dev-dist'),
+      contentBase: path.join(__dirname, 'docs'),
       compress: true,
       port: 9000,
       disableHostCheck: true

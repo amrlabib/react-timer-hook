@@ -5,6 +5,7 @@ build
 !.eslintrc
 yarn-error.log
 dev-dist
+docs
 
 *.js
 !dist/index.js
