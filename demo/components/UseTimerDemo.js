@@ -19,8 +19,7 @@ export default function UseTimerDemo({ expiryTimestamp }) {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <h1>react-timer-hook </h1>
-      <p>Timer Demo</p>
+      <h2>UseTimer Demo</h2>
       <StyledTimer seconds={seconds} minutes={minutes} hours={hours} days={days} />
       <p>{isRunning ? 'Running' : 'Not running'}</p>
       <Button type="button" onClick={start}>Start</Button>

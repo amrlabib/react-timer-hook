@@ -14,15 +14,15 @@ const StyledSepartorContainer = styled.span`
   flex-direction: column;
   align-items: center;
   align-self: flex-end;
-  margin-bottom: 20px;
+  margin: 0 5px 10px 5px;
 `;
 
 const StyledSepartor = styled.span`
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 6px;
   margin: 5px 0;
 `;
 

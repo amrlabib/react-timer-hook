@@ -1,7 +1,6 @@
 import React from 'react';
 import { useStopwatch } from '../../src/index';
 import Button from './Button';
-import Digit from './Digit';
 import StyledTimer from './StyledTimer';
 
 export default function UseStopwatchDemo() {
@@ -19,7 +18,7 @@ export default function UseStopwatchDemo() {
 
   return (
     <div style={{textAlign: 'center'}}>
-      <p>Stopwatch Demo</p>
+      <h2>UseStopwatch Demo</h2>
       <StyledTimer seconds={seconds} minutes={minutes} hours={hours} days={days} />
       <p>{isRunning ? 'Running' : 'Not running'}</p>
       <Button onClick={start}>Start</Button>

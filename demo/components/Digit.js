@@ -19,14 +19,27 @@ const StyledDigitContainer = styled.div`
 `;
 
 const StyledSingleDigit = styled.span`
+  position: relative;
   display: flex;
   flex: 0 1 25%;
-  font-size: 70px;
+  font-size: 50px;
   background-color: #404549;
   border-radius: 5px;
   padding: 5px 20px;
   color: white;
   margin: 0 5px;
+  &:after {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 50%;
+    bottom: 50%;
+    content: "";
+    width: '100%';
+    height: 2px;
+    background-color: #232323;
+    opacity: 0.5;
+  }
 `;
 
 export default function Digit({ value, title, addSeparator }: Object) {
