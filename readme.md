@@ -23,7 +23,7 @@ OR
 
 ---
 
-## `useTimer`
+## `useTimer` [Live Demo](https://amrlabib.github.io/react-timer-hook/)
 
 ### Example
 
@@ -101,7 +101,7 @@ export default function App() {
 
 ---
 
-## `useStopwatch`
+## `useStopwatch` [Live Demo](https://amrlabib.github.io/react-timer-hook/)
 
 ### Example
 
@@ -169,7 +169,7 @@ export default function App() {
 ---
 
 
-## `useTime`
+## `useTime` [Live Demo](https://amrlabib.github.io/react-timer-hook/)
 
 ### Example
 
