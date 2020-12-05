@@ -1,15 +1,14 @@
 import React from 'react';
 import { useTimer } from '../../src/index';
-import StyledTimer from './StyledTimer';
+import TimerStyled from './TimerStyled';
 import Button from './Button';
 
-export default function UseTimerDemo({ expiryTimestamp }) {
+export default function UseTimerDemo({ expiryTimestamp }: Object) {
   const {
     seconds,
     minutes,
     hours,
     days,
-    isRunning,
     start,
     pause,
     resume,
@@ -20,14 +19,14 @@ export default function UseTimerDemo({ expiryTimestamp }) {
   return (
     <div>
       <h2>UseTimer Demo</h2>
-      <StyledTimer seconds={seconds} minutes={minutes} hours={hours} days={days} />
+      <TimerStyled seconds={seconds} minutes={minutes} hours={hours} days={days} />
       <Button type="button" onClick={start}>Start</Button>
       <Button type="button" onClick={pause}>Pause</Button>
       <Button type="button" onClick={resume}>Resume</Button>
       <Button
         type="button"
         onClick={() => {
-          // Restarts to 5 minutes timer
+          // Restarts to 10 minutes timer
           const time = new Date();
           time.setSeconds(time.getSeconds() + 600);
           restart(time);

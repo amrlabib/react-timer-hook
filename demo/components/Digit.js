@@ -1,38 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 7px;
+  margin: 0 5px;
   &: first-child {
     margin-left: 0;
   }
 `;
 
-const StyledTitle = styled.span`
+const Title = styled.span`
   font-size: 12px;
   margin-bottom: 5px;
 `;
 
-const StyledDigitContainer = styled.div`
+const DigitContainer = styled.div`
   display: flex;
   flex-direction: row;
   padding: 0;
 `;
 
-const StyledSingleDigit = styled.span`
+const SingleDigit = styled.span`
   position: relative;
   display: flex;
   flex: 0 1 25%;
   font-size: 30px;
   background-color: #404549;
   border-radius: 5px;
-  padding: 10px 15px;
+  padding: 10px 12px;
   color: white;
   &:first-child {
-    margin-right: 10px;
+    margin-right: 2px;
   }
   &:after {
     position: absolute;
@@ -52,16 +52,16 @@ export default function Digit({ value, title }: Object) {
   const leftDigit = value >= 10 ? value.toString()[0] : '0';
   const rightDigit = value >= 10 ? value.toString()[1] : value.toString();
   return (
-    <StyledContainer>
-      <StyledTitle>{title}</StyledTitle>
-      <StyledDigitContainer>
-        <StyledSingleDigit>
+    <Container>
+      <Title>{title}</Title>
+      <DigitContainer>
+        <SingleDigit>
           {leftDigit}
-        </StyledSingleDigit>
-        <StyledSingleDigit>
+        </SingleDigit>
+        <SingleDigit>
           {rightDigit}
-        </StyledSingleDigit>
-      </StyledDigitContainer>
-    </StyledContainer>
+        </SingleDigit>
+      </DigitContainer>
+    </Container>
   );
 }

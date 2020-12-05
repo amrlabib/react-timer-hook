@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledButton = styled.button`
+const ButtonStyled = styled.button`
   border-radius: 5;
   margin: 0 10px 0 0px;
   outline: none;
   border: none;
-  padding: 7px 15px;
+  padding: 6px 14px;
   color: #404549;
   border-radius: 3px;
   border: solid 1px #404549;
@@ -18,6 +18,6 @@ const StyledButton = styled.button`
 
 export default function Button(props) {
   return (
-    <StyledButton {...props} />
+    <ButtonStyled {...props} />
   );
 }
