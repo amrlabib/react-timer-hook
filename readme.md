@@ -14,7 +14,7 @@ React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.h
 
 ---
 
-## `useTimer` - [Live Demo](https://amrlabib.github.io/react-timer-hook/)
+## `useTimer` - [Demo](https://amrlabib.github.io/react-timer-hook/)
 
 ### Example
 
@@ -92,7 +92,7 @@ export default function App() {
 
 ---
 
-## `useStopwatch` - [Live Demo](https://amrlabib.github.io/react-timer-hook/)
+## `useStopwatch` - [Demo](https://amrlabib.github.io/react-timer-hook/)
 
 ### Example
 
@@ -160,7 +160,7 @@ export default function App() {
 ---
 
 
-## `useTime` - [Live Demo](https://amrlabib.github.io/react-timer-hook/)
+## `useTime` - [Demo](https://amrlabib.github.io/react-timer-hook/)
 
 ### Example
 
