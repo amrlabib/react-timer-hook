@@ -1,29 +1,20 @@
 ## react-timer-hook
 
-React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.html), built to handle timers(countdown), stopwatch, and time logic/state in your react component.
+React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.html), built to handle timer, stopwatch, and time logic/state in your react component.
 
 1. `useTimer`: Timers (countdown timer)
 2. `useStopwatch`: Stopwatch (count up timer)
 3. `useTime`: Time (return current time)
 
-
-#### Note:
-
-React hooks is available from react version 16.8.0
-
 ---
 
 ## Setup
 
-`yarn add react-timer-hook`
-
-OR
-
-`npm install --save react-timer-hook`
+`yarn add react-timer-hook` OR `npm install --save react-timer-hook`
 
 ---
 
-## `useTimer` [Live Demo](https://amrlabib.github.io/react-timer-hook/)
+## `useTimer` - [Live Demo](https://amrlabib.github.io/react-timer-hook/)
 
 ### Example
 
@@ -101,7 +92,7 @@ export default function App() {
 
 ---
 
-## `useStopwatch` [Live Demo](https://amrlabib.github.io/react-timer-hook/)
+## `useStopwatch` - [Live Demo](https://amrlabib.github.io/react-timer-hook/)
 
 ### Example
 
@@ -169,7 +160,7 @@ export default function App() {
 ---
 
 
-## `useTime` [Live Demo](https://amrlabib.github.io/react-timer-hook/)
+## `useTime` - [Live Demo](https://amrlabib.github.io/react-timer-hook/)
 
 ### Example
 

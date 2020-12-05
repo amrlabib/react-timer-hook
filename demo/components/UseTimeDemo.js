@@ -6,7 +6,7 @@ import StyledTimer from './StyledTimer';
 const StyledRow = styled.div`
   flex: 1;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
 `;
 
@@ -26,7 +26,7 @@ export default function UseTimeDemo() {
   } = useTime({ });
 
   return (
-    <div style={{textAlign: 'center'}}>
+    <div>
       <h2>UseTime Demo</h2>
       <StyledRow>
         <StyledTimer seconds={seconds} minutes={minutes} hours={hours} />

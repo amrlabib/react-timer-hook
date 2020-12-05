@@ -18,10 +18,9 @@ export default function UseTimerDemo({ expiryTimestamp }) {
 
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div>
       <h2>UseTimer Demo</h2>
       <StyledTimer seconds={seconds} minutes={minutes} hours={hours} days={days} />
-      <p>{isRunning ? 'Running' : 'Not running'}</p>
       <Button type="button" onClick={start}>Start</Button>
       <Button type="button" onClick={pause}>Pause</Button>
       <Button type="button" onClick={resume}>Resume</Button>
@@ -30,7 +29,7 @@ export default function UseTimerDemo({ expiryTimestamp }) {
         onClick={() => {
           // Restarts to 5 minutes timer
           const time = new Date();
-          time.setSeconds(time.getSeconds() + 300);
+          time.setSeconds(time.getSeconds() + 600);
           restart(time);
         }}
       >

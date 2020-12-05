@@ -5,29 +5,35 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 7px;
+  &: first-child {
+    margin-left: 0;
+  }
 `;
 
 const StyledTitle = styled.span`
-  font-size: 14px;
-  color: white;
+  font-size: 12px;
   margin-bottom: 5px;
 `;
 
 const StyledDigitContainer = styled.div`
   display: flex;
   flex-direction: row;
+  padding: 0;
 `;
 
 const StyledSingleDigit = styled.span`
   position: relative;
   display: flex;
   flex: 0 1 25%;
-  font-size: 50px;
+  font-size: 30px;
   background-color: #404549;
   border-radius: 5px;
-  padding: 5px 20px;
+  padding: 10px 15px;
   color: white;
-  margin: 0 5px;
+  &:first-child {
+    margin-right: 10px;
+  }
   &:after {
     position: absolute;
     left: 0px;
@@ -38,11 +44,11 @@ const StyledSingleDigit = styled.span`
     width: '100%';
     height: 2px;
     background-color: #232323;
-    opacity: 0.5;
+    opacity: 0.4;
   }
 `;
 
-export default function Digit({ value, title, addSeparator }: Object) {
+export default function Digit({ value, title }: Object) {
   const leftDigit = value >= 10 ? value.toString()[0] : '0';
   const rightDigit = value >= 10 ? value.toString()[1] : value.toString();
   return (

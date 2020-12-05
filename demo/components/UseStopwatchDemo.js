@@ -17,10 +17,9 @@ export default function UseStopwatchDemo() {
 
 
   return (
-    <div style={{textAlign: 'center'}}>
+    <div>
       <h2>UseStopwatch Demo</h2>
       <StyledTimer seconds={seconds} minutes={minutes} hours={hours} days={days} />
-      <p>{isRunning ? 'Running' : 'Not running'}</p>
       <Button onClick={start}>Start</Button>
       <Button onClick={pause}>Pause</Button>
       <Button onClick={reset}>Reset</Button>
