@@ -19,6 +19,7 @@ export function useTimer(settings: TimerSettings): TimerResult
 
 interface StopwatchSettings {
     autoStart?: boolean;
+    offsetTimestamp?: number;
 }
 
 interface StopwatchResult {

@@ -142,6 +142,7 @@ export default function App() {
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
 | autoStart | boolean | No | if set to `true` stopwatch will auto start |
+| offsetTimestamp | number | No | this will define the initial stopwatch offset example: `const stopwatchOffset = new Date(); stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + 300);` this is 5 minutes offset it will cause stopwatch start from 5 minutes and then start counting up |
 
 ### Values
 
@@ -154,7 +155,7 @@ export default function App() {
 | isRunning | boolean | flag to indicate if stopwatch is running or not |
 | start | function | function to be called to start/resume stopwatch |
 | pause | function | function to be called to pause stopwatch |
-| reset | function | function to be called to reset stopwatch to 0:0:0:0 |
+| reset | function | function to be called to reset stopwatch to 0:0:0:0, you can also pass offset parameter to this function to reset stopwatch with offset, similar to how `offsetTimestamp` will offset the initial stopwatch time |
 
 
 ---

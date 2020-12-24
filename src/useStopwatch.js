@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Time } from './utils';
 
 export default function useStopwatch(settings) {
-  const { autoStart } = settings || {};
+  const { autoStart, offsetTimestamp } = settings || {};
 
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(Time.getSecondsFromExpiry(offsetTimestamp || 0));
   const [isRunning, setIsRunning] = useState(autoStart);
   const intervalRef = useRef();
 
@@ -27,9 +27,9 @@ export default function useStopwatch(settings) {
     clearIntervalRef();
   }
 
-  function reset() {
+  function reset(offset: number) {
     clearIntervalRef();
-    setSeconds(0);
+    setSeconds(Time.getSecondsFromExpiry(offset || 0));
     if (autoStart) {
       start();
     }
