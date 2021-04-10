@@ -33,6 +33,7 @@ export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart 
   }
 
   function restart(newExpiryTimestamp) {
+    setIsRunning(autoStart);
     setExpiryTimestamp(newExpiryTimestamp);
     setSeconds(Time.getSecondsFromExpiry(newExpiryTimestamp));
   }
