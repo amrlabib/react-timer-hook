@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Time, Validate } from './utils';
 import { useInterval } from './hooks';
 
 export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart }) {
   const [expiryTimestamp, setExpiryTimestamp] = useState(expiry);
   const [seconds, setSeconds] = useState(Time.getSecondsFromExpiry(expiryTimestamp));
-  const [isRunning, setIsRunning] = useState(false);
+  const [isRunning, setIsRunning] = useState(autoStart);
+  const [didStart, setDidStart] = useState(autoStart);
 
   function handleExpire() {
     Validate.onExpire(onExpire) && onExpire();
@@ -15,15 +16,20 @@ export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart 
     setIsRunning(false);
   }
 
-  function start() {
-    setIsRunning(true);
-  }
-
   function resume() {
     const time = new Date();
     time.setSeconds(time.getSeconds() + seconds); // calculate new expiry timestamp based on last paused seconds count
     setExpiryTimestamp(time);
     setIsRunning(true);
+  }
+
+  function start() {
+    if (didStart) {
+      setIsRunning(true);
+    } else {
+      resume();
+      setDidStart(true);
+    }
   }
 
   function restart(newExpiryTimestamp) {
@@ -38,12 +44,6 @@ export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart 
     }
     setSeconds(secondsValue);
   } : () => {}, 1000);
-
-  useEffect(() => {
-    if (autoStart) {
-      setIsRunning(true);
-    }
-  }, [autoStart]);
 
   return {
     ...Time.getTimeFromSeconds(seconds), start, pause, resume, restart, isRunning,
