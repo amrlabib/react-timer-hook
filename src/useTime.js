@@ -1,31 +1,13 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { Time } from './utils';
+import { useInterval } from './hooks';
 
-export default function useTime(settings) {
-  const { format } = settings || {};
-
+export default function useTime({ format }) {
   const [seconds, setSeconds] = useState(Time.getSecondsFromTimeNow());
-  const intervalRef = useRef();
 
-  function clearIntervalRef() {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-    }
-  }
-
-  function start() {
-    if (!intervalRef.current) {
-      intervalRef.current = setInterval(() => setSeconds(Time.getSecondsFromTimeNow()), 1000);
-    }
-  }
-
-  // didMount effect
-  useEffect(() => {
-    start();
-    return clearIntervalRef;
-  }, []);
-
+  useInterval(() => {
+    setSeconds(Time.getSecondsFromTimeNow());
+  }, 1000);
 
   return {
     ...Time.getFormattedTimeFromSeconds(seconds, format),
