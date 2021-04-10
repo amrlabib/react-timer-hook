@@ -1,89 +1,49 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Time, Validate } from './utils';
+import { useInterval } from './hooks';
 
-export default function useTimer(settings) {
-  const { expiryTimestamp: expiry, onExpire } = settings || {};
+export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart }) {
   const [expiryTimestamp, setExpiryTimestamp] = useState(expiry);
   const [seconds, setSeconds] = useState(Time.getSecondsFromExpiry(expiryTimestamp));
-  const [isRunning, setIsRunning] = useState(true);
-  const intervalRef = useRef();
-
-  function clearIntervalRef() {
-    if (intervalRef.current) {
-      setIsRunning(false);
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-    }
-  }
+  const [isRunning, setIsRunning] = useState(false);
 
   function handleExpire() {
-    clearIntervalRef();
     Validate.onExpire(onExpire) && onExpire();
   }
 
-  function start() {
-    if (!intervalRef.current) {
-      setIsRunning(true);
-      intervalRef.current = setInterval(() => {
-        const secondsValue = Time.getSecondsFromExpiry(expiryTimestamp);
-        if (secondsValue <= 0) {
-          handleExpire();
-        }
-        setSeconds(secondsValue);
-      }, 1000);
-    }
+  function pause() {
+    setIsRunning(false);
   }
 
-  function pause() {
-    clearIntervalRef();
+  function start() {
+    setIsRunning(true);
   }
 
   function resume() {
-    if (!intervalRef.current) {
-      setIsRunning(true);
-      intervalRef.current = setInterval(() => setSeconds((prevSeconds) => {
-        const secondsValue = prevSeconds - 1;
-        if (secondsValue <= 0) {
-          handleExpire();
-        }
-        return secondsValue;
-      }), 1000);
-    }
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + seconds); // calculate new expiry timestamp based on last paused seconds count
+    setExpiryTimestamp(time);
+    setIsRunning(true);
   }
 
   function restart(newExpiryTimestamp) {
-    clearIntervalRef();
     setExpiryTimestamp(newExpiryTimestamp);
+    setSeconds(Time.getSecondsFromExpiry(newExpiryTimestamp));
   }
 
-  function handleExtraMilliSeconds(secondsValue, extraMilliSeconds) {
-    setIsRunning(true);
-    intervalRef.current = setTimeout(() => {
-      const currentSeconds = Time.getSecondsFromExpiry(expiryTimestamp);
-      setSeconds(currentSeconds);
-      if (currentSeconds <= 0) {
-        handleExpire();
-      } else {
-        intervalRef.current = undefined;
-        start();
-      }
-    }, extraMilliSeconds);
-  }
+  useInterval(isRunning ? () => {
+    const secondsValue = Time.getSecondsFromExpiry(expiryTimestamp);
+    if (secondsValue <= 0) {
+      handleExpire();
+    }
+    setSeconds(secondsValue);
+  } : () => {}, 1000);
 
   useEffect(() => {
-    if (Validate.expiryTimestamp(expiryTimestamp)) {
-      const secondsValue = Time.getSecondsFromExpiry(expiryTimestamp);
-      const extraMilliSeconds = Math.floor((secondsValue - Math.floor(secondsValue)) * 1000);
-      setSeconds(secondsValue);
-      if (extraMilliSeconds > 0) {
-        handleExtraMilliSeconds(secondsValue, extraMilliSeconds);
-      } else {
-        start();
-      }
+    if (autoStart) {
+      setIsRunning(true);
     }
-    return clearIntervalRef;
-  }, [expiryTimestamp]);
-
+  }, [autoStart]);
 
   return {
     ...Time.getTimeFromSeconds(seconds), start, pause, resume, restart, isRunning,

@@ -13,8 +13,7 @@ export default function UseTimerDemo({ expiryTimestamp }: Object) {
     pause,
     resume,
     restart,
-  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
-
+  } = useTimer({ expiryTimestamp, autoStart: true, onExpire: () => console.warn('onExpire called') });
 
   return (
     <div>
