@@ -9,6 +9,10 @@ export default function useInterval(callback, delay) {
   });
 
   useEffect(() => {
+    if (!delay) {
+      return () => {};
+    }
+
     const interval = setInterval(() => {
       callbacRef.current && callbacRef.current();
     }, delay);

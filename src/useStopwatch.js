@@ -6,9 +6,9 @@ export default function useStopwatch({ autoStart, offsetTimestamp }) {
   const [seconds, setSeconds] = useState(Time.getSecondsFromExpiry(offsetTimestamp || 0));
   const [isRunning, setIsRunning] = useState(autoStart);
 
-  useInterval(isRunning ? () => {
+  useInterval(() => {
     setSeconds((prevSeconds) => (prevSeconds + 1));
-  } : () => {}, 1000);
+  }, isRunning ? 1000 : null);
 
   function start() {
     setIsRunning(true);

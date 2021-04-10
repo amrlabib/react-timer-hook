@@ -21,11 +21,13 @@ export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart 
     time.setSeconds(time.getSeconds() + seconds); // calculate new expiry timestamp based on last paused seconds count
     setExpiryTimestamp(time);
     setIsRunning(true);
+    setSeconds(Time.getSecondsFromExpiry(time));
   }
 
   function start() {
     if (didStart) {
       setIsRunning(true);
+      setSeconds(Time.getSecondsFromExpiry(expiryTimestamp));
     } else {
       resume();
       setDidStart(true);
@@ -38,13 +40,13 @@ export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart 
     setSeconds(Time.getSecondsFromExpiry(newExpiryTimestamp));
   }
 
-  useInterval(isRunning ? () => {
+  useInterval(() => {
     const secondsValue = Time.getSecondsFromExpiry(expiryTimestamp);
     if (secondsValue <= 0) {
       handleExpire();
     }
     setSeconds(secondsValue);
-  } : () => {}, 1000);
+  }, isRunning ? 1000 : null);
 
   return {
     ...Time.getTimeFromSeconds(seconds), start, pause, resume, restart, isRunning,
