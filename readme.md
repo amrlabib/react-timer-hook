@@ -33,7 +33,7 @@ function MyTimer({ expiryTimestamp }) {
     pause,
     resume,
     restart,
-  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+  } = useTimer({ expiryTimestamp, autoStart: true, onExpire: () => console.warn('onExpire called') });
 
 
   return (
@@ -73,7 +73,9 @@ export default function App() {
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
 | expiryTimestamp | number(timestamp) | YES | this will define for how long the timer will be running   |
+| autoStart | boolean | No | flag to decide if timer should start automatically |
 | onExpire | Function | No | callback function to be executed once countdown timer is expired |
+
 
 ### Values
 
