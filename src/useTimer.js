@@ -13,7 +13,7 @@ function getDelayFromExpiryTimestamp(expiryTimestamp) {
   return extraMilliSeconds > 0 ? extraMilliSeconds : DEFAULT_DELAY;
 }
 
-export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart }) {
+export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart = true }) {
   const [expiryTimestamp, setExpiryTimestamp] = useState(expiry);
   const [seconds, setSeconds] = useState(Time.getSecondsFromExpiry(expiryTimestamp));
   const [isRunning, setIsRunning] = useState(autoStart);
