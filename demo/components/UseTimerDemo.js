@@ -28,7 +28,7 @@ export default function UseTimerDemo({ expiryTimestamp }: Object) {
           // Restarts to 10 minutes timer
           const time = new Date();
           time.setSeconds(time.getSeconds() + 600);
-          restart(time);
+          restart(time, true);
         }}
       >
         Restart

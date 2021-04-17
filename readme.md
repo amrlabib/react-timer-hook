@@ -89,7 +89,7 @@ export default function App() {
 | pause | function | function to be called to pause timer |
 | start | function | function if called after pause the timer will continue based on original expiryTimestamp |
 | resume | function | function if called after pause the timer will continue countdown from last paused state |
-| restart | function | function to restart timer with new expiryTimestamp |
+| restart | function | function to restart timer with new expiryTimestamp, accept 2 arguments first is the new `expiryTimestamp` of type number(timestamp) and second is `autoStart` of type boolean to decide if it should automatically start after restart or not |
 
 
 ---
