@@ -89,7 +89,7 @@ export default function App() {
 | pause | function | function to be called to pause timer |
 | start | function | function if called after pause the timer will continue based on original expiryTimestamp |
 | resume | function | function if called after pause the timer will continue countdown from last paused state |
-| restart | function | function to restart timer with new expiryTimestamp, accept 2 arguments first is the new `expiryTimestamp` of type number(timestamp) and second is `autoStart` of type boolean to decide if it should automatically start after restart or not |
+| restart | function | function to restart timer with new expiryTimestamp, accept 2 arguments first is the new `expiryTimestamp` of type number(timestamp) and second is `autoStart` of type boolean to decide if it should automatically start after restart or not, default is `true` |
 
 
 ---
@@ -157,7 +157,7 @@ export default function App() {
 | isRunning | boolean | flag to indicate if stopwatch is running or not |
 | start | function | function to be called to start/resume stopwatch |
 | pause | function | function to be called to pause stopwatch |
-| reset | function | function to be called to reset stopwatch to 0:0:0:0, you can also pass offset parameter to this function to reset stopwatch with offset, similar to how `offsetTimestamp` will offset the initial stopwatch time |
+| reset | function | function to be called to reset stopwatch to 0:0:0:0, you can also pass offset parameter to this function to reset stopwatch with offset, similar to how `offsetTimestamp` will offset the initial stopwatch time, this function will accept also a second argument which will decide if stopwatch should automatically start after reset or not default is `true` |
 
 
 ---

@@ -21,7 +21,7 @@ export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart 
     setIsRunning(false);
   }
 
-  function restart(newExpiryTimestamp, newAutoStart) {
+  function restart(newExpiryTimestamp, newAutoStart = true) {
     const secondsValue = Time.getSecondsFromExpiry(newExpiryTimestamp);
     const extraMilliSecondsValue = Math.floor((secondsValue - Math.floor(secondsValue)) * 1000);
     setDelay(extraMilliSecondsValue > 0 ? extraMilliSecondsValue : 1000);

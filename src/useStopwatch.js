@@ -18,9 +18,9 @@ export default function useStopwatch({ autoStart, offsetTimestamp }) {
     setIsRunning(false);
   }
 
-  function reset(offset: number) {
-    setIsRunning(autoStart);
-    setSeconds(Time.getSecondsFromExpiry(offset || 0));
+  function reset(offset = 0, newAutoStart = true) {
+    setIsRunning(newAutoStart);
+    setSeconds(Time.getSecondsFromExpiry(offset));
   }
 
   return {
