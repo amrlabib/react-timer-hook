@@ -3,13 +3,22 @@ import { Time, Validate } from './utils';
 import { useInterval } from './hooks';
 
 const DEFAULT_DELAY = 1000;
+function getDelayFromExpiryTimestamp(expiryTimestamp) {
+  if (!Validate.expiryTimestamp(expiryTimestamp)) {
+    return null;
+  }
+
+  const seconds = Time.getSecondsFromExpiry(expiryTimestamp);
+  const extraMilliSeconds = Math.floor((seconds - Math.floor(seconds)) * 1000);
+  return extraMilliSeconds > 0 ? extraMilliSeconds : DEFAULT_DELAY;
+}
+
 export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart }) {
   const [expiryTimestamp, setExpiryTimestamp] = useState(expiry);
   const [seconds, setSeconds] = useState(Time.getSecondsFromExpiry(expiryTimestamp));
   const [isRunning, setIsRunning] = useState(autoStart);
   const [didStart, setDidStart] = useState(autoStart);
-  const extraMilliSeconds = Math.floor((seconds - Math.floor(seconds)) * 1000);
-  const [delay, setDelay] = useState(extraMilliSeconds > 0 ? extraMilliSeconds : 1000);
+  const [delay, setDelay] = useState(getDelayFromExpiryTimestamp(expiryTimestamp));
 
   function handleExpire() {
     Validate.onExpire(onExpire) && onExpire();
@@ -22,19 +31,17 @@ export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart 
   }
 
   function restart(newExpiryTimestamp, newAutoStart = true) {
-    const secondsValue = Time.getSecondsFromExpiry(newExpiryTimestamp);
-    const extraMilliSecondsValue = Math.floor((secondsValue - Math.floor(secondsValue)) * 1000);
-    setDelay(extraMilliSecondsValue > 0 ? extraMilliSecondsValue : 1000);
+    setDelay(getDelayFromExpiryTimestamp(newExpiryTimestamp));
     setDidStart(newAutoStart);
     setIsRunning(newAutoStart);
     setExpiryTimestamp(newExpiryTimestamp);
-    setSeconds(secondsValue);
+    setSeconds(Time.getSecondsFromExpiry(newExpiryTimestamp));
   }
 
   function resume() {
     const time = new Date();
     time.setMilliseconds(time.getMilliseconds() + (seconds * 1000));
-    restart(time, true);
+    restart(time);
   }
 
   function start() {
