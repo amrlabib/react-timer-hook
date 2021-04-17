@@ -12,7 +12,7 @@ interface TimerResult {
     start: () => void;
     pause: () => void;
     resume: () => void;
-    restart: (newExpiryTimestamp: number) => void;
+    restart: (newExpiryTimestamp: number, autoStart?: boolean) => void;
 }
 
 export function useTimer(settings: TimerSettings): TimerResult
@@ -30,7 +30,7 @@ interface StopwatchResult {
     isRunning: boolean;
     start: () => void;
     pause: () => void;
-    reset: () => void;
+    reset: (offsetTimestamp?: number, autoStart?: boolean) => void;
 }
 
 export function useStopwatch(settings?: StopwatchSettings): StopwatchResult
