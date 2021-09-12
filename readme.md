@@ -72,7 +72,7 @@ export default function App() {
 
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
-| expiryTimestamp | number(timestamp) | YES | this will define for how long the timer will be running   |
+| expiryTimestamp | Date object | YES | this will define for how long the timer will be running   |
 | autoStart | boolean | No | flag to decide if timer should start automatically, by default it is set to `true` |
 | onExpire | Function | No | callback function to be executed once countdown timer is expired |
 
@@ -89,7 +89,7 @@ export default function App() {
 | pause | function | function to be called to pause timer |
 | start | function | function if called after pause the timer will continue based on original expiryTimestamp |
 | resume | function | function if called after pause the timer will continue countdown from last paused state |
-| restart | function | function to restart timer with new expiryTimestamp, accept 2 arguments first is the new `expiryTimestamp` of type number(timestamp) and second is `autoStart` of type boolean to decide if it should automatically start after restart or not, default is `true` |
+| restart | function | function to restart timer with new expiryTimestamp, accept 2 arguments first is the new `expiryTimestamp` of type Date object and second is `autoStart` of type boolean to decide if it should automatically start after restart or not, default is `true` |
 
 
 ---
@@ -144,7 +144,7 @@ export default function App() {
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
 | autoStart | boolean | No | if set to `true` stopwatch will auto start, by default it is set to `false` |
-| offsetTimestamp | number | No | this will define the initial stopwatch offset example: `const stopwatchOffset = new Date(); stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + 300);` this will result in a 5 minutes offset and stopwatch will start from 0:0:5:0 instead of 0:0:0:0 |
+| offsetTimestamp | Date object | No | this will define the initial stopwatch offset example: `const stopwatchOffset = new Date(); stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + 300);` this will result in a 5 minutes offset and stopwatch will start from 0:0:5:0 instead of 0:0:0:0 |
 
 ### Values
 

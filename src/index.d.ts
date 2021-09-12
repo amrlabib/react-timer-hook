@@ -20,7 +20,7 @@ export function useTimer(settings: TimerSettings): TimerResult
 
 interface StopwatchSettings {
     autoStart?: boolean;
-    offsetTimestamp?: number;
+    offsetTimestamp?: Date;
 }
 
 interface StopwatchResult {
@@ -31,7 +31,7 @@ interface StopwatchResult {
     isRunning: boolean;
     start: () => void;
     pause: () => void;
-    reset: (offsetTimestamp?: number, autoStart?: boolean) => void;
+    reset: (offsetTimestamp?: Date, autoStart?: boolean) => void;
 }
 
 export function useStopwatch(settings?: StopwatchSettings): StopwatchResult
