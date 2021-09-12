@@ -1,6 +1,6 @@
 interface TimerSettings {
     autoStart?: boolean;
-    expiryTimestamp: number;
+    expiryTimestamp: Date;
     onExpire?: () => void;
 }
 
@@ -13,7 +13,7 @@ interface TimerResult {
     start: () => void;
     pause: () => void;
     resume: () => void;
-    restart: (newExpiryTimestamp: number, autoStart?: boolean) => void;
+    restart: (newExpiryTimestamp: Date, autoStart?: boolean) => void;
 }
 
 export function useTimer(settings: TimerSettings): TimerResult
