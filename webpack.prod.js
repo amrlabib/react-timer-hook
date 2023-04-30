@@ -15,16 +15,23 @@ module.exports = {
     module: {
         rules: [{
             test: /\.js$/,
-            loader: 'babel-loader',
-            options: {
-                presets: ['env', 'es2015', 'react', 'stage-1'],
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: [
+                  ['@babel/preset-env', { targets: "defaults" }],
+                  ['@babel/preset-typescript', { allowNamespaces: true }]
+                ]
+              }
             }
         }]
     },
     plugins: [
-        new CopyWebpackPlugin([
-            { from: './src/index.d.ts', to: './' },
-        ]),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: './src/index.d.ts', to: './' },
+                ],
+        }),
     ],
     externals: [
       'react',

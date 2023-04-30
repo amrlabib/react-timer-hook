@@ -3,7 +3,7 @@ import { useTimer } from '../../src/index';
 import TimerStyled from './TimerStyled';
 import Button from './Button';
 
-export default function UseTimerDemo({ expiryTimestamp }: Object) {
+export default function UseTimerDemo({ expiryTimestamp }) {
   const {
     seconds,
     minutes,

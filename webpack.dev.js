@@ -19,21 +19,29 @@ module.exports = {
         rules: [{
             test: /\.js$/,
             exclude: /node_modules/,
-            loader: 'babel-loader',
-            options: {
-                presets: ['env', 'es2015', 'react', 'stage-1'],
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: [
+                  ['@babel/preset-env', { targets: "defaults" }],
+                  ['@babel/preset-typescript', { allowNamespaces: true }]
+                ]
+              }
             }
         }]
     },
     plugins: [
-        new CopyWebpackPlugin([
-            { from: './demo/index.html', to: './' },
-        ]),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: "./demo/index.html", to: "./" },
+                ],
+        }),
     ],
     devServer: {
-      contentBase: path.join(__dirname, 'docs'),
+      static: {
+        directory: path.join(__dirname, 'docs')
+      },
       compress: true,
       port: 9000,
-      disableHostCheck: true
     }
 }

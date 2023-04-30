@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "plugins": [
     "react-hooks"
   ],
@@ -13,5 +13,5 @@
     }],
     "max-len": 0
   },
-  "extends": "airbnb"
+  "extends": "airbnb",
 }
