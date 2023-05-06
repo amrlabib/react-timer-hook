@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
 
-export default function useStopwatch({ autoStart, offsetTimestamp }) {
+export default function useStopwatch({ autoStart, offsetTimestamp } = {}) {
   const [passedSeconds, setPassedSeconds] = useState(Time.getSecondsFromExpiry(offsetTimestamp, true) || 0);
   const [prevTime, setPrevTime] = useState(new Date());
   const [seconds, setSeconds] = useState(passedSeconds + Time.getSecondsFromPrevTime(prevTime || 0, true));

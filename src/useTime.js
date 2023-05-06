@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
 
-export default function useTime({ format }) {
+export default function useTime({ format } = {}) {
   const [seconds, setSeconds] = useState(Time.getSecondsFromTimeNow());
 
   useInterval(() => {
