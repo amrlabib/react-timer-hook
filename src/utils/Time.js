@@ -7,6 +7,7 @@ export default class Time {
     const seconds = Math.floor(totalSeconds % 60);
 
     return {
+      totalSeconds,
       seconds,
       minutes,
       hours,

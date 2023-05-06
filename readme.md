@@ -85,6 +85,7 @@ export default function App() {
 | minutes | number | minutes value |
 | hours | number | hours value |
 | days | number | days value |
+| totalSeconds | number | total number of seconds left in timer NOT converted to minutes, hours or days |
 | isRunning | boolean | flag to indicate if timer is running or not |
 | pause | function | function to be called to pause timer |
 | start | function | function if called after pause the timer will continue based on original expiryTimestamp |
@@ -154,6 +155,7 @@ export default function App() {
 | minutes | number | minutes value |
 | hours | number | hours value |
 | days | number | days value |
+| totalSeconds | number | total number of seconds in stopwatch NOT converted to minutes, hours or days |
 | isRunning | boolean | flag to indicate if stopwatch is running or not |
 | start | function | function to be called to start/resume stopwatch |
 | pause | function | function to be called to pause stopwatch |
