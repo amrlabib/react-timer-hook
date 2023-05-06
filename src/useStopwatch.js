@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
 
@@ -12,26 +12,26 @@ export default function useStopwatch({ autoStart, offsetTimestamp }) {
     setSeconds(passedSeconds + Time.getSecondsFromPrevTime(prevTime, true));
   }, isRunning ? 1000 : null);
 
-  function start() {
+  const start = useCallback(() => {
     const newPrevTime = new Date();
     setPrevTime(newPrevTime);
     setIsRunning(true);
     setSeconds(passedSeconds + Time.getSecondsFromPrevTime(newPrevTime, true));
-  }
+  }, [passedSeconds]);
 
-  function pause() {
+  const pause = useCallback(() => {
     setPassedSeconds(seconds);
     setIsRunning(false);
-  }
+  }, [seconds]);
 
-  function reset(offset = 0, newAutoStart = true) {
+  const reset = useCallback((offset = 0, newAutoStart = true) => {
     const newPassedSeconds = Time.getSecondsFromExpiry(offset, true) || 0;
     const newPrevTime = new Date();
     setPrevTime(newPrevTime);
     setPassedSeconds(newPassedSeconds);
     setIsRunning(newAutoStart);
     setSeconds(newPassedSeconds + Time.getSecondsFromPrevTime(newPrevTime, true));
-  }
+  }, []);
 
   return {
     ...Time.getTimeFromSeconds(seconds), start, pause, reset, isRunning,

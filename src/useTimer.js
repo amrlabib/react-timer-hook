@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Time, Validate } from './utils';
 import { useInterval } from './hooks';
 
@@ -20,38 +20,38 @@ export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart 
   const [didStart, setDidStart] = useState(autoStart);
   const [delay, setDelay] = useState(getDelayFromExpiryTimestamp(expiryTimestamp));
 
-  function handleExpire() {
+  const handleExpire = useCallback(() => {
     Validate.onExpire(onExpire) && onExpire();
     setIsRunning(false);
     setDelay(null);
-  }
+  }, [onExpire]);
 
-  function pause() {
+  const pause = useCallback(() => {
     setIsRunning(false);
-  }
+  }, []);
 
-  function restart(newExpiryTimestamp, newAutoStart = true) {
+  const restart = useCallback((newExpiryTimestamp, newAutoStart = true) => {
     setDelay(getDelayFromExpiryTimestamp(newExpiryTimestamp));
     setDidStart(newAutoStart);
     setIsRunning(newAutoStart);
     setExpiryTimestamp(newExpiryTimestamp);
     setSeconds(Time.getSecondsFromExpiry(newExpiryTimestamp));
-  }
+  }, []);
 
-  function resume() {
+  const resume = useCallback(() => {
     const time = new Date();
     time.setMilliseconds(time.getMilliseconds() + (seconds * 1000));
     restart(time);
-  }
+  }, [seconds, restart]);
 
-  function start() {
+  const start = useCallback(() => {
     if (didStart) {
       setSeconds(Time.getSecondsFromExpiry(expiryTimestamp));
       setIsRunning(true);
     } else {
       resume();
     }
-  }
+  }, [expiryTimestamp, didStart, resume]);
 
   useInterval(() => {
     if (delay !== DEFAULT_DELAY) {
