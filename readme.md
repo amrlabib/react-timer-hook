@@ -24,6 +24,7 @@ import { useTimer } from 'react-timer-hook';
 
 function MyTimer({ expiryTimestamp }) {
   const {
+    totalSeconds,
     seconds,
     minutes,
     hours,
@@ -105,6 +106,7 @@ import { useStopwatch } from 'react-timer-hook';
 
 function MyStopwatch() {
   const {
+    totalSeconds,
     seconds,
     minutes,
     hours,
