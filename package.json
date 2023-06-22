@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "prepare": "npm run build:prod",
     "build:demo": "rm -rf ./docs && webpack --config webpack.dev.js && webpack-dev-server --open --config webpack.dev.js",
     "build:prod": "rm -rf ./dist && webpack --config webpack.prod.js",
     "lint": "node_modules/.bin/eslint src"
