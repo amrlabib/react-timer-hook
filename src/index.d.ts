@@ -5,6 +5,7 @@ interface TimerSettings {
 }
 
 interface TimerResult {
+    totalSeconds: number;
     seconds: number;
     minutes: number;
     hours: number;
@@ -24,6 +25,7 @@ interface StopwatchSettings {
 }
 
 interface StopwatchResult {
+    totalSeconds: number;
     seconds: number;
     minutes: number;
     hours: number;
