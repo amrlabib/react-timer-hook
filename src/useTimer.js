@@ -2,28 +2,31 @@ import { useState, useCallback } from 'react';
 import { Time, Validate } from './utils';
 import { useInterval } from './hooks';
 
-const DEFAULT_DELAY = 1000;
-function getDelayFromExpiryTimestamp(expiryTimestamp) {
+const MILLISEC_INTERVAL = 1;
+const SECOND_INTERVAL = 1000;
+function getIntervalFromExpiryTimestamp(expiryTimestamp) {
   if (!Validate.expiryTimestamp(expiryTimestamp)) {
     return null;
   }
-
-  const seconds = Time.getSecondsFromExpiry(expiryTimestamp);
-  const extraMilliSeconds = Math.floor((seconds - Math.floor(seconds)) * 1000);
-  return extraMilliSeconds > 0 ? extraMilliSeconds : DEFAULT_DELAY;
+  return MILLISEC_INTERVAL;
 }
 
-export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart = true } = {}) {
+export default function useTimer({
+  expiryTimestamp: expiry,
+  onExpire,
+  autoStart = true,
+  enableMilliseconds = false,
+} = {}) {
   const [expiryTimestamp, setExpiryTimestamp] = useState(expiry);
-  const [seconds, setSeconds] = useState(Time.getSecondsFromExpiry(expiryTimestamp));
+  const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromExpiry(expiryTimestamp));
   const [isRunning, setIsRunning] = useState(autoStart);
   const [didStart, setDidStart] = useState(autoStart);
-  const [delay, setDelay] = useState(getDelayFromExpiryTimestamp(expiryTimestamp));
+  const [interval, setInterval] = useState(getIntervalFromExpiryTimestamp(expiryTimestamp));
 
   const handleExpire = useCallback(() => {
     Validate.onExpire(onExpire) && onExpire();
     setIsRunning(false);
-    setDelay(null);
+    setInterval(null);
   }, [onExpire]);
 
   const pause = useCallback(() => {
@@ -31,22 +34,22 @@ export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart 
   }, []);
 
   const restart = useCallback((newExpiryTimestamp, newAutoStart = true) => {
-    setDelay(getDelayFromExpiryTimestamp(newExpiryTimestamp));
+    setInterval(getIntervalFromExpiryTimestamp(newExpiryTimestamp));
     setDidStart(newAutoStart);
     setIsRunning(newAutoStart);
     setExpiryTimestamp(newExpiryTimestamp);
-    setSeconds(Time.getSecondsFromExpiry(newExpiryTimestamp));
+    setMilliseconds(Time.getMillisecondsFromExpiry(newExpiryTimestamp));
   }, []);
 
   const resume = useCallback(() => {
     const time = new Date();
-    time.setMilliseconds(time.getMilliseconds() + (seconds * 1000));
+    time.setMilliseconds(time.getMilliseconds() + (milliseconds));
     restart(time);
-  }, [seconds, restart]);
+  }, [milliseconds, restart]);
 
   const start = useCallback(() => {
     if (didStart) {
-      setSeconds(Time.getSecondsFromExpiry(expiryTimestamp));
+      setMilliseconds(Time.getMillisecondsFromExpiry(expiryTimestamp));
       setIsRunning(true);
     } else {
       resume();
@@ -54,17 +57,20 @@ export default function useTimer({ expiryTimestamp: expiry, onExpire, autoStart 
   }, [expiryTimestamp, didStart, resume]);
 
   useInterval(() => {
-    if (delay !== DEFAULT_DELAY) {
-      setDelay(DEFAULT_DELAY);
+    const millisecondsValue = Time.getMillisecondsFromExpiry(expiryTimestamp);
+
+    // Change from 1 millisecond to 1 second interval if enableMilliseconds is false and we are not interested in millisecond values
+    if (!enableMilliseconds && interval === MILLISEC_INTERVAL) {
+      const { milliseconds: millisecondsVal } = Time.getTimeFromMilliseconds(milliseconds);
+      millisecondsVal >= 950 && setInterval(SECOND_INTERVAL);
     }
-    const secondsValue = Time.getSecondsFromExpiry(expiryTimestamp);
-    setSeconds(secondsValue);
-    if (secondsValue <= 0) {
+    setMilliseconds(millisecondsValue);
+    if (millisecondsValue <= 0) {
       handleExpire();
     }
-  }, isRunning ? delay : null);
+  }, isRunning ? interval : null);
 
   return {
-    ...Time.getTimeFromSeconds(seconds), start, pause, resume, restart, isRunning,
+    ...Time.getTimeFromMilliseconds(milliseconds), start, pause, resume, restart, isRunning,
   };
 }

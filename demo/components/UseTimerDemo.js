@@ -3,8 +3,9 @@ import { useTimer } from '../../src/index';
 import TimerStyled from './TimerStyled';
 import Button from './Button';
 
-export default function UseTimerDemo({ expiryTimestamp }) {
+export default function UseTimerDemo({ expiryTimestamp, enableMilliseconds }) {
   const {
+    milliseconds,
     seconds,
     minutes,
     hours,
@@ -13,12 +14,12 @@ export default function UseTimerDemo({ expiryTimestamp }) {
     pause,
     resume,
     restart,
-  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called'), enableMilliseconds });
 
   return (
     <div>
       <h2>UseTimer Demo</h2>
-      <TimerStyled seconds={seconds} minutes={minutes} hours={hours} days={days} />
+      <TimerStyled milliseconds={milliseconds} seconds={seconds} minutes={minutes} hours={hours} days={days} enableMilliseconds={enableMilliseconds} />
       <Button type="button" onClick={start}>Start</Button>
       <Button type="button" onClick={pause}>Pause</Button>
       <Button type="button" onClick={resume}>Resume</Button>

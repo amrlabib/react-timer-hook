@@ -26,7 +26,7 @@ const Separtor = styled.span`
   margin: 5px 0px;
 `;
 
-export default function TimerStyled({ seconds, minutes, hours, days }) {
+export default function TimerStyled({ milliseconds, seconds, minutes, hours, days, enableMilliseconds }) {
   return (
     <TimerContainer>
       {days !== undefined ? <Digit value={days} title="DAYS" addSeparator /> : null}
@@ -36,6 +36,12 @@ export default function TimerStyled({ seconds, minutes, hours, days }) {
       <Digit value={minutes} title="MINUTES" addSeparator />
       <SepartorContainer><Separtor /><Separtor /></SepartorContainer>
       <Digit value={seconds} title="SECONDS" />
+      {enableMilliseconds ? 
+        <>
+          <SepartorContainer><Separtor /><Separtor /></SepartorContainer>
+          <Digit value={milliseconds} title="MILLISECONDS" isMIlliseconds />
+        </>
+        : null }
     </TimerContainer>
   );
 }

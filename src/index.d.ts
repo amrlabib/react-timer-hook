@@ -2,10 +2,13 @@ interface TimerSettings {
     autoStart?: boolean;
     expiryTimestamp: Date;
     onExpire?: () => void;
+    enableMilliseconds?: boolean;
 }
 
 interface TimerResult {
+    totalMilliseconds: number;
     totalSeconds: number;
+    milliseconds: number;
     seconds: number;
     minutes: number;
     hours: number;
