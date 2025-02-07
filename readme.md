@@ -75,6 +75,7 @@ export default function App() {
 | --- | --- | --- | ---- |
 | expiryTimestamp | Date object | YES | this will define for how long the timer will be running   |
 | autoStart | boolean | No | flag to decide if timer should start automatically, by default it is set to `true` |
+| enableMilliseconds | boolean | No | flag to enable millisecond accuracy |
 | onExpire | Function | No | callback function to be executed once countdown timer is expired |
 
 
@@ -82,11 +83,13 @@ export default function App() {
 
 | key | Type | Description |
 | --- | --- | ---- |
+| milliseconds | number | milliseconds value disabled by default, set `enableMilliseconds: true` to enable it |
 | seconds | number | seconds value |
 | minutes | number | minutes value |
 | hours | number | hours value |
 | days | number | days value |
 | totalSeconds | number | total number of seconds left in timer NOT converted to minutes, hours or days |
+| totalMilliseconds | number | total number of milliseconds left in timer NOT converted to minutes, hours or days |
 | isRunning | boolean | flag to indicate if timer is running or not |
 | pause | function | function to be called to pause timer |
 | start | function | function if called after pause the timer will continue based on original expiryTimestamp |
