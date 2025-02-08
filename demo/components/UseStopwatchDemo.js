@@ -3,8 +3,9 @@ import { useStopwatch } from '../../src/index';
 import Button from './Button';
 import TimerStyled from './TimerStyled';
 
-export default function UseStopwatchDemo() {
+export default function UseStopwatchDemo({ enableMilliseconds }) {
   const {
+    milliseconds,
     seconds,
     minutes,
     hours,
@@ -12,13 +13,13 @@ export default function UseStopwatchDemo() {
     start,
     pause,
     reset,
-  } = useStopwatch({ autoStart: true });
+  } = useStopwatch({ autoStart: true, enableMilliseconds });
 
 
   return (
     <div>
       <h2>UseStopwatch Demo</h2>
-      <TimerStyled seconds={seconds} minutes={minutes} hours={hours} days={days} />
+      <TimerStyled milliseconds={milliseconds} seconds={seconds} minutes={minutes} hours={hours} days={days} enableMilliseconds={enableMilliseconds} />
       <Button onClick={start}>Start</Button>
       <Button onClick={pause}>Pause</Button>
       <Button onClick={reset}>Reset</Button>

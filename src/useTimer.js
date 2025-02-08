@@ -59,7 +59,8 @@ export default function useTimer({
   useInterval(() => {
     const millisecondsValue = Time.getMillisecondsFromExpiry(expiryTimestamp);
 
-    // Change from 1 millisecond to 1 second interval if enableMilliseconds is false and we are not interested in millisecond values
+    // Initially interval is 1ms to handle expiryTimestamp with precision
+    // Then we change from 1 millisecond to 1 second interval if enableMilliseconds is false and we are not interested in millisecond values
     if (!enableMilliseconds && interval === MILLISEC_INTERVAL) {
       const { milliseconds: millisecondsVal } = Time.getTimeFromMilliseconds(milliseconds);
       millisecondsVal >= 950 && setInterval(SECOND_INTERVAL);

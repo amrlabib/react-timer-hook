@@ -75,7 +75,7 @@ export default function App() {
 | --- | --- | --- | ---- |
 | expiryTimestamp | Date object | YES | this will define for how long the timer will be running   |
 | autoStart | boolean | No | flag to decide if timer should start automatically, by default it is set to `true` |
-| enableMilliseconds | boolean | No | flag to enable millisecond accuracy |
+| enableMilliseconds | boolean | No | flag to enable millisecond accuracy, `false` by default |
 | onExpire | Function | No | callback function to be executed once countdown timer is expired |
 
 
@@ -83,7 +83,7 @@ export default function App() {
 
 | key | Type | Description |
 | --- | --- | ---- |
-| milliseconds | number | milliseconds value disabled by default, set `enableMilliseconds: true` to enable it |
+| milliseconds | number | milliseconds value is disabled by default, if you need ms value enable it by setting `enableMilliseconds: true` |
 | seconds | number | seconds value |
 | minutes | number | minutes value |
 | hours | number | hours value |
@@ -151,11 +151,13 @@ export default function App() {
 | --- | --- | --- | ---- |
 | autoStart | boolean | No | if set to `true` stopwatch will auto start, by default it is set to `false` |
 | offsetTimestamp | Date object | No | this will define the initial stopwatch offset example: `const stopwatchOffset = new Date(); stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + 300);` this will result in a 5 minutes offset and stopwatch will start from 0:0:5:0 instead of 0:0:0:0 |
+| enableMilliseconds | boolean | No | flag to enable millisecond accuracy, `false` by default |
 
 ### Values
 
 | key | Type | Description |
 | --- | --- | ---- |
+| milliseconds | number | milliseconds value is disabled by default, if you need ms value enable it by setting `enableMilliseconds: true` |
 | seconds | number | seconds value |
 | minutes | number | minutes value |
 | hours | number | hours value |
