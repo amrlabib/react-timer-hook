@@ -70,7 +70,7 @@ export default function App() {
         <Separator />
         <UseStopwatchDemo enableMilliseconds={true} />
         <Separator />
-        <UseTimeDemo />
+        <UseTimeDemo enableMilliseconds={true} />
       </Container>
     </div>
   );

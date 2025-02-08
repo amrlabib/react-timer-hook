@@ -18,36 +18,10 @@ export default class Time {
     };
   }
 
-  static getTimeFromSeconds(secs) {
-    const totalSeconds = Math.ceil(secs);
-    const days = Math.floor(totalSeconds / (60 * 60 * 24));
-    const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
-    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
-    const seconds = Math.floor(totalSeconds % 60);
-
-    return {
-      totalSeconds,
-      seconds,
-      minutes,
-      hours,
-      days,
-    };
-  }
-
   static getMillisecondsFromExpiry(expiry) {
     const now = new Date().getTime();
     const milliSecondsDistance = expiry - now;
     return milliSecondsDistance > 0 ? milliSecondsDistance : 0;
-  }
-
-  static getSecondsFromExpiry(expiry, shouldRound) {
-    const now = new Date().getTime();
-    const milliSecondsDistance = expiry - now;
-    if (milliSecondsDistance > 0) {
-      const val = milliSecondsDistance / 1000;
-      return shouldRound ? Math.round(val) : val;
-    }
-    return 0;
   }
 
   static getMillisecondsFromPrevTime(prevTime) {
@@ -56,15 +30,20 @@ export default class Time {
     return milliSecondsDistance > 0 ? milliSecondsDistance : 0;
   }
 
-  static getSecondsFromTimeNow() {
+  static getMillisecondsFromTimeNow() {
     const now = new Date();
     const currentTimestamp = now.getTime();
-    const offset = (now.getTimezoneOffset() * 60);
-    return (currentTimestamp / 1000) - offset;
+    const offset = (now.getTimezoneOffset() * 60 * 1000);
+    return currentTimestamp - offset;
   }
 
-  static getFormattedTimeFromSeconds(totalSeconds, format) {
-    const { seconds: secondsValue, minutes, hours } = Time.getTimeFromSeconds(totalSeconds);
+  static getFormattedTimeFromMilliseconds(milliseconds, format) {
+    const {
+      milliseconds: millisecVal,
+      seconds: secondsValue,
+      minutes,
+      hours,
+    } = Time.getTimeFromMilliseconds(milliseconds);
     let ampm = '';
     let hoursValue = hours;
 
@@ -74,6 +53,7 @@ export default class Time {
     }
 
     return {
+      milliseconds: millisecVal,
       seconds: secondsValue,
       minutes,
       hours: hoursValue,

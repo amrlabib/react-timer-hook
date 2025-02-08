@@ -2,14 +2,16 @@ import { useState } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
 
-export default function useTime({ format } = {}) {
-  const [seconds, setSeconds] = useState(Time.getSecondsFromTimeNow());
+const MILLISEC_INTERVAL = 1;
+const SECOND_INTERVAL = 1000;
+export default function useTime({ format, enableMilliseconds = false } = {}) {
+  const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromTimeNow());
 
   useInterval(() => {
-    setSeconds(Time.getSecondsFromTimeNow());
-  }, 1000);
+    setMilliseconds(Time.getMillisecondsFromTimeNow());
+  }, enableMilliseconds ? MILLISEC_INTERVAL : SECOND_INTERVAL);
 
   return {
-    ...Time.getFormattedTimeFromSeconds(seconds, format),
+    ...Time.getFormattedTimeFromMilliseconds(milliseconds, format),
   };
 }
