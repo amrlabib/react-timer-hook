@@ -1,9 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
+import { MILLISEC_INTERVAL, SECOND_INTERVAL } from './constants';
 
-const MILLISEC_INTERVAL = 1;
-const SECOND_INTERVAL = 1000;
 export default function useStopwatch({ autoStart, offsetTimestamp, enableMilliseconds = false } = {}) {
   const [passedMilliseconds, setPassedMilliseconds] = useState(Time.getMillisecondsFromExpiry(offsetTimestamp) || 0);
   const [prevTime, setPrevTime] = useState(new Date());

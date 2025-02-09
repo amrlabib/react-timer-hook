@@ -1,9 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Time, Validate } from './utils';
 import { useInterval } from './hooks';
+import { MILLISEC_INTERVAL, SECOND_INTERVAL } from './constants';
 
-const MILLISEC_INTERVAL = 1;
-const SECOND_INTERVAL = 1000;
 function getIntervalFromExpiryTimestamp(expiryTimestamp) {
   if (!Validate.expiryTimestamp(expiryTimestamp)) {
     return null;

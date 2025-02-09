@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
+import { MILLISEC_INTERVAL, SECOND_INTERVAL } from './constants';
 
-const MILLISEC_INTERVAL = 1;
-const SECOND_INTERVAL = 1000;
 export default function useTime({ format, enableMilliseconds = false } = {}) {
   const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromTimeNow());
 
