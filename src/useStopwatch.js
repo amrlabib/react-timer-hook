@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
 
@@ -10,17 +10,21 @@ export default function useStopwatch({ autoStart, offsetTimestamp, enableMillise
   const [milliseconds, setMilliseconds] = useState(passedMilliseconds + Time.getMillisecondsFromPrevTime(prevTime || 0));
   const [isRunning, setIsRunning] = useState(autoStart);
   const [interval, setInterval] = useState(MILLISEC_INTERVAL);
+  const [precisionCounter, setPrecisionCounter] = useState(0);
 
   useInterval(() => {
-    // Initially interval is 1ms to handle offsetTimestamp with precision
+    setPrecisionCounter(precisionCounter + 1);
+    setMilliseconds(passedMilliseconds + Time.getMillisecondsFromPrevTime(prevTime));
+  }, isRunning ? interval : null);
+
+  useEffect(() => {
+    // Initially interval is 1ms to handle expiryTimestamp with precision
     // Then we change from 1 millisecond to 1 second interval if enableMilliseconds is false and we are not interested in millisecond values
-    if (!enableMilliseconds && interval === MILLISEC_INTERVAL) {
+    if (!enableMilliseconds && interval === MILLISEC_INTERVAL && precisionCounter > 60) {
       const { milliseconds: millisecondsVal } = Time.getTimeFromMilliseconds(milliseconds);
       millisecondsVal <= 50 && setInterval(SECOND_INTERVAL);
     }
-
-    setMilliseconds(passedMilliseconds + Time.getMillisecondsFromPrevTime(prevTime));
-  }, isRunning ? interval : null);
+  }, [milliseconds, enableMilliseconds, interval, precisionCounter]);
 
   const start = useCallback(() => {
     const newPrevTime = new Date();
@@ -32,11 +36,14 @@ export default function useStopwatch({ autoStart, offsetTimestamp, enableMillise
   const pause = useCallback(() => {
     setPassedMilliseconds(milliseconds);
     setIsRunning(false);
+    setPrecisionCounter(0);
+    setInterval(MILLISEC_INTERVAL);
   }, [milliseconds]);
 
   const reset = useCallback((offset = 0, newAutoStart = true) => {
     const newPassedSeconds = Time.getMillisecondsFromExpiry(offset) || 0;
     const newPrevTime = new Date();
+    setPrecisionCounter(0);
     setPrevTime(newPrevTime);
     setPassedMilliseconds(newPassedSeconds);
     setIsRunning(newAutoStart);
