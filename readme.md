@@ -25,6 +25,7 @@ import { useTimer } from 'react-timer-hook';
 function MyTimer({ expiryTimestamp }) {
   const {
     totalSeconds,
+    milliseconds,
     seconds,
     minutes,
     hours,
@@ -34,7 +35,7 @@ function MyTimer({ expiryTimestamp }) {
     pause,
     resume,
     restart,
-  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called'), enableMilliseconds: true });
 
 
   return (
@@ -42,7 +43,7 @@ function MyTimer({ expiryTimestamp }) {
       <h1>react-timer-hook </h1>
       <p>Timer Demo</p>
       <div style={{fontSize: '100px'}}>
-        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>:<span>{milliseconds}</span>
       </div>
       <p>{isRunning ? 'Running' : 'Not running'}</p>
       <button onClick={start}>Start</button>
@@ -110,6 +111,7 @@ import { useStopwatch } from 'react-timer-hook';
 function MyStopwatch() {
   const {
     totalSeconds,
+    milliseconds,
     seconds,
     minutes,
     hours,
@@ -118,7 +120,7 @@ function MyStopwatch() {
     start,
     pause,
     reset,
-  } = useStopwatch({ autoStart: true });
+  } = useStopwatch({ autoStart: true, enableMilliseconds: true });
 
 
   return (
@@ -126,7 +128,7 @@ function MyStopwatch() {
       <h1>react-timer-hook</h1>
       <p>Stopwatch Demo</p>
       <div style={{fontSize: '100px'}}>
-        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>:<span>{milliseconds}</span>
       </div>
       <p>{isRunning ? 'Running' : 'Not running'}</p>
       <button onClick={start}>Start</button>
