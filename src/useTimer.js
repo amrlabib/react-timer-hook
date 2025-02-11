@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Time, Validate } from './utils';
 import { useInterval } from './hooks';
-import { MILLISEC_INTERVAL, SECOND_INTERVAL } from './constants';
+import { MILLISEC_INTERVAL, SECOND_INTERVAL, PRECISION_COUNTER_LIMIT } from './constants';
 
 function getIntervalFromExpiryTimestamp(expiryTimestamp) {
   if (!Validate.expiryTimestamp(expiryTimestamp)) {
@@ -27,6 +27,7 @@ export default function useTimer({
     Validate.onExpire(onExpire) && onExpire();
     setIsRunning(false);
     setInterval(null);
+    setPrecisionCounter(0);
   }, [onExpire]);
 
   const pause = useCallback(() => {
@@ -62,7 +63,7 @@ export default function useTimer({
   useEffect(() => {
     // Initially interval is 1ms to handle expiryTimestamp with precision, example 10.4s timer
     // Then we change from 1 millisecond to 1 second interval if enableMilliseconds is false and we are not interested in millisecond values
-    if (!enableMilliseconds && interval === MILLISEC_INTERVAL && precisionCounter > 60) {
+    if (!enableMilliseconds && interval === MILLISEC_INTERVAL && precisionCounter > PRECISION_COUNTER_LIMIT) {
       const { milliseconds: millisecondsVal } = Time.getTimeFromMilliseconds(milliseconds);
       millisecondsVal >= 950 && setInterval(SECOND_INTERVAL);
     }
@@ -71,7 +72,7 @@ export default function useTimer({
   useInterval(() => {
     const millisecondsValue = Time.getMillisecondsFromExpiry(expiryTimestamp);
     setMilliseconds(millisecondsValue);
-    setPrecisionCounter(precisionCounter + 1);
+    precisionCounter <= PRECISION_COUNTER_LIMIT && setPrecisionCounter(precisionCounter + 1);
     if (millisecondsValue <= 0) {
       handleExpire();
     }

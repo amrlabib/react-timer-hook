@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
-import { MILLISEC_INTERVAL, SECOND_INTERVAL } from './constants';
+import { MILLISEC_INTERVAL, SECOND_INTERVAL, PRECISION_COUNTER_LIMIT } from './constants';
 
 export default function useStopwatch({ autoStart, offsetTimestamp, enableMilliseconds = false } = {}) {
   const [passedMilliseconds, setPassedMilliseconds] = useState(Time.getMillisecondsFromExpiry(offsetTimestamp) || 0);
@@ -12,14 +12,14 @@ export default function useStopwatch({ autoStart, offsetTimestamp, enableMillise
   const [precisionCounter, setPrecisionCounter] = useState(0);
 
   useInterval(() => {
-    setPrecisionCounter(precisionCounter + 1);
     setMilliseconds(passedMilliseconds + Time.getMillisecondsFromPrevTime(prevTime));
+    precisionCounter <= PRECISION_COUNTER_LIMIT && setPrecisionCounter(precisionCounter + 1);
   }, isRunning ? interval : null);
 
   useEffect(() => {
     // Initially interval is 1ms to handle expiryTimestamp with precision
     // Then we change from 1 millisecond to 1 second interval if enableMilliseconds is false and we are not interested in millisecond values
-    if (!enableMilliseconds && interval === MILLISEC_INTERVAL && precisionCounter > 60) {
+    if (!enableMilliseconds && interval === MILLISEC_INTERVAL && precisionCounter > PRECISION_COUNTER_LIMIT) {
       const { milliseconds: millisecondsVal } = Time.getTimeFromMilliseconds(milliseconds);
       millisecondsVal <= 50 && setInterval(SECOND_INTERVAL);
     }
