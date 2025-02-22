@@ -17,11 +17,11 @@ export default function useStopwatch({ autoStart, offsetTimestamp, enableMillise
   }, isRunning ? interval : null);
 
   useEffect(() => {
-    // Initially interval is 1ms to handle expiryTimestamp with precision
-    // Then we change from 1 millisecond to 1 second interval if enableMilliseconds is false and we are not interested in millisecond values
+    // Initially interval is set to MILLISEC_INTERVAL to handle expiryTimestamp with precision
+    // Then we change from MILLISEC_INTERVAL to SECOND_INTERVAL if enableMilliseconds is false and we are not interested in millisecond values
     if (!enableMilliseconds && interval === MILLISEC_INTERVAL && precisionCounter > PRECISION_COUNTER_LIMIT) {
       const { milliseconds: millisecondsVal } = Time.getTimeFromMilliseconds(milliseconds);
-      millisecondsVal <= 50 && setInterval(SECOND_INTERVAL);
+      millisecondsVal <= (PRECISION_COUNTER_LIMIT * MILLISEC_INTERVAL) && setInterval(SECOND_INTERVAL);
     }
   }, [milliseconds, enableMilliseconds, interval, precisionCounter]);
 
@@ -40,13 +40,14 @@ export default function useStopwatch({ autoStart, offsetTimestamp, enableMillise
   }, [milliseconds]);
 
   const reset = useCallback((offset = 0, newAutoStart = true) => {
-    const newPassedSeconds = Time.getMillisecondsFromExpiry(offset) || 0;
+    const newPassedMilliseconds = Time.getMillisecondsFromExpiry(offset) || 0;
     const newPrevTime = new Date();
     setPrecisionCounter(0);
     setPrevTime(newPrevTime);
-    setPassedMilliseconds(newPassedSeconds);
+    setPassedMilliseconds(newPassedMilliseconds);
     setIsRunning(newAutoStart);
-    setMilliseconds(newPassedSeconds + Time.getMillisecondsFromPrevTime(newPrevTime));
+    setInterval(MILLISEC_INTERVAL);
+    setMilliseconds(newPassedMilliseconds + Time.getMillisecondsFromPrevTime(newPrevTime));
   }, []);
 
   return {

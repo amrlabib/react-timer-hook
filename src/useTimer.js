@@ -61,11 +61,11 @@ export default function useTimer({
   }, [expiryTimestamp, didStart, resume]);
 
   useEffect(() => {
-    // Initially interval is 1ms to handle expiryTimestamp with precision, example 10.4s timer
-    // Then we change from 1 millisecond to 1 second interval if enableMilliseconds is false and we are not interested in millisecond values
+    // Initially interval is set to MILLISEC_INTERVAL to handle expiryTimestamp with precision, example 10.4s timer
+    // Then we change from MILLISEC_INTERVAL to SECOND_INTERVAL interval if enableMilliseconds is false and we are not interested in millisecond values
     if (!enableMilliseconds && interval === MILLISEC_INTERVAL && precisionCounter > PRECISION_COUNTER_LIMIT) {
       const { milliseconds: millisecondsVal } = Time.getTimeFromMilliseconds(milliseconds);
-      millisecondsVal >= 950 && setInterval(SECOND_INTERVAL);
+      millisecondsVal >= (SECOND_INTERVAL - (PRECISION_COUNTER_LIMIT * MILLISEC_INTERVAL)) && setInterval(SECOND_INTERVAL);
     }
   }, [milliseconds, enableMilliseconds, interval, precisionCounter]);
 
