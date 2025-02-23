@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Time, Validate } from './utils';
 import { useInterval } from './hooks';
 import { SECOND_INTERVAL } from './constants';
@@ -57,6 +57,10 @@ export default function useTimer({
       setInterval(millisecondsValue);
     }
   }, isRunning ? interval : null);
+
+  useEffect(() => {
+    Validate.expiryTimestamp(expiryTimestamp);
+  }, [expiryTimestamp]);
 
   return {
     ...Time.getTimeFromMilliseconds(milliseconds), start, pause, resume, restart, isRunning,
