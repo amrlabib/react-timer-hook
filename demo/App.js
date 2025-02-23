@@ -66,11 +66,11 @@ export default function App() {
         <p>
           React timer hook is a custom <a href="https://reactjs.org/docs/hooks-intro.html" target="_blank">react hook</a> built to handle timer, stopwatch, and time logic/state in your react component.
         </p>
-        <UseTimerDemo expiryTimestamp={time} enableMilliseconds={true} />
+        <UseTimerDemo expiryTimestamp={time} interval={20} />
         <Separator />
-        <UseStopwatchDemo enableMilliseconds={true} />
+        <UseStopwatchDemo interval={20} />
         <Separator />
-        <UseTimeDemo enableMilliseconds={true} />
+        <UseTimeDemo interval={20} />
       </Container>
     </div>
   );

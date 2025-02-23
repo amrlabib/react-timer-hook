@@ -35,7 +35,7 @@ function MyTimer({ expiryTimestamp }) {
     pause,
     resume,
     restart,
-  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called'), enableMilliseconds: true });
+  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called'), interval: 20 });
 
 
   return (
@@ -76,7 +76,7 @@ export default function App() {
 | --- | --- | --- | ---- |
 | expiryTimestamp | Date object | YES | this will define for how long the timer will be running   |
 | autoStart | boolean | No | flag to decide if timer should start automatically, by default it is set to `true` |
-| enableMilliseconds | boolean | No | flag to enable access to milliseconds value, `false` by default |
+| interval | number | No | value to change the interval of the timer, by default it is set to 1000ms, Note: this value will not affect the timer it will just define the interval used to calculate the current timer values, For example if you have a usecase where milliseconds are used you need to use smaller value for interval example 20ms or 100ms based on your needs |
 | onExpire | Function | No | callback function to be executed once countdown timer is expired |
 
 
@@ -84,7 +84,7 @@ export default function App() {
 
 | key | Type | Description |
 | --- | --- | ---- |
-| milliseconds | number | milliseconds value is disabled by default, if you need ms value enable it by setting `enableMilliseconds: true` |
+| milliseconds | number | milliseconds value, to get accurate ms values you need to set interval to a smaller value example: 20ms |
 | seconds | number | seconds value |
 | minutes | number | minutes value |
 | hours | number | hours value |
@@ -120,7 +120,7 @@ function MyStopwatch() {
     start,
     pause,
     reset,
-  } = useStopwatch({ autoStart: true, enableMilliseconds: true });
+  } = useStopwatch({ autoStart: true, interval: 20 });
 
 
   return (
@@ -153,13 +153,13 @@ export default function App() {
 | --- | --- | --- | ---- |
 | autoStart | boolean | No | if set to `true` stopwatch will auto start, by default it is set to `false` |
 | offsetTimestamp | Date object | No | this will define the initial stopwatch offset example: `const stopwatchOffset = new Date(); stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + 300);` this will result in a 5 minutes offset and stopwatch will start from 0:0:5:0 instead of 0:0:0:0 |
-| enableMilliseconds | boolean | No | flag to enable access to milliseconds value, `false` by default |
+| interval | number | No | value to change the interval of the stopwatch, by default it is set to 1000ms, Note: this value will not affect the stopwatch it will just define the interval used to calculate the current passed values, For example if you have a usecase where milliseconds are used you need to use smaller value for interval example 20ms or 100ms based on your needs |
 
 ### Values
 
 | key | Type | Description |
 | --- | --- | ---- |
-| milliseconds | number | milliseconds value is disabled by default, if you need ms value enable it by setting `enableMilliseconds: true` |
+| milliseconds | number | milliseconds value, to get accurate ms values you need to set interval to a smaller value example: 20ms |
 | seconds | number | seconds value |
 | minutes | number | minutes value |
 | hours | number | hours value |
@@ -184,18 +184,19 @@ import { useTime } from 'react-timer-hook';
 
 function MyTime() {
   const {
+    milliseconds,
     seconds,
     minutes,
     hours,
     ampm,
-  } = useTime({ format: '12-hour'});
+  } = useTime({ format: '12-hour', interval: 20 });
 
   return (
     <div style={{textAlign: 'center'}}>
       <h1>react-timer-hook </h1>
       <p>Current Time Demo</p>
       <div style={{fontSize: '100px'}}>
-        <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span><span>{ampm}</span>
+        <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span><span>{milliseconds}</span><span>{ampm}</span>
       </div>
     </div>
   );
@@ -215,11 +216,13 @@ export default function App() {
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
 | format | string | No | if set to `12-hour` time will be formatted with am/pm |
+| interval | number | No | value to change the interval of the time, by default it is set to 1000ms, Note: this value will not affect the time it will just define the interval difference to calculate the current time, For example if you have a usecase where milliseconds are used you need to use smaller value for interval example 20ms or 100ms based on your needs |
 
 ### Values
 
 | key | Type | Description |
 | --- | --- | ---- |
+| milliseconds | number | milliseconds value |
 | seconds | number | seconds value |
 | minutes | number | minutes value |
 | hours | number | hours value |

@@ -1,3 +1,5 @@
+import Validate from './Validate';
+
 export default class Time {
   static getTimeFromMilliseconds(millisecs, isCountDown = true) {
     const totalSeconds = isCountDown ? Math.ceil(millisecs / 1000) : Math.floor(millisecs / 1000);
@@ -19,6 +21,10 @@ export default class Time {
   }
 
   static getMillisecondsFromExpiry(expiry) {
+    if (!Validate.expiryTimestamp(expiry)) {
+      return 0;
+    }
+
     const now = new Date().getTime();
     const milliSecondsDistance = expiry - now;
     return milliSecondsDistance > 0 ? milliSecondsDistance : 0;
