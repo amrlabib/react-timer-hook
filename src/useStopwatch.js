@@ -8,7 +8,8 @@ export default function useStopwatch({ autoStart, offsetTimestamp, interval: cus
   const [prevTime, setPrevTime] = useState(new Date());
   const [milliseconds, setMilliseconds] = useState(passedMilliseconds + Time.getMillisecondsFromPrevTime(prevTime || 0));
   const [isRunning, setIsRunning] = useState(autoStart);
-  const [interval, setInterval] = useState(milliseconds % SECOND_INTERVAL || customInterval);
+  const millisecondsInitialOffset = SECOND_INTERVAL - (milliseconds % SECOND_INTERVAL);
+  const [interval, setInterval] = useState(customInterval < millisecondsInitialOffset ? customInterval : millisecondsInitialOffset);
 
   useInterval(() => {
     if (interval !== customInterval) {
@@ -26,9 +27,9 @@ export default function useStopwatch({ autoStart, offsetTimestamp, interval: cus
   }, [passedMilliseconds]);
 
   const pause = useCallback(() => {
-    setPassedMilliseconds(milliseconds);
+    setPassedMilliseconds(passedMilliseconds + Time.getMillisecondsFromPrevTime(prevTime));
     setIsRunning(false);
-  }, [milliseconds]);
+  }, [passedMilliseconds, prevTime]);
 
   const reset = useCallback((offset = 0, newAutoStart = true) => {
     const newPassedMilliseconds = Time.getMillisecondsFromExpiry(offset) || 0;
