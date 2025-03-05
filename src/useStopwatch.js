@@ -4,9 +4,9 @@ import { useInterval } from './hooks';
 import { SECOND_INTERVAL } from './constants';
 
 export default function useStopwatch({ autoStart, offsetTimestamp, interval: customInterval = SECOND_INTERVAL } = {}) {
-  const [passedMilliseconds, setPassedMilliseconds] = useState(Time.getMillisecondsFromExpiry(offsetTimestamp) || 0);
-  const [prevTime, setPrevTime] = useState(new Date());
-  const [milliseconds, setMilliseconds] = useState(passedMilliseconds + Time.getMillisecondsFromPrevTime(prevTime || 0));
+  const offsetMilliseconds = Time.getMillisecondsFromExpiry(offsetTimestamp) || 0;
+  const [prevTime, setPrevTime] = useState(new Date() - new Date(offsetMilliseconds));
+  const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromPrevTime(prevTime || 0));
   const [isRunning, setIsRunning] = useState(autoStart);
   const millisecondsInitialOffset = SECOND_INTERVAL - (milliseconds % SECOND_INTERVAL);
   const [interval, setInterval] = useState(customInterval < millisecondsInitialOffset ? customInterval : millisecondsInitialOffset);
@@ -16,29 +16,27 @@ export default function useStopwatch({ autoStart, offsetTimestamp, interval: cus
       setInterval(customInterval);
     }
 
-    setMilliseconds(passedMilliseconds + Time.getMillisecondsFromPrevTime(prevTime));
+    setMilliseconds(Time.getMillisecondsFromPrevTime(prevTime));
   }, isRunning ? interval : null);
 
   const start = useCallback(() => {
-    const newPrevTime = new Date();
-    setPrevTime(newPrevTime);
+    setPrevTime(new Date() - new Date(milliseconds));
     setIsRunning(true);
-    setMilliseconds(passedMilliseconds + Time.getMillisecondsFromPrevTime(newPrevTime));
-  }, [passedMilliseconds]);
+  }, [milliseconds]);
 
   const pause = useCallback(() => {
-    setPassedMilliseconds(passedMilliseconds + Time.getMillisecondsFromPrevTime(prevTime));
+    setMilliseconds(Time.getMillisecondsFromPrevTime(prevTime));
     setIsRunning(false);
-  }, [passedMilliseconds, prevTime]);
+  }, [prevTime]);
 
   const reset = useCallback((offset = 0, newAutoStart = true) => {
-    const newPassedMilliseconds = Time.getMillisecondsFromExpiry(offset) || 0;
-    const newPrevTime = new Date();
+    const newOffsetMilliseconds = Time.getMillisecondsFromExpiry(offset) || 0;
+    const newPrevTime = new Date() - new Date(newOffsetMilliseconds);
+    const newMilliseconds = Time.getMillisecondsFromPrevTime(newPrevTime);
+    const millisecondsOffset = SECOND_INTERVAL - (newMilliseconds % SECOND_INTERVAL);
     setPrevTime(newPrevTime);
-    setPassedMilliseconds(newPassedMilliseconds);
-    const newMilliseconds = newPassedMilliseconds + Time.getMillisecondsFromPrevTime(newPrevTime);
     setMilliseconds(newMilliseconds);
-    setInterval(newMilliseconds % SECOND_INTERVAL || customInterval);
+    setInterval(customInterval < millisecondsOffset ? customInterval : millisecondsOffset);
     setIsRunning(newAutoStart);
   }, [customInterval]);
 
