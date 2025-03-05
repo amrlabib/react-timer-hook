@@ -76,7 +76,7 @@ export default function App() {
 | --- | --- | --- | ---- |
 | expiryTimestamp | Date object | YES | this will define for how long the timer will be running   |
 | autoStart | boolean | No | flag to decide if timer should start automatically, by default it is set to `true` |
-| interval | number | No | value to change the interval of the timer, by default it is set to 1000ms, Note: this value will not affect the timer it will just define the interval used to calculate the current timer values, For example if you have a usecase where milliseconds are used you need to use smaller value for interval example 20ms or 100ms based on your needs |
+| interval | number | No | value to change the interval of the timer, by default it is set to 1000ms. Note: this value will not affect the timer, it will just define the frequency used to calculate the current timer values. For example, if you have a use case where milliseconds are used, you need to use a smaller value for the interval, for example, 20ms or 100ms based on your needs. |
 | onExpire | Function | No | callback function to be executed once countdown timer is expired |
 
 
@@ -153,7 +153,7 @@ export default function App() {
 | --- | --- | --- | ---- |
 | autoStart | boolean | No | if set to `true` stopwatch will auto start, by default it is set to `false` |
 | offsetTimestamp | Date object | No | this will define the initial stopwatch offset example: `const stopwatchOffset = new Date(); stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + 300);` this will result in a 5 minutes offset and stopwatch will start from 0:0:5:0 instead of 0:0:0:0 |
-| interval | number | No | value to change the interval of the stopwatch, by default it is set to 1000ms, Note: this value will not affect the stopwatch it will just define the interval used to calculate the current passed values, For example if you have a usecase where milliseconds are used you need to use smaller value for interval example 20ms or 100ms based on your needs |
+| interval | number | No | value to change the interval of the stopwatch, by default it is set to 1000ms. Note: this value will not affect the stopwatch, it will just define the frequency used to calculate the current timer values. For example, if you have a use case where milliseconds are used, you need to use a smaller value for the interval, for example, 20ms or 100ms based on your needs. |
 
 ### Values
 
@@ -216,7 +216,7 @@ export default function App() {
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
 | format | string | No | if set to `12-hour` time will be formatted with am/pm |
-| interval | number | No | value to change the interval of the time, by default it is set to 1000ms, Note: this value will not affect the time it will just define the interval difference to calculate the current time, For example if you have a usecase where milliseconds are used you need to use smaller value for interval example 20ms or 100ms based on your needs |
+| interval | number | No | value to change the interval of the time, by default it is set to 1000ms. Note: this value will not affect the thime, it will just define the frequency used to calculate the current time values. For example, if you have a use case where milliseconds are used, you need to use a smaller value for the interval, for example, 20ms or 100ms based on your needs. |
 
 ### Values
 
