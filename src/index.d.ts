@@ -2,7 +2,7 @@ interface TimerSettings {
     autoStart?: boolean;
     expiryTimestamp: Date;
     onExpire?: () => void;
-    enableMilliseconds?: boolean;
+    interval?: number;
 }
 
 interface TimerResult {
@@ -25,7 +25,7 @@ export function useTimer(settings: TimerSettings): TimerResult
 interface StopwatchSettings {
     autoStart?: boolean;
     offsetTimestamp?: Date;
-    enableMilliseconds?: boolean;
+    interval?: number;
 }
 
 interface StopwatchResult {
@@ -46,6 +46,7 @@ export function useStopwatch(settings?: StopwatchSettings): StopwatchResult
 
 interface TimeSettings {
     format?: '12-hour';
+    interval?: number;
 }
 
 interface TimeResult {
