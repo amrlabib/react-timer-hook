@@ -25,6 +25,7 @@ import { useTimer } from 'react-timer-hook';
 function MyTimer({ expiryTimestamp }) {
   const {
     totalSeconds,
+    milliseconds,
     seconds,
     minutes,
     hours,
@@ -34,7 +35,7 @@ function MyTimer({ expiryTimestamp }) {
     pause,
     resume,
     restart,
-  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called'), interval: 20 });
 
 
   return (
@@ -42,7 +43,7 @@ function MyTimer({ expiryTimestamp }) {
       <h1>react-timer-hook </h1>
       <p>Timer Demo</p>
       <div style={{fontSize: '100px'}}>
-        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>:<span>{milliseconds}</span>
       </div>
       <p>{isRunning ? 'Running' : 'Not running'}</p>
       <button onClick={start}>Start</button>
@@ -75,6 +76,7 @@ export default function App() {
 | --- | --- | --- | ---- |
 | expiryTimestamp | Date object | YES | this will define for how long the timer will be running   |
 | autoStart | boolean | No | flag to decide if timer should start automatically, by default it is set to `true` |
+| interval | number | No | value to change the interval of the timer, by default it is set to 1000ms. Note: this value will not affect the timer, it will just define the frequency used to calculate the current timer values. For example, if you have a use case where milliseconds are used, you need to use a smaller value for the interval, for example, 20ms or 100ms based on your needs. |
 | onExpire | Function | No | callback function to be executed once countdown timer is expired |
 
 
@@ -82,11 +84,13 @@ export default function App() {
 
 | key | Type | Description |
 | --- | --- | ---- |
+| milliseconds | number | milliseconds value, to get accurate ms values you need to set interval to a smaller value example: 20ms |
 | seconds | number | seconds value |
 | minutes | number | minutes value |
 | hours | number | hours value |
 | days | number | days value |
 | totalSeconds | number | total number of seconds left in timer NOT converted to minutes, hours or days |
+| totalMilliseconds | number | total number of milliseconds left in timer NOT converted to minutes, hours or days |
 | isRunning | boolean | flag to indicate if timer is running or not |
 | pause | function | function to be called to pause timer |
 | start | function | function if called after pause the timer will continue based on original expiryTimestamp |
@@ -107,6 +111,7 @@ import { useStopwatch } from 'react-timer-hook';
 function MyStopwatch() {
   const {
     totalSeconds,
+    milliseconds,
     seconds,
     minutes,
     hours,
@@ -115,7 +120,7 @@ function MyStopwatch() {
     start,
     pause,
     reset,
-  } = useStopwatch({ autoStart: true });
+  } = useStopwatch({ autoStart: true, interval: 20 });
 
 
   return (
@@ -123,7 +128,7 @@ function MyStopwatch() {
       <h1>react-timer-hook</h1>
       <p>Stopwatch Demo</p>
       <div style={{fontSize: '100px'}}>
-        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>:<span>{milliseconds}</span>
       </div>
       <p>{isRunning ? 'Running' : 'Not running'}</p>
       <button onClick={start}>Start</button>
@@ -148,11 +153,13 @@ export default function App() {
 | --- | --- | --- | ---- |
 | autoStart | boolean | No | if set to `true` stopwatch will auto start, by default it is set to `false` |
 | offsetTimestamp | Date object | No | this will define the initial stopwatch offset example: `const stopwatchOffset = new Date(); stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + 300);` this will result in a 5 minutes offset and stopwatch will start from 0:0:5:0 instead of 0:0:0:0 |
+| interval | number | No | value to change the interval of the stopwatch, by default it is set to 1000ms. Note: this value will not affect the stopwatch, it will just define the frequency used to calculate the current timer values. For example, if you have a use case where milliseconds are used, you need to use a smaller value for the interval, for example, 20ms or 100ms based on your needs. |
 
 ### Values
 
 | key | Type | Description |
 | --- | --- | ---- |
+| milliseconds | number | milliseconds value, to get accurate ms values you need to set interval to a smaller value example: 20ms |
 | seconds | number | seconds value |
 | minutes | number | minutes value |
 | hours | number | hours value |
@@ -177,18 +184,19 @@ import { useTime } from 'react-timer-hook';
 
 function MyTime() {
   const {
+    milliseconds,
     seconds,
     minutes,
     hours,
     ampm,
-  } = useTime({ format: '12-hour'});
+  } = useTime({ format: '12-hour', interval: 20 });
 
   return (
     <div style={{textAlign: 'center'}}>
       <h1>react-timer-hook </h1>
       <p>Current Time Demo</p>
       <div style={{fontSize: '100px'}}>
-        <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span><span>{ampm}</span>
+        <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span><span>{milliseconds}</span><span>{ampm}</span>
       </div>
     </div>
   );
@@ -208,11 +216,13 @@ export default function App() {
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
 | format | string | No | if set to `12-hour` time will be formatted with am/pm |
+| interval | number | No | value to change the interval of the time, by default it is set to 1000ms. Note: this value will not affect the thime, it will just define the frequency used to calculate the current time values. For example, if you have a use case where milliseconds are used, you need to use a smaller value for the interval, for example, 20ms or 100ms based on your needs. |
 
 ### Values
 
 | key | Type | Description |
 | --- | --- | ---- |
+| milliseconds | number | milliseconds value |
 | seconds | number | seconds value |
 | minutes | number | minutes value |
 | hours | number | hours value |

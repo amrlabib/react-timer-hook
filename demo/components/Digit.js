@@ -31,8 +31,9 @@ const SingleDigit = styled.span`
   border-radius: 5px;
   padding: 10px 12px;
   color: white;
-  &:first-child {
-    margin-right: 2px;
+  margin-right: 2px;
+  &:last-child {
+    margin-right: ;
   }
   &:after {
     position: absolute;
@@ -48,18 +49,29 @@ const SingleDigit = styled.span`
   }
 `;
 
-export default function Digit({ value, title }) {
-  const leftDigit = value >= 10 ? value.toString()[0] : '0';
-  const rightDigit = value >= 10 ? value.toString()[1] : value.toString();
+export default function Digit({ value, title, isMIlliseconds }) {
+  const digits = value.toString().padStart(4, '0');
   return (
     <Container>
       <Title>{title}</Title>
       <DigitContainer>
+        {isMIlliseconds ?
+          <>
+            <SingleDigit>
+              {digits[0]}
+            </SingleDigit>
+            <SingleDigit>
+              {digits[1]}
+            </SingleDigit>
+          </>
+          : 
+          null
+        }
         <SingleDigit>
-          {leftDigit}
+          {digits[2]}
         </SingleDigit>
         <SingleDigit>
-          {rightDigit}
+          {digits[3]}
         </SingleDigit>
       </DigitContainer>
     </Container>

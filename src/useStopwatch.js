@@ -1,39 +1,46 @@
 import { useState, useCallback } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
+import { SECOND_INTERVAL } from './constants';
 
-export default function useStopwatch({ autoStart, offsetTimestamp } = {}) {
-  const [passedSeconds, setPassedSeconds] = useState(Time.getSecondsFromExpiry(offsetTimestamp, true) || 0);
-  const [prevTime, setPrevTime] = useState(new Date());
-  const [seconds, setSeconds] = useState(passedSeconds + Time.getSecondsFromPrevTime(prevTime || 0, true));
+export default function useStopwatch({ autoStart, offsetTimestamp, interval: customInterval = SECOND_INTERVAL } = {}) {
+  const offsetMilliseconds = Time.getMillisecondsFromExpiry(offsetTimestamp) || 0;
+  const [prevTime, setPrevTime] = useState(new Date() - new Date(offsetMilliseconds));
+  const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromPrevTime(prevTime || 0));
   const [isRunning, setIsRunning] = useState(autoStart);
+  const millisecondsInitialOffset = SECOND_INTERVAL - (milliseconds % SECOND_INTERVAL);
+  const [interval, setInterval] = useState(customInterval < millisecondsInitialOffset ? customInterval : millisecondsInitialOffset);
 
   useInterval(() => {
-    setSeconds(passedSeconds + Time.getSecondsFromPrevTime(prevTime, true));
-  }, isRunning ? 1000 : null);
+    if (interval !== customInterval) {
+      setInterval(customInterval);
+    }
+
+    setMilliseconds(Time.getMillisecondsFromPrevTime(prevTime));
+  }, isRunning ? interval : null);
 
   const start = useCallback(() => {
-    const newPrevTime = new Date();
-    setPrevTime(newPrevTime);
+    setPrevTime(new Date() - new Date(milliseconds));
     setIsRunning(true);
-    setSeconds(passedSeconds + Time.getSecondsFromPrevTime(newPrevTime, true));
-  }, [passedSeconds]);
+  }, [milliseconds]);
 
   const pause = useCallback(() => {
-    setPassedSeconds(seconds);
+    setMilliseconds(Time.getMillisecondsFromPrevTime(prevTime));
     setIsRunning(false);
-  }, [seconds]);
+  }, [prevTime]);
 
   const reset = useCallback((offset = 0, newAutoStart = true) => {
-    const newPassedSeconds = Time.getSecondsFromExpiry(offset, true) || 0;
-    const newPrevTime = new Date();
+    const newOffsetMilliseconds = Time.getMillisecondsFromExpiry(offset) || 0;
+    const newPrevTime = new Date() - new Date(newOffsetMilliseconds);
+    const newMilliseconds = Time.getMillisecondsFromPrevTime(newPrevTime);
+    const millisecondsOffset = SECOND_INTERVAL - (newMilliseconds % SECOND_INTERVAL);
     setPrevTime(newPrevTime);
-    setPassedSeconds(newPassedSeconds);
+    setMilliseconds(newMilliseconds);
+    setInterval(customInterval < millisecondsOffset ? customInterval : millisecondsOffset);
     setIsRunning(newAutoStart);
-    setSeconds(newPassedSeconds + Time.getSecondsFromPrevTime(newPrevTime, true));
-  }, []);
+  }, [customInterval]);
 
   return {
-    ...Time.getTimeFromSeconds(seconds), start, pause, reset, isRunning,
+    ...Time.getTimeFromMilliseconds(milliseconds, false), start, pause, reset, isRunning,
   };
 }

@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
+import { SECOND_INTERVAL } from './constants';
 
-export default function useTime({ format } = {}) {
-  const [seconds, setSeconds] = useState(Time.getSecondsFromTimeNow());
+export default function useTime({ format, interval: customInterval = SECOND_INTERVAL } = {}) {
+  const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromTimeNow());
 
   useInterval(() => {
-    setSeconds(Time.getSecondsFromTimeNow());
-  }, 1000);
+    setMilliseconds(Time.getMillisecondsFromTimeNow());
+  }, customInterval);
 
   return {
-    ...Time.getFormattedTimeFromSeconds(seconds, format),
+    ...Time.getFormattedTimeFromMilliseconds(milliseconds, format),
   };
 }
