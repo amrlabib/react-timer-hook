@@ -56,8 +56,8 @@ export default function App() {
           <Header>
             <H1>react-timer-hook</H1>
             <div>
-              <iframe src="https://ghbtns.com/github-btn.html?user=amrlabib&repo=react-timer-hook&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160" height="30" title="GitHub" />
-              <iframe src="https://ghbtns.com/github-btn.html?user=amrlabib&repo=react-timer-hook&type=fork&count=true&size=large" frameborder="0" scrolling="0" width="126" height="30" title="GitHub" />
+              <iframe src="https://ghbtns.com/github-btn.html?user=amrlabib&repo=react-timer-hook&type=star&count=true&size=large" frameBorder="0" scrolling="0" width="160" height="30" title="GitHub" />
+              <iframe src="https://ghbtns.com/github-btn.html?user=amrlabib&repo=react-timer-hook&type=fork&count=true&size=large" frameBorder="0" scrolling="0" width="126" height="30" title="GitHub" />
             </div>
           </Header>
         </Container>

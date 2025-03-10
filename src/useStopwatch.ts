@@ -2,10 +2,24 @@ import { useState, useCallback } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
 import { SECOND_INTERVAL } from './constants';
+import { TimeFromMillisecondsType } from './utils/Time';
 
-export default function useStopwatch({ autoStart, offsetTimestamp, interval: customInterval = SECOND_INTERVAL } = {}) {
-  const offsetMilliseconds = Time.getMillisecondsFromExpiry(offsetTimestamp) || 0;
-  const [prevTime, setPrevTime] = useState(new Date() - new Date(offsetMilliseconds));
+export type useStopwatchSettingsType = {
+  autoStart?: boolean,
+  offsetTimestamp?: Date,
+  interval?: number,
+};
+
+export type useStopwatchResultType = TimeFromMillisecondsType & {
+  start: () => void, 
+  pause: () => void, 
+  reset: (offset?: Date, newAutoStart?: boolean) => void, 
+  isRunning: boolean,
+};
+
+export default function useStopwatch({ autoStart = true, offsetTimestamp, interval: customInterval = SECOND_INTERVAL }: useStopwatchSettingsType = {}): useStopwatchResultType {
+  const offsetMilliseconds = offsetTimestamp ? Time.getMillisecondsFromExpiry(offsetTimestamp) : 0;
+  const [prevTime, setPrevTime] = useState<number>(new Date().getTime() - new Date(offsetMilliseconds).getTime());
   const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromPrevTime(prevTime || 0));
   const [isRunning, setIsRunning] = useState(autoStart);
   const millisecondsInitialOffset = SECOND_INTERVAL - (milliseconds % SECOND_INTERVAL);
@@ -20,7 +34,7 @@ export default function useStopwatch({ autoStart, offsetTimestamp, interval: cus
   }, isRunning ? interval : null);
 
   const start = useCallback(() => {
-    setPrevTime(new Date() - new Date(milliseconds));
+    setPrevTime(new Date().getTime() - new Date(milliseconds).getTime());
     setIsRunning(true);
   }, [milliseconds]);
 
@@ -29,9 +43,9 @@ export default function useStopwatch({ autoStart, offsetTimestamp, interval: cus
     setIsRunning(false);
   }, [prevTime]);
 
-  const reset = useCallback((offset = 0, newAutoStart = true) => {
-    const newOffsetMilliseconds = Time.getMillisecondsFromExpiry(offset) || 0;
-    const newPrevTime = new Date() - new Date(newOffsetMilliseconds);
+  const reset = useCallback((offset?: Date, newAutoStart = true) => {
+    const newOffsetMilliseconds = offset ? Time.getMillisecondsFromExpiry(offset) : 0;
+    const newPrevTime = new Date().getTime() - new Date(newOffsetMilliseconds).getTime();
     const newMilliseconds = Time.getMillisecondsFromPrevTime(newPrevTime);
     const millisecondsOffset = SECOND_INTERVAL - (newMilliseconds % SECOND_INTERVAL);
     setPrevTime(newPrevTime);
@@ -41,6 +55,6 @@ export default function useStopwatch({ autoStart, offsetTimestamp, interval: cus
   }, [customInterval]);
 
   return {
-    ...Time.getTimeFromMilliseconds(milliseconds, false), start, pause, reset, isRunning,
+    ...Time.getTimeFromMilliseconds(milliseconds, false),start, pause, reset, isRunning,
   };
 }

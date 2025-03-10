@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-export default function useInterval(callback, delay) {
-  const callbackRef = useRef();
+export default function useInterval(callback: () => void, delay: number | null) {
+  const callbackRef = useRef(callback);
 
   // update callback function with current render callback that has access to latest props and state
   useEffect(() => {

@@ -2,18 +2,34 @@ import { useState, useCallback, useEffect } from 'react';
 import { Time, Validate } from './utils';
 import { useInterval } from './hooks';
 import { SECOND_INTERVAL } from './constants';
+import { TimeFromMillisecondsType } from './utils/Time';
+
+export type useTimerSettingsType = {
+  expiryTimestamp: Date,
+  onExpire?: () => void,
+  autoStart?: boolean,
+  interval: number,
+}
+
+export type useTimerResultType = TimeFromMillisecondsType & {
+  start: () => void, 
+  pause: () => void,
+  resume: () => void, 
+  restart: (newExpiryTimestamp: Date, newAutoStart: boolean) => void,
+  isRunning: boolean,
+};
 
 export default function useTimer({
   expiryTimestamp: expiry,
-  onExpire,
+  onExpire = () => {},
   autoStart = true,
   interval: customInterval = SECOND_INTERVAL,
-} = {}) {
+}: useTimerSettingsType): useTimerResultType {
   const [expiryTimestamp, setExpiryTimestamp] = useState(expiry);
   const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromExpiry(expiryTimestamp));
   const [isRunning, setIsRunning] = useState(autoStart);
   const [didStart, setDidStart] = useState(autoStart);
-  const [interval, setInterval] = useState(customInterval);
+  const [interval, setInterval] = useState<number | null>(customInterval);
 
   const handleExpire = useCallback(() => {
     Validate.onExpire(onExpire) && onExpire();
@@ -25,7 +41,7 @@ export default function useTimer({
     setIsRunning(false);
   }, []);
 
-  const restart = useCallback((newExpiryTimestamp, newAutoStart = true) => {
+  const restart = useCallback((newExpiryTimestamp: Date, newAutoStart = true) => {
     setInterval(customInterval);
     setDidStart(newAutoStart);
     setIsRunning(newAutoStart);
@@ -53,7 +69,7 @@ export default function useTimer({
     setMilliseconds(millisecondsValue);
     if (millisecondsValue <= 0) {
       handleExpire();
-    } else if (millisecondsValue < interval) {
+    } else if (interval && millisecondsValue < interval) {
       setInterval(millisecondsValue);
     }
   }, isRunning ? interval : null);
