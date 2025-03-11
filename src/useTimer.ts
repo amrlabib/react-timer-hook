@@ -15,7 +15,7 @@ export type useTimerResultType = TimeFromMillisecondsType & {
   start: () => void, 
   pause: () => void,
   resume: () => void, 
-  restart: (newExpiryTimestamp: Date, newAutoStart: boolean) => void,
+  restart: (newExpiryTimestamp: Date, newAutoStart?: boolean) => void,
   isRunning: boolean,
 };
 
@@ -32,7 +32,9 @@ export default function useTimer({
   const [interval, setInterval] = useState<number | null>(customInterval);
 
   const handleExpire = useCallback(() => {
-    Validate.onExpire(onExpire) && onExpire();
+    if (Validate.onExpire(onExpire)) {
+      onExpire();
+    }
     setIsRunning(false);
     setInterval(null);
   }, [onExpire]);

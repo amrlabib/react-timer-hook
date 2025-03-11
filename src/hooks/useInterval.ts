@@ -14,7 +14,7 @@ export default function useInterval(callback: () => void, delay: number | null) 
     }
 
     const interval = setInterval(() => {
-      callbackRef.current && callbackRef.current();
+      callbackRef?.current?.();
     }, delay);
     return () => clearInterval(interval);
   }, [delay]);

@@ -14,7 +14,7 @@ export type FormattedTimeFromMillisecondsType = {
   seconds: number,
   minutes: number,
   hours: number,
-  ampm?: 'pm' | 'am' ,
+  ampm?: 'pm' | 'am',
 };
 
 
@@ -77,7 +77,9 @@ export default class Time {
       seconds: secondsValue,
       minutes,
       hours: hoursValue,
-      ampm,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      ampm, 
     };
   }
 }

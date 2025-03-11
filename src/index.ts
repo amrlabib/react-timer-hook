@@ -17,13 +17,13 @@ export default function useTimerDeprecated(settings: useTimerSettingsType) {
   }, []);
 
   if (settings.expiryTimestamp) {
-    const values = useTimer(settings); // eslint-disable-line
+    const values = useTimer(settings);
     return {
       ...values, startTimer: values.start, stopTimer: values.pause, resetTimer: () => {},
     };
   }
 
-  const values = useStopwatch(settings); // eslint-disable-line
+  const values = useStopwatch(settings);
   return {
     ...values, startTimer: values.start, stopTimer: values.pause, resetTimer: values.reset,
   };
