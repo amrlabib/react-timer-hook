@@ -13,7 +13,7 @@ export default function UseStopwatchDemo({ interval }: { interval: number}) {
     start,
     pause,
     reset,
-  } = useStopwatch();
+  } = useStopwatch({ interval });
 
 
   return (

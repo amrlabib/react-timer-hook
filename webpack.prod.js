@@ -1,38 +1,29 @@
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-
 module.exports = {
     performance: {
       hints: false
     },
     mode: "production",
-    entry: './src/index.js',
+    entry: './src/index.ts',
     output: {
         filename: './index.js',
         library: 'react-timer-hook',
         libraryTarget: "umd",
         globalObject: 'typeof self !== \'undefined\' ? self : this',
     },
-    module: {
-        rules: [{
-            test: /\.js$/,
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: [
-                  ['@babel/preset-env', { targets: "defaults" }],
-                  ['@babel/preset-typescript', { allowNamespaces: true }]
-                ]
-              }
-            }
-        }]
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js'],
     },
-    plugins: [
-        new CopyWebpackPlugin({
-            patterns: [
-                { from: './src/index.d.ts', to: './' },
-                ],
-        }),
-    ],
+    module: {
+        rules: [
+          {
+            test: /\.ts?$/,
+            use: {
+              loader: 'ts-loader',
+            },
+            exclude: /node_modules/
+          },
+        ]
+    },
     externals: [
       'react',
       /^react\/.+$/,

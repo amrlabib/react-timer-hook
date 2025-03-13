@@ -17,12 +17,14 @@ export default function useTimerDeprecated(settings: useTimerSettingsType) {
   }, []);
 
   if (settings.expiryTimestamp) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const values = useTimer(settings);
     return {
       ...values, startTimer: values.start, stopTimer: values.pause, resetTimer: () => {},
     };
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const values = useStopwatch(settings);
   return {
     ...values, startTimer: values.start, stopTimer: values.pause, resetTimer: values.reset,
