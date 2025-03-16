@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx",   // If you're using React
-    "strict": true,        // Enable strict type checking
+    "jsx": "react-jsx",
+    "strict": true,
     "skipLibCheck": true,
     "declaration": true,
-    "declarationDir": "./dist/types",   // Output directory for the type definitions
-    "moduleResolution": "node",          // Recommended for npm packages
+    "declarationDir": "./dist/types",
+    "moduleResolution": "node",
     "target": "ES6",
     "module": "ESNext",
     "esModuleInterop": true
-    // "emitDeclarationOnly": true
   },
 }

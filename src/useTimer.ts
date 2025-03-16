@@ -8,7 +8,7 @@ export type useTimerSettingsType = {
   expiryTimestamp: Date,
   onExpire?: () => void,
   autoStart?: boolean,
-  interval: number,
+  interval?: number,
 }
 
 export type useTimerResultType = TimeFromMillisecondsType & {
