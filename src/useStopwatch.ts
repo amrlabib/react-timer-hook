@@ -55,6 +55,6 @@ export default function useStopwatch({ autoStart = true, offsetTimestamp, interv
   }, [customInterval]);
 
   return {
-    ...Time.getTimeFromMilliseconds(milliseconds, false),start, pause, reset, isRunning,
+    ...Time.getTimeFromMilliseconds(milliseconds, false), start, pause, reset, isRunning,
   };
 }

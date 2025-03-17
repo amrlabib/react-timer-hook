@@ -9,12 +9,14 @@ export type TimeFromMillisecondsType = {
   days: number,
 };
 
+export type AMPMType = '' | 'pm' | 'am';
+
 export type FormattedTimeFromMillisecondsType = {
   milliseconds: number,
   seconds: number,
   minutes: number,
   hours: number,
-  ampm?: 'pm' | 'am',
+  ampm?: AMPMType,
 };
 
 
@@ -64,7 +66,7 @@ export default class Time {
       minutes,
       hours,
     } = Time.getTimeFromMilliseconds(milliseconds);
-    let ampm;
+    let ampm: AMPMType = '';
     let hoursValue = hours;
 
     if (format === '12-hour') {
@@ -77,8 +79,6 @@ export default class Time {
       seconds: secondsValue,
       minutes,
       hours: hoursValue,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       ampm, 
     };
   }
