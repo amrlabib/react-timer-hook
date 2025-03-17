@@ -1,42 +1,33 @@
 const path = require('path')
-
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-
-
 module.exports = {
-    performance: {
+	performance: {
       hints: false
     },
     mode: "development",
-    entry: './demo/index.js',
+    entry: './demo/index.tsx',
     output: {
         filename: 'index.js',
         chunkFilename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'docs'),
         globalObject: 'typeof self !== \'undefined\' ? self : this',
     },
-    module: {
-        rules: [{
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: [
-                  ['@babel/preset-env', { targets: "defaults" }],
-                  ['@babel/preset-typescript', { allowNamespaces: true }]
-                ]
-              }
-            }
-        }]
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js'],
     },
-    plugins: [
-        new CopyWebpackPlugin({
-            patterns: [
-                { from: "./demo/index.html", to: "./" },
-                ],
-        }),
-    ],
+    module: {
+        rules: [
+          {
+            test: /\.tsx?$/,
+            use: {
+              loader: 'ts-loader',
+              options: {
+                transpileOnly: true,
+              },
+            },
+            exclude: /node_modules/
+          },
+        ]
+    },
     devServer: {
       static: {
         directory: path.join(__dirname, 'docs')

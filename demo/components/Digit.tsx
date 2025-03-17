@@ -49,7 +49,13 @@ const SingleDigit = styled.span`
   }
 `;
 
-export default function Digit({ value, title, isMIlliseconds }) {
+type DigitType = {
+  value: number,
+  title: string,
+  isMIlliseconds?: boolean;
+};
+
+export default function Digit({ value, title, isMIlliseconds }: DigitType) {
   const digits = value.toString().padStart(4, '0');
   return (
     <Container>
