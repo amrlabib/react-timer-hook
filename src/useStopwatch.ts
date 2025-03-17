@@ -39,9 +39,11 @@ export default function useStopwatch({ autoStart = true, offsetTimestamp, interv
   }, [milliseconds]);
 
   const pause = useCallback(() => {
-    setMilliseconds(Time.getMillisecondsFromPrevTime(prevTime));
-    setIsRunning(false);
-  }, [prevTime]);
+    if (isRunning) {
+      setMilliseconds(Time.getMillisecondsFromPrevTime(prevTime));
+      setIsRunning(false);
+    }
+  }, [prevTime, isRunning]);
 
   const reset = useCallback((offset?: Date, newAutoStart = true) => {
     const newOffsetMilliseconds = offset ? Time.getMillisecondsFromExpiry(offset) : 0;
