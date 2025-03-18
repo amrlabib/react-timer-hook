@@ -42,7 +42,7 @@ export default class Time {
 
   static getMillisecondsFromExpiry(expiry: Date): number {
     const now = new Date().getTime();
-    const milliSecondsDistance = expiry.getTime() - now;
+    const milliSecondsDistance = expiry?.getTime() - now;
     return milliSecondsDistance > 0 ? milliSecondsDistance : 0;
   }
 
