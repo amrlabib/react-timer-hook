@@ -6,8 +6,7 @@ build
 yarn-error.log
 dev-dist
 docs
-
+demo
 *.js
-!dist/index.js
-
+!dist/**/*
 *.html
