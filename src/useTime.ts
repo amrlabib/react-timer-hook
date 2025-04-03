@@ -5,11 +5,11 @@ import { SECOND_INTERVAL } from './constants';
 import { FormattedTimeFromMillisecondsType } from './utils/Time';
 
 export type useTimeSettingsType = {
-  format?: '12-hour',
+  format?: '24-hour' | '12-hour',
   interval?: number;
 };
 
-export default function useTime({ format, interval: customInterval = SECOND_INTERVAL }: useTimeSettingsType = {}): FormattedTimeFromMillisecondsType {
+export default function useTime({ format = '24-hour', interval: customInterval = SECOND_INTERVAL }: useTimeSettingsType = {}): FormattedTimeFromMillisecondsType {
   const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromTimeNow());
 
   useInterval(() => {
