@@ -59,7 +59,7 @@ export default class Time {
     return currentTimestamp - offset;
   }
 
-  static getFormattedTimeFromMilliseconds(milliseconds: number, format?: '12-hour'): FormattedTimeFromMillisecondsType {
+  static getFormattedTimeFromMilliseconds(milliseconds: number, format?: '12-hour' | '24-hour'): FormattedTimeFromMillisecondsType {
     const {
       milliseconds: millisecVal,
       seconds: secondsValue,
