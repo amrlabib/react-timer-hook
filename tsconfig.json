@@ -8,6 +8,9 @@
     "moduleResolution": "node",
     "target": "ES6",
     "module": "ESNext",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "@utils": ["./src/utils/index"]
+    }
   },
 }

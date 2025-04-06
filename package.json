@@ -8,11 +8,12 @@
     "prepare": "yarn build:prod",
     "build:demo": "rm -r ./docs || true && webpack --config webpack.dev.js && cp ./demo/index.html ./docs && webpack-dev-server --open --config webpack.dev.js",
     "build:prod": "rm -r ./dist || true && webpack --config webpack.prod.js && rm -r ./dist/types/demo",
-    "lint": "node_modules/.bin/eslint src"
+    "lint": "node_modules/.bin/eslint src",
+    "test": "jest"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn tsc --noEmit"
+      "pre-commit": "yarn lint && yarn tsc --noEmit && yarn test"
     }
   },
   "repository": {
@@ -60,5 +61,10 @@
   },
   "peerDependencies": {
     "react": ">=16.8.0"
+  },
+  "dependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.1"
   }
 }
