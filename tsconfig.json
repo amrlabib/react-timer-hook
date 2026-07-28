@@ -10,4 +10,5 @@
     "module": "ESNext",
     "esModuleInterop": true
   },
+  "exclude": ["**/__tests__/**", "**/*.test.ts"]
 }
