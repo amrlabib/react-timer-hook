@@ -27,7 +27,7 @@ export default function useTimer({
 }: useTimerSettingsType): useTimerResultType {
   const [expiryTimestamp, setExpiryTimestamp] = useState(expiry);
   const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromExpiry(expiryTimestamp));
-  const [isRunning, setIsRunning] = useState(autoStart);
+  const [isRunning, setIsRunning] = useState(autoStart && milliseconds > 0);
   const [didStart, setDidStart] = useState(autoStart);
   const [interval, setInterval] = useState<number | null>(customInterval);
 
