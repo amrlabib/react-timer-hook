@@ -90,7 +90,7 @@ export default function App() {
 | hours | number | hours value |
 | days | number | days value |
 | totalSeconds | number | total number of seconds left in timer NOT converted to minutes, hours or days |
-| totalMilliseconds | number | total number of milliseconds left in timer NOT converted to minutes, hours or days |
+| totalMilliseconds | number | total number of milliseconds left in timer NOT converted to seconds, minutes, hours or days |
 | isRunning | boolean | flag to indicate if timer is running or not |
 | pause | function | function to be called to pause timer |
 | start | function | function if called after pause the timer will continue based on original expiryTimestamp |
@@ -151,7 +151,7 @@ export default function App() {
 
 | key | Type | Required | Description |
 | --- | --- | --- | ---- |
-| autoStart | boolean | No | if set to `true` stopwatch will auto start, by default it is set to `false` |
+| autoStart | boolean | No | if set to `true` stopwatch will auto start, by default it is set to `true` |
 | offsetTimestamp | Date object | No | this will define the initial stopwatch offset example: `const stopwatchOffset = new Date(); stopwatchOffset.setSeconds(stopwatchOffset.getSeconds() + 300);` this will result in a 5 minutes offset and stopwatch will start from 0:0:5:0 instead of 0:0:0:0 |
 | interval | number | No | value to change the interval of the stopwatch, by default it is set to 1000ms. Note: this value will not affect the stopwatch, it will just define the frequency used to calculate the current timer values. For example, if you have a use case where milliseconds are used, you need to use a smaller value for the interval, for example, 20ms or 100ms based on your needs. |
 
@@ -165,6 +165,7 @@ export default function App() {
 | hours | number | hours value |
 | days | number | days value |
 | totalSeconds | number | total number of seconds in stopwatch NOT converted to minutes, hours or days |
+| totalMilliseconds | number | total number of milliseconds in stopwatch NOT converted to seconds, minutes, hours or days |
 | isRunning | boolean | flag to indicate if stopwatch is running or not |
 | start | function | function to be called to start/resume stopwatch |
 | pause | function | function to be called to pause stopwatch |
