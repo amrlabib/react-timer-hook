@@ -1,5 +1,12 @@
 ## react-timer-hook
 
+[![Test](https://github.com/amrlabib/react-timer-hook/actions/workflows/test.yml/badge.svg)](https://github.com/amrlabib/react-timer-hook/actions/workflows/test.yml)
+[![npm](https://img.shields.io/npm/dw/react-timer-hook)](https://www.npmjs.com/package/react-timer-hook)
+[![npm version](https://img.shields.io/npm/v/react-timer-hook)](https://www.npmjs.com/package/react-timer-hook)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/react-timer-hook)](https://bundlephobia.com/package/react-timer-hook)
+[![license](https://img.shields.io/npm/l/react-timer-hook)](https://github.com/amrlabib/react-timer-hook/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/amrlabib/react-timer-hook)](https://github.com/amrlabib/react-timer-hook/stargazers)
+
 React timer hook is a custom [react hook](https://reactjs.org/docs/hooks-intro.html), built to handle timer, stopwatch, and time logic/state in your react component.
 
 1. `useTimer`: Timers (countdown timer)
