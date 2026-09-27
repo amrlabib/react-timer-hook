@@ -83,6 +83,19 @@ describe('useStopwatch', () => {
 			expect(result.current.seconds).toBe(0);
 			expect(result.current.milliseconds).toBe(0);
 		});
+
+		test('non Date offsetTimestamp values', () => {
+			const { result } = renderHook(() =>
+        useStopwatch({ offsetTimestamp: {} as unknown as Date })
+      );
+
+			expect(result.current.seconds).toBe(0);
+			expect(result.current.totalMilliseconds).toBe(0);
+
+			act(() => { jest.advanceTimersByTime(3000); });
+
+			expect(result.current.seconds).toBe(3);
+		});
 	});
 
 	describe('interval', () => {
@@ -403,6 +416,41 @@ describe('useStopwatch', () => {
 
 			expect(result.current.isRunning).toBe(true);
 			expect(result.current.seconds).toBe(5);
+		});
+
+		test('calling reset with a non Date argument resets the stopwatch to 0', () => {
+			const { result } = renderHook(() =>
+        useStopwatch()
+      );
+
+			act(() => { jest.advanceTimersByTime(5000); });
+
+			expect(result.current.seconds).toBe(5);
+
+			// react passes the event object when reset is used directly as onClick={reset}
+			act(() => result.current.reset({ type: 'click' } as unknown as Date));
+
+			expect(result.current.seconds).toBe(0);
+
+			act(() => { jest.advanceTimersByTime(2000); });
+
+			expect(result.current.isRunning).toBe(true);
+			expect(result.current.seconds).toBe(2);
+		});
+
+		test('calling reset with an invalid Date resets the stopwatch to 0', () => {
+			const { result } = renderHook(() =>
+        useStopwatch()
+      );
+
+			act(() => { jest.advanceTimersByTime(5000); });
+
+			expect(result.current.seconds).toBe(5);
+
+			act(() => result.current.reset(new Date('invalid')));
+
+			expect(result.current.seconds).toBe(0);
+			expect(result.current.totalMilliseconds).toBe(0);
 		});
 	});
 });
