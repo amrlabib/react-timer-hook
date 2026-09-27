@@ -40,6 +40,11 @@ export default class Time {
     };
   }
 
+  static isValidDate(value: unknown): value is Date {
+    return Object.prototype.toString.call(value) === '[object Date]'
+      && !Number.isNaN((value as Date).getTime());
+  }
+
   static getMillisecondsFromExpiry(expiry: Date): number {
     const now = new Date().getTime();
     const milliSecondsDistance = expiry?.getTime() - now;

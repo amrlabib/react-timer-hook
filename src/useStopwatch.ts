@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, SyntheticEvent } from 'react';
 import { Time } from './utils';
 import { useInterval } from './hooks';
 import { SECOND_INTERVAL } from './constants';
@@ -11,14 +11,14 @@ export type useStopwatchSettingsType = {
 };
 
 export type useStopwatchResultType = TimeFromMillisecondsType & {
-  start: () => void, 
-  pause: () => void, 
-  reset: (offset?: Date, newAutoStart?: boolean) => void, 
+  start: () => void,
+  pause: () => void,
+  reset: (offset?: Date | SyntheticEvent, newAutoStart?: boolean) => void,
   isRunning: boolean,
 };
 
 export default function useStopwatch({ autoStart = true, offsetTimestamp, interval: customInterval = SECOND_INTERVAL }: useStopwatchSettingsType = {}): useStopwatchResultType {
-  const offsetMilliseconds = offsetTimestamp ? Time.getMillisecondsFromExpiry(offsetTimestamp) : 0;
+  const offsetMilliseconds = Time.isValidDate(offsetTimestamp) ? Time.getMillisecondsFromExpiry(offsetTimestamp) : 0;
   const [prevTime, setPrevTime] = useState<number>(new Date().getTime() - new Date(offsetMilliseconds).getTime());
   const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromPrevTime(prevTime || 0));
   const [isRunning, setIsRunning] = useState(autoStart);
@@ -45,8 +45,8 @@ export default function useStopwatch({ autoStart = true, offsetTimestamp, interv
     }
   }, [prevTime, isRunning]);
 
-  const reset = useCallback((offset?: Date, newAutoStart = true) => {
-    const newOffsetMilliseconds = offset ? Time.getMillisecondsFromExpiry(offset) : 0;
+  const reset = useCallback((offset?: Date | SyntheticEvent, newAutoStart = true) => {
+    const newOffsetMilliseconds = Time.isValidDate(offset) ? Time.getMillisecondsFromExpiry(offset) : 0;
     const newPrevTime = new Date().getTime() - new Date(newOffsetMilliseconds).getTime();
     const newMilliseconds = Time.getMillisecondsFromPrevTime(newPrevTime);
     const millisecondsOffset = SECOND_INTERVAL - (newMilliseconds % SECOND_INTERVAL);
