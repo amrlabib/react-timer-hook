@@ -120,6 +120,30 @@ describe('useTime', () => {
     });
   });
 
+  describe('utc', () => {
+    beforeEach(() => jest.useFakeTimers());
+    afterEach(() => jest.useRealTimers());
+
+    test('returns local time by default', () => {
+      jest.setSystemTime(getLocalDateAtTime(14, 30, 45));
+      const { result } = renderHook(() => useTime());
+
+      expect(result.current.hours).toBe(14);
+      expect(result.current.minutes).toBe(30);
+      expect(result.current.seconds).toBe(45);
+    });
+
+    test('returns UTC time when utc is true', () => {
+      const d = getLocalDateAtTime(14, 30, 45);
+      jest.setSystemTime(d);
+      const { result } = renderHook(() => useTime({ utc: true }));
+
+      expect(result.current.hours).toBe(d.getUTCHours());
+      expect(result.current.minutes).toBe(d.getUTCMinutes());
+      expect(result.current.seconds).toBe(d.getUTCSeconds());
+    });
+  });
+
   describe('ampm', () => {
     beforeEach(() => jest.useFakeTimers());
     afterEach(() => jest.useRealTimers());

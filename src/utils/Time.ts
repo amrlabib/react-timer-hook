@@ -52,9 +52,12 @@ export default class Time {
     return milliSecondsDistance > 0 ? milliSecondsDistance : 0;
   }
 
-  static getMillisecondsFromTimeNow(): number {
+  static getMillisecondsFromTimeNow(utc = false): number {
     const now = new Date();
     const currentTimestamp = now.getTime();
+    if (utc) {
+      return currentTimestamp;
+    }
     const offset = (now.getTimezoneOffset() * 60 * 1000);
     return currentTimestamp - offset;
   }
