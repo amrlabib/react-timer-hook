@@ -7,13 +7,14 @@ import { FormattedTimeFromMillisecondsType } from './utils/Time';
 export type useTimeSettingsType = {
   format?: '12-hour',
   interval?: number;
+  utc?: boolean;
 };
 
-export default function useTime({ format, interval: customInterval = SECOND_INTERVAL }: useTimeSettingsType = {}): FormattedTimeFromMillisecondsType {
-  const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromTimeNow());
+export default function useTime({ format, interval: customInterval = SECOND_INTERVAL, utc = false }: useTimeSettingsType = {}): FormattedTimeFromMillisecondsType {
+  const [milliseconds, setMilliseconds] = useState(Time.getMillisecondsFromTimeNow(utc));
 
   useInterval(() => {
-    setMilliseconds(Time.getMillisecondsFromTimeNow());
+    setMilliseconds(Time.getMillisecondsFromTimeNow(utc));
   }, customInterval);
 
   return {

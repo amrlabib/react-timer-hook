@@ -229,6 +229,7 @@ export default function App() {
 | --- | --- | --- | ---- |
 | format | string | No | if set to `12-hour` time will be formatted with am/pm |
 | interval | number | No | value to change the interval of the time, by default it is set to 1000ms. Note: this value will not affect the thime, it will just define the frequency used to calculate the current time values. For example, if you have a use case where milliseconds are used, you need to use a smaller value for the interval, for example, 20ms or 100ms based on your needs. |
+| utc | boolean | No | if set to `true` time will be returned in UTC instead of local time. Defaults to `false`. |
 
 ### Values
 
