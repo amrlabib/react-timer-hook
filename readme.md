@@ -3,7 +3,7 @@
 [![Test](https://github.com/amrlabib/react-timer-hook/actions/workflows/test.yml/badge.svg)](https://github.com/amrlabib/react-timer-hook/actions/workflows/test.yml)
 [![npm](https://img.shields.io/npm/dw/react-timer-hook)](https://www.npmjs.com/package/react-timer-hook)
 [![npm version](https://img.shields.io/npm/v/react-timer-hook)](https://www.npmjs.com/package/react-timer-hook)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/react-timer-hook)](https://bundlephobia.com/result?p=react-timer-hook)
+[![bundle size](https://img.shields.io/badge/bundle_size-1.5kB_gzip-brightgreen)](https://bundlephobia.com/result?p=react-timer-hook)
 [![license](https://img.shields.io/npm/l/react-timer-hook)](https://github.com/amrlabib/react-timer-hook/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/amrlabib/react-timer-hook)](https://github.com/amrlabib/react-timer-hook/stargazers)
 
@@ -11,17 +11,19 @@
 
 ## react-timer-hook
 
-**react-timer-hook** is a lightweight, drift-free, millisecond-precision custom [React Hook](https://react.dev/learn/reusing-logic-with-custom-hooks) for handling timer, stopwatch, and time logic/state in your React components.
-
-1. `useTimer`: Timers (countdown timer)
-2. `useStopwatch`: Stopwatch (count up timer)
-3. `useTime`: Time (return current time)
-
----
+**react-timer-hook** is a lightweight, zero-dependency, drift-free, millisecond-precision custom [React Hook](https://react.dev/learn/reusing-logic-with-custom-hooks) for handling timer, stopwatch, and time logic/state in your React and React Native components.
 
 ## Setup
 
 `yarn add react-timer-hook` OR `npm install --save react-timer-hook`
+
+---
+
+| Hook | Preview |
+| --- | --- |
+| [`useTimer`](#usetimer---demo) — countdown timer | ![useTimer demo](./assets/useTimer-thumb.gif) |
+| [`useStopwatch`](#usestopwatch---demo) — count up timer | ![useStopwatch demo](./assets/useStopwatch-thumb.gif) |
+| [`useTime`](#usetime---demo) — current time | ![useTime demo](./assets/useTime-thumb.gif) |
 
 ---
 
