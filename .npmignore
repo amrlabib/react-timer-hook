@@ -1,7 +1,6 @@
 node_modules
 src
 __tests__
-assets
 .DS_Store
 build
 !.eslintrc

@@ -19,11 +19,9 @@
 
 ---
 
-| Hook | Preview |
-| --- | --- |
-| [`useTimer`](#usetimer---demo) — countdown timer | ![useTimer demo](./assets/useTimer-thumb.gif) |
-| [`useStopwatch`](#usestopwatch---demo) — count up timer | ![useStopwatch demo](./assets/useStopwatch-thumb.gif) |
-| [`useTime`](#usetime---demo) — current time | ![useTime demo](./assets/useTime-thumb.gif) |
+- [`useTimer`](#usetimer---demo): countdown timer
+- [`useStopwatch`](#usestopwatch---demo): count up timer
+- [`useTime`](#usetime---demo): current time
 
 ---
 
