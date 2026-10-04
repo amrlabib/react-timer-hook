@@ -1,5 +1,6 @@
 node_modules
 src
+__tests__
 .DS_Store
 build
 !.eslintrc
