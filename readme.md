@@ -11,7 +11,7 @@
 
 ## react-timer-hook
 
-**react-timer-hook** is a lightweight, zero-dependency, drift-free, millisecond-precision custom [React Hook](https://react.dev/learn/reusing-logic-with-custom-hooks) for handling timer, stopwatch, and time logic/state in your React and React Native components.
+**react-timer-hook** is a lightweight, zero-dependency, drift-free, millisecond-precision custom [React Hook](https://react.dev/learn/reusing-logic-with-custom-hooks) for handling timer (countdown), stopwatch, and time logic/state in your React and React Native components.
 
 ## Setup
 

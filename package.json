@@ -1,7 +1,7 @@
 {
   "name": "react-timer-hook",
   "version": "4.0.8",
-  "description": "Lightweight, zero-dependency, drift-free, millisecond-precision custom React Hook for timer, stopwatch, and time logic/state in your React and React Native components.",
+  "description": "Lightweight, zero-dependency, drift-free, millisecond-precision custom React Hook for timer (countdown), stopwatch, and time logic/state in your React and React Native components.",
   "main": "dist/index.js",
   "types": "dist/types/src/index.d.ts",
   "scripts": {
