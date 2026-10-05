@@ -404,5 +404,25 @@ describe('useStopwatch', () => {
 			expect(result.current.isRunning).toBe(true);
 			expect(result.current.seconds).toBe(5);
 		});
+
+		test('calling reset directly as an event handler does not throw', () => {
+			const { result } = renderHook(() =>
+        useStopwatch()
+      );
+
+			act(() => { jest.advanceTimersByTime(5000); });
+
+			expect(result.current.seconds).toBe(5);
+
+			const clickEvent = { type: 'click', target: {} };
+			act(() => (result.current.reset as (arg?: unknown) => void)(clickEvent));
+
+			expect(result.current.seconds).toBe(0);
+
+			act(() => { jest.advanceTimersByTime(2000); });
+
+			expect(result.current.isRunning).toBe(true);
+			expect(result.current.seconds).toBe(2);
+		});
 	});
 });
