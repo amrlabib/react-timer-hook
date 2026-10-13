@@ -32,6 +32,28 @@ describe('useTime', () => {
     });
   });
 
+  describe('sub-second time', () => {
+    beforeEach(() => jest.useFakeTimers());
+    afterEach(() => jest.useRealTimers());
+
+    test('does not round the current second up', () => {
+      jest.setSystemTime(getLocalDateAtTime(14, 30, 45, 500));
+      const { result } = renderHook(() => useTime());
+
+      expect(result.current.seconds).toBe(45);
+      expect(result.current.milliseconds).toBe(500);
+    });
+
+    test('does not roll minutes and hours over early', () => {
+      jest.setSystemTime(getLocalDateAtTime(14, 59, 59, 600));
+      const { result } = renderHook(() => useTime());
+
+      expect(result.current.hours).toBe(14);
+      expect(result.current.minutes).toBe(59);
+      expect(result.current.seconds).toBe(59);
+    });
+  });
+
   describe('interval', () => {
     beforeEach(() => jest.useFakeTimers());
     afterEach(() => jest.useRealTimers());

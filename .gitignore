@@ -5,3 +5,4 @@ node_modules
 build
 !.eslintrc
 yarn-error.log
+config.bat
