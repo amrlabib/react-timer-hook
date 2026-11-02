@@ -68,7 +68,7 @@ export default class Time {
       seconds: secondsValue,
       minutes,
       hours,
-    } = Time.getTimeFromMilliseconds(milliseconds);
+    } = Time.getTimeFromMilliseconds(milliseconds, false);
     let ampm: AMPMType = '';
     let hoursValue = hours;
 

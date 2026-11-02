@@ -6,8 +6,8 @@
   "types": "dist/types/src/index.d.ts",
   "scripts": {
     "prepare": "yarn build:prod",
-    "build:demo": "rm -r ./docs || true && webpack --config webpack.dev.js && cp ./demo/index.html ./docs && webpack-dev-server --open --config webpack.dev.js",
-    "build:prod": "rm -r ./dist || true && webpack --config webpack.prod.js && rm -r ./dist/types/demo",
+    "build:demo": "node init && rm -r ./docs || true && webpack --config webpack.dev.js && cp ./demo/index.html ./docs && webpack-dev-server --open --config webpack.dev.js",
+    "build:prod": "node init && rm -r ./dist || true && webpack --config webpack.prod.js && rm -r ./dist/types/demo",
     "lint": "node_modules/.bin/eslint src",
     "test": "jest"
   },
