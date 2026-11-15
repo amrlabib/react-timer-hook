@@ -8,6 +8,19 @@ function getExpiryTimestamp(seconds: number): Date {
 }
 
 describe('useStopwatch', () => {
+  describe('repeated start between ticks', () => {
+    beforeEach(() => jest.useFakeTimers());
+    afterEach(() => jest.useRealTimers());
+
+    test.each([1000, 100])('preserves elapsed time with a %ims interval', (interval) => {
+      const { result } = renderHook(() => useStopwatch({ interval }));
+      act(() => { jest.advanceTimersByTime(interval / 2); });
+      act(() => result.current.start());
+      act(() => { jest.advanceTimersByTime(interval / 2); });
+      expect(result.current.totalMilliseconds).toBe(interval);
+      expect(result.current.isRunning).toBe(true);
+    });
+  });
 
 	describe('autoStart', () => {
 		beforeEach(() => jest.useFakeTimers());

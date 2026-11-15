@@ -34,9 +34,12 @@ export default function useStopwatch({ autoStart = true, offsetTimestamp, interv
   }, isRunning ? interval : null);
 
   const start = useCallback(() => {
+    if (isRunning) {
+      return;
+    }
     setPrevTime(new Date().getTime() - new Date(milliseconds).getTime());
     setIsRunning(true);
-  }, [milliseconds]);
+  }, [milliseconds, isRunning]);
 
   const pause = useCallback(() => {
     if (isRunning) {
